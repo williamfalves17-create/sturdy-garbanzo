@@ -228,4 +228,2339 @@ tr:hover td{background:rgba(255,255,255,0.015);}
 .pw-pix:hover{border-color:var(--accent);}
 .pw-pix-label{font-size:10px;color:var(--text3);margin-bottom:4px;text-transform:uppercase;letter-spacing:1px;}
 .pw-pix-key{font-family:'DM Mono',monospace;font-size:14px;color:var(--accent3);}
-.pw-divider{display:flex;align-items:center;gap:12px;margin:16px 0;
+.pw-divider{display:flex;align-items:center;gap:12px;margin:16px 0;font-size:11px;color:var(--text4);}
+.pw-divider::before,.pw-divider::after{content:'';flex:1;height:1px;background:var(--border);}
+.pw-key-input{width:100%;background:var(--bg3);border:1px solid var(--border2);border-radius:var(--radius2);padding:12px 15px;color:var(--text);font-family:'DM Mono',monospace;font-size:14px;outline:none;text-align:center;letter-spacing:2px;transition:border-color 0.2s;margin-bottom:12px;}
+.pw-key-input:focus{border-color:var(--accent);}
+.pw-err{color:var(--red);font-size:11px;margin-bottom:12px;display:none;}
+
+/* ═══════════ TICKER ═══════════ */
+.ticker-strip{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:12px 18px;display:flex;gap:28px;overflow-x:auto;margin-bottom:20px;scrollbar-width:none;}
+.ticker-strip::-webkit-scrollbar{display:none;}
+.tick-item{display:flex;flex-direction:column;gap:2px;min-width:fit-content;}
+.tick-name{font-size:9px;color:var(--text4);font-weight:700;letter-spacing:1.2px;text-transform:uppercase;}
+.tick-val{font-family:'DM Mono',monospace;font-size:14px;color:var(--text);}
+.tick-chg{font-size:10px;font-family:'DM Mono',monospace;}
+.tick-up{color:var(--green);}
+.tick-dn{color:var(--red);}
+
+/* ═══════════ RINGS ═══════════ */
+.rings-row{display:flex;gap:20px;flex-wrap:wrap;justify-content:space-around;padding:8px 0;}
+.ring-item{text-align:center;}
+.ring-svg-wrap{position:relative;width:100px;height:100px;}
+.ring-svg-wrap svg{transform:rotate(-90deg);}
+.ring-inner{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;}
+.ring-pct{font-family:'Syne',sans-serif;font-size:18px;font-weight:800;line-height:1;}
+.ring-label{font-size:9px;color:var(--text3);margin-top:6px;text-transform:uppercase;letter-spacing:0.8px;}
+
+/* ═══════════ EDUCATION ═══════════ */
+.edu-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;}
+.edu-card{background:var(--bg3);border:1px solid var(--border2);border-radius:var(--radius);padding:20px;cursor:pointer;transition:all 0.2s;}
+.edu-card:hover{border-color:var(--border3);transform:translateY(-2px);}
+.edu-card.open{border-color:var(--accent);}
+.edu-card-hd{display:flex;align-items:center;gap:12px;margin-bottom:0;}
+.edu-icon{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;}
+.edu-card-title{font-family:'Syne',sans-serif;font-size:14px;font-weight:700;}
+.edu-card-sub{font-size:11px;color:var(--text3);margin-top:2px;}
+.edu-body{margin-top:14px;font-size:12px;color:var(--text2);line-height:1.7;display:none;border-top:1px solid var(--border);padding-top:14px;}
+.edu-card.open .edu-body{display:block;}
+.edu-formula{background:var(--bg4);border-radius:var(--radius3);padding:10px 12px;font-family:'DM Mono',monospace;font-size:11px;color:var(--accent3);margin:10px 0;}
+
+/* ═══════════ DIARY ═══════════ */
+.diary-cal{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-bottom:16px;}
+.cal-day{aspect-ratio:1;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:10px;font-family:'DM Mono',monospace;color:var(--text3);background:var(--bg3);}
+.cal-day.has-entry{cursor:pointer;}
+.cal-day.mood-good{background:rgba(30,217,122,0.2);color:var(--green);}
+.cal-day.mood-bad{background:rgba(240,72,90,0.2);color:var(--red);}
+.cal-day.mood-ok{background:rgba(245,200,66,0.2);color:var(--yellow);}
+.cal-day.mood-save{background:rgba(24,212,232,0.2);color:var(--cyan);}
+.cal-day.today{border:1px solid var(--accent);color:var(--accent3);}
+.diary-entry{background:var(--bg3);border:1px solid var(--border2);border-radius:var(--radius2);padding:14px;margin-bottom:10px;}
+.diary-entry-hd{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;}
+.diary-entry-date{font-size:10px;font-family:'DM Mono',monospace;color:var(--text3);}
+.diary-entry-text{font-size:12px;color:var(--text2);line-height:1.5;}
+
+/* ═══════════ CALCULATOR ═══════════ */
+.calc-disp{background:var(--bg);border:1px solid var(--border2);border-radius:var(--radius2);padding:16px 18px;font-family:'DM Mono',monospace;font-size:30px;text-align:right;min-height:72px;display:flex;flex-direction:column;justify-content:flex-end;margin-bottom:12px;overflow:hidden;}
+.calc-expr{font-size:12px;color:var(--text3);margin-bottom:4px;min-height:16px;}
+.calc-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;}
+.cb{padding:15px;border-radius:var(--radius2);border:none;cursor:pointer;font-size:15px;font-family:'DM Mono',monospace;font-weight:500;transition:all 0.12s;}
+.cb:active{transform:scale(0.94);}
+.cb-num{background:var(--bg3);color:var(--text);}
+.cb-num:hover{background:var(--bg4);}
+.cb-op{background:rgba(124,106,247,0.18);color:var(--accent3);}
+.cb-op:hover{background:rgba(124,106,247,0.3);}
+.cb-eq{background:var(--accent);color:#fff;}
+.cb-eq:hover{background:var(--accent2);}
+.cb-clr{background:rgba(240,72,90,0.18);color:var(--red);}
+.cb-clr:hover{background:rgba(240,72,90,0.3);}
+
+/* ═══════════ RADAR ═══════════ */
+.news-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px;}
+.news-card{background:var(--bg3);border:1px solid var(--border2);border-radius:var(--radius2);padding:16px;transition:all 0.2s;cursor:pointer;}
+.news-card:hover{border-color:var(--border3);transform:translateY(-2px);}
+.news-source{font-size:9px;text-transform:uppercase;letter-spacing:1.5px;font-weight:700;margin-bottom:8px;}
+.news-title{font-size:13px;font-weight:600;line-height:1.4;margin-bottom:8px;color:var(--text);}
+.news-time{font-size:10px;color:var(--text4);font-family:'DM Mono',monospace;}
+.news-cat{display:inline-block;padding:2px 8px;border-radius:20px;font-size:9px;font-weight:700;margin-bottom:6px;}
+
+/* ═══════════ TOAST ═══════════ */
+#toast{position:fixed;bottom:22px;right:22px;background:var(--card);border:1px solid var(--border2);border-radius:var(--radius);padding:12px 18px;font-size:12px;color:var(--text);z-index:9999;transform:translateY(60px);opacity:0;transition:all 0.3s;display:flex;align-items:center;gap:8px;box-shadow:var(--shadow);max-width:320px;}
+#toast.show{transform:translateY(0);opacity:1;}
+#toast.t-ok{border-left:3px solid var(--green);}
+#toast.t-err{border-left:3px solid var(--red);}
+#toast.t-info{border-left:3px solid var(--accent);}
+
+/* ═══════════ RESPONSIVE ═══════════ */
+@media(max-width:900px){
+  .sidebar{transform:translateX(-100%);}
+  .sidebar.open{transform:translateX(0);}
+  .main{margin-left:0;}
+  .grid2,.grid3,.grid4{grid-template-columns:1fr;}
+  .content{padding:16px;}
+  .topbar{padding:12px 16px;}
+  .menu-btn{display:flex;}
+}
+</style>
+
+<!-- Firebase SDK -->
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+<script>
+  const firebaseConfig = {
+    apiKey: "AIzaSyD8-GSmb8qrGrhZ0Fjk-xbLAPep4LPMeqE",
+    authDomain: "lliw-app.firebaseapp.com",
+    projectId: "lliw-app",
+    storageBucket: "lliw-app.firebasestorage.app",
+    messagingSenderId: "1027771456973",
+    appId: "1:1027771456973:web:2795e2065dcb0209387884"
+  };
+  firebase.initializeApp(firebaseConfig);
+  const _auth = firebase.auth();
+  const _db = firebase.firestore();
+
+  window.fbLogin = (email, password) => _auth.signInWithEmailAndPassword(email, password);
+  window.fbRegister = (email, password) => _auth.createUserWithEmailAndPassword(email, password);
+  window.fbForgot = (email) => _auth.sendPasswordResetEmail(email);
+  window.fbSignOut = () => _auth.signOut();
+  window.fbSave = async (uid, data) => {
+    try { await _db.collection("usuarios").doc(uid).set(data, {merge:true}); } catch(e) { console.error(e); }
+  };
+  window.fbLoad = async (uid) => {
+    try { const snap = await _db.collection("usuarios").doc(uid).get(); return snap.exists ? snap.data() : null; } catch(e) { return null; }
+  };
+</script>
+
+</head>
+<body>
+
+<!-- ══════════════════════ LOGIN ══════════════════════ -->
+<div id="login-screen">
+  <div class="login-grid-bg"></div>
+  <div class="login-orb o1"></div>
+  <div class="login-orb o2"></div>
+  <div class="login-wrap">
+    <div class="login-box">
+      <div class="login-logo-wrap">
+        <div class="login-logo">LLI<span>W</span></div>
+        <div class="login-tagline">Sua jornada para a liberdade financeira começa hoje</div>
+      </div>
+      <div class="login-quote">
+        <div class="login-quote-text" id="lq-text"></div>
+        <div class="login-quote-author" id="lq-author"></div>
+      </div>
+      <div id="login-form">
+        <label class="f-label">E-mail</label>
+        <input class="f-input" id="li-email" type="email" placeholder="seu@email.com" autocomplete="email">
+        <label class="f-label">Senha</label>
+        <input class="f-input" id="li-pass" type="password" placeholder="••••••••" autocomplete="current-password">
+        <div class="login-err" id="li-err">E-mail ou senha incorretos.</div>
+        <button class="btn-login" onclick="doLogin()">Entrar</button>
+        <div class="login-links">
+          <button class="login-link" onclick="showForgot()">Esqueci minha senha</button>
+          <button class="login-link" onclick="showRegister()">Criar conta</button>
+        </div>
+      </div>
+      <div id="register-form" style="display:none">
+        <label class="f-label">Nome</label>
+        <input class="f-input" id="reg-name" type="text" placeholder="Seu nome">
+        <label class="f-label">E-mail</label>
+        <input class="f-input" id="reg-email" type="email" placeholder="seu@email.com">
+        <label class="f-label">Senha</label>
+        <input class="f-input" id="reg-pass" type="password" placeholder="mínimo 6 caracteres">
+        <div class="login-err" id="reg-err"></div>
+        <button class="btn-login" onclick="doRegister()">Criar conta gratuita</button>
+        <div class="login-links">
+          <button class="login-link" onclick="showLogin()">Voltar ao login</button>
+        </div>
+      </div>
+      <div id="forgot-form" style="display:none">
+        <label class="f-label">Seu e-mail cadastrado</label>
+        <input class="f-input" id="fgt-email" type="email" placeholder="seu@email.com">
+        <div class="login-err" id="fgt-err"></div>
+        <div id="fgt-ok" style="display:none;color:var(--green);font-size:12px;margin-bottom:12px;">Link de recuperação enviado! Verifique seu e-mail.</div>
+        <button class="btn-login" onclick="doForgot()">Enviar link de recuperação</button>
+        <div class="login-links">
+          <button class="login-link" onclick="showLogin()">Voltar ao login</button>
+        </div>
+      </div>
+      <div class="login-demo">Crie sua conta gratuitamente — 24h de acesso grátis</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════ ONBOARDING ══════════════════════ -->
+<div id="onboarding-screen">
+  <div class="ob-box">
+    <div class="ob-step-bar" id="ob-steps"></div>
+    <div id="ob-content"></div>
+  </div>
+</div>
+
+<!-- ══════════════════════ APP ══════════════════════ -->
+<div id="app">
+  <aside class="sidebar" id="sidebar">
+    <div class="sb-logo">LLI<span>W</span></div>
+    <div class="sb-logo-sub">Plataforma Financeira</div>
+    <div class="sb-trial" id="sb-trial">
+      <div class="sb-trial-label">Periodo Trial</div>
+      <div class="sb-trial-time" id="trial-timer">23:59:59</div>
+      <div class="sb-trial-sub">Restante de acesso gratuito</div>
+    </div>
+    <nav class="sb-nav">
+      <div class="sb-section">Principal</div>
+      <div class="sb-item active" onclick="goPage('dashboard',this)"><div class="sb-icon">◈</div>Dashboard</div>
+      <div class="sb-item" onclick="goPage('recebimentos',this)"><div class="sb-icon">↓</div>Recebimentos</div>
+      <div class="sb-item" onclick="goPage('despesas',this)"><div class="sb-icon">↑</div>Despesas</div>
+      <div class="sb-item" onclick="goPage('planejamento',this)"><div class="sb-icon">▤</div>Planejamento</div>
+      <div class="sb-section">Investimentos</div>
+      <div class="sb-item" onclick="goPage('ativos',this)"><div class="sb-icon">◉</div>Meus Ativos</div>
+      <div class="sb-item" onclick="goPage('mercado',this)"><div class="sb-icon">⬡</div>Mercado</div>
+      <div class="sb-section">Gestão</div>
+      <div class="sb-item" onclick="goPage('dividas',this)"><div class="sb-icon">⚠</div>Dívidas</div>
+      <div class="sb-item" onclick="goPage('diario',this)"><div class="sb-icon">✎</div>Diário</div>
+      <div class="sb-section">Ferramentas</div>
+      <div class="sb-item" onclick="goPage('simuladores',this)"><div class="sb-icon">∿</div>Simuladores</div>
+      <div class="sb-item" onclick="goPage('calculadoras',this)"><div class="sb-icon">∑</div>Calculadoras</div>
+      <div class="sb-item" onclick="goPage('educacao',this)"><div class="sb-icon">◎</div>Educação</div>
+      <div class="sb-section">Extra</div>
+      <div class="sb-item" onclick="goPage('radar',this)"><div class="sb-icon">◐</div>Radar</div>
+      <div class="sb-item" onclick="openPaywall()"><div class="sb-icon">★</div>Assinar Premium</div>
+    </nav>
+    <div class="sb-bottom">
+      <div class="sb-user">
+        <div class="sb-avatar" id="sb-av">A</div>
+        <div><div class="sb-uname" id="sb-nm">Usuário</div><div class="sb-urole" id="sb-status-label">Endividado</div></div>
+      </div>
+      <button class="sb-logout" onclick="doLogout()">Sair da conta</button>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="topbar">
+      <div class="topbar-left">
+        <div class="menu-btn" id="menu-btn" onclick="toggleSidebar()">☰</div>
+        <div class="topbar-title" id="page-title">Dashboard</div>
+      </div>
+      <div class="topbar-right">
+        <div class="topbar-date" id="top-date"></div>
+        <div class="topbar-score" id="top-score">
+          <div class="topbar-score-label">STATUS</div>
+          <div class="topbar-score-val" id="top-score-val" style="color:var(--accent3)">—</div>
+        </div>
+      </div>
+    </div>
+    <div class="content">
+
+      <!-- ─── DASHBOARD ─── -->
+      <div class="page active" id="pg-dashboard">
+        <div class="ticker-strip" id="ticker"></div>
+        <div class="kpi-row" id="dash-kpis"></div>
+        <div class="grid2">
+          <div class="panel">
+            <div class="panel-hd"><div class="sec-title">Receitas × Despesas <span class="badge badge-purple">6 meses</span></div></div>
+            <div class="chart-box"><canvas id="c-rd"></canvas></div>
+          </div>
+          <div class="panel">
+            <div class="panel-hd"><div class="sec-title">Distribuição de Despesas</div></div>
+            <div class="chart-box"><canvas id="c-desp-cat"></canvas></div>
+          </div>
+        </div>
+        <div class="grid2">
+          <div class="panel">
+            <div class="panel-hd"><div class="sec-title">% Salário Investido <span class="badge badge-green">Mensal</span></div></div>
+            <div class="chart-box"><canvas id="c-sal-inv"></canvas></div>
+          </div>
+          <div class="panel">
+            <div class="panel-hd"><div class="sec-title">Evolução Renda Passiva</div></div>
+            <div class="chart-box"><canvas id="c-rp"></canvas></div>
+          </div>
+        </div>
+        <div class="grid2">
+          <div class="panel">
+            <div class="panel-hd"><div class="sec-title">Comprometimento de Renda</div></div>
+            <div class="rings-row" id="dash-rings"></div>
+          </div>
+          <div class="score-card" id="dash-score-card">
+            <div class="sec-title" style="justify-content:center;margin-bottom:16px;">Score de Saúde Financeira</div>
+            <div class="score-ring" id="score-ring-wrap"></div>
+            <div class="score-tips" id="score-tips"></div>
+          </div>
+        </div>
+        <div class="panel">
+          <div class="panel-hd"><div class="sec-title">Projeção Patrimonial <span class="badge badge-cyan">5 · 10 · 20 anos</span></div></div>
+          <div class="chart-box tall"><canvas id="c-proj"></canvas></div>
+        </div>
+      </div>
+
+      <!-- ─── RECEBIMENTOS ─── -->
+      <div class="page" id="pg-recebimentos">
+        <div class="panel">
+          <div class="sec-title" style="margin-bottom:16px;">Registrar Recebimento</div>
+          <div class="form-grid">
+            <div class="fg"><label class="fl">Origem</label><input class="fi" id="r-origem" placeholder="Ex: Empresa ABC"></div>
+            <div class="fg"><label class="fl">Categoria</label><select class="fs" id="r-cat"><option>Salário I</option><option>Salário II</option><option>Extra</option><option>Freelance</option><option>Dividendo</option><option>Aluguel</option><option>Renda Passiva</option><option>Outro</option></select></div>
+            <div class="fg"><label class="fl">Valor (R$)</label><input class="fi" id="r-valor" type="number" placeholder="0,00" min="0"></div>
+            <div class="fg"><label class="fl">Data</label><input class="fi" id="r-data" type="date"></div>
+            <div class="fg"><label class="fl">Tipo</label><select class="fs" id="r-tipo"><option>Ativa</option><option>Passiva</option></select></div>
+          </div>
+          <button class="btn btn-accent" onclick="addRec()">+ Registrar</button>
+        </div>
+        <div class="panel">
+          <div class="panel-hd">
+            <div class="sec-title">Histórico <span class="badge badge-green" id="r-total-badge"></span></div>
+            <div style="font-size:11px;color:var(--text3)">Total: <span id="r-total" style="color:var(--green);font-family:'DM Mono',monospace"></span></div>
+          </div>
+          <div class="tbl-wrap"><table><thead><tr><th>Data</th><th>Origem</th><th>Categoria</th><th>Tipo</th><th>Valor</th><th></th></tr></thead><tbody id="tb-rec"></tbody></table></div>
+        </div>
+      </div>
+
+      <!-- ─── DESPESAS ─── -->
+      <div class="page" id="pg-despesas">
+        <div class="panel">
+          <div class="sec-title" style="margin-bottom:16px;">Registrar Despesa</div>
+          <div class="form-grid">
+            <div class="fg"><label class="fl">Descrição</label><input class="fi" id="d-desc" placeholder="Ex: Aluguel"></div>
+            <div class="fg"><label class="fl">Categoria</label><select class="fs" id="d-cat"><option>Moradia</option><option>Alimentação</option><option>Transporte</option><option>Saúde</option><option>Educação</option><option>Lazer</option><option>Investimento</option><option>Pagamento de Dívida</option><option>Assinaturas</option><option>Outros</option></select></div>
+            <div class="fg"><label class="fl">Valor (R$)</label><input class="fi" id="d-valor" type="number" placeholder="0,00" min="0"></div>
+            <div class="fg"><label class="fl">Data</label><input class="fi" id="d-data" type="date"></div>
+            <div class="fg"><label class="fl">Recorrência</label><select class="fs" id="d-rec"><option>Única</option><option>Mensal</option><option>Anual</option></select></div>
+            <div class="fg"><label class="fl">Limite Alerta (R$)</label><input class="fi" id="d-limit" type="number" placeholder="Opcional"></div>
+          </div>
+          <button class="btn btn-accent" onclick="addDesp()">+ Registrar</button>
+        </div>
+        <div class="panel">
+          <div class="panel-hd">
+            <div class="sec-title">Histórico</div>
+            <div style="font-size:11px;color:var(--text3)">Total: <span id="d-total" style="color:var(--red);font-family:'DM Mono',monospace"></span></div>
+          </div>
+          <div class="tbl-wrap"><table><thead><tr><th>Data</th><th>Descrição</th><th>Categoria</th><th>Recorrência</th><th>Valor</th><th></th></tr></thead><tbody id="tb-desp"></tbody></table></div>
+        </div>
+      </div>
+
+      <!-- ─── PLANEJAMENTO ─── -->
+      <div class="page" id="pg-planejamento">
+        <div class="kpi-row" id="plan-kpis"></div>
+        <div class="grid2">
+          <div class="panel">
+            <div class="panel-hd"><div class="sec-title">Regra 50-30-20 <span class="badge badge-purple">Análise</span></div></div>
+            <div class="chart-box"><canvas id="c-5030"></canvas></div>
+            <div id="plan-5030-detail" style="margin-top:14px;font-size:12px;color:var(--text2);line-height:1.8;"></div>
+          </div>
+          <div class="panel">
+            <div class="sec-title" style="margin-bottom:16px;">Meta de Investimento Mensal</div>
+            <div class="fg" style="margin-bottom:10px;"><label class="fl">Meta mensal (R$)</label><input class="fi" id="meta-val" type="number" placeholder="500" value="500"></div>
+            <div class="progress-wrap" style="height:8px;margin-bottom:6px;"><div class="progress-fill" id="meta-bar" style="background:var(--accent);width:0%"></div></div>
+            <div style="display:flex;justify-content:space-between;font-size:10px;color:var(--text3);margin-bottom:16px;"><span>Investido este mês</span><span id="meta-pct-label">0%</span></div>
+            <div class="divider"></div>
+            <div class="sec-title" style="margin-bottom:14px;margin-top:4px;">Projeção FIRE</div>
+            <div class="form-grid" style="grid-template-columns:1fr 1fr;">
+              <div class="fg"><label class="fl">Aporte/mês (R$)</label><input class="fi" id="fire-aporte" type="number" value="1000"></div>
+              <div class="fg"><label class="fl">Rentab. anual (%)</label><input class="fi" id="fire-rent" type="number" value="12"></div>
+              <div class="fg"><label class="fl">Gasto mensal (R$)</label><input class="fi" id="fire-gasto" type="number" value="5000"></div>
+              <div class="fg"><label class="fl">Patrimônio atual (R$)</label><input class="fi" id="fire-pat" type="number" value="0"></div>
+            </div>
+            <button class="btn btn-accent" style="margin-bottom:12px;" onclick="calcFire()">Calcular FIRE</button>
+            <div id="fire-result"></div>
+          </div>
+        </div>
+        <div class="panel">
+          <div class="panel-hd"><div class="sec-title">Despesas por Categoria — Anual</div></div>
+          <div class="chart-box tall"><canvas id="c-plan-anual"></canvas></div>
+        </div>
+      </div>
+
+      <!-- ─── ATIVOS ─── -->
+      <div class="page" id="pg-ativos">
+        <div class="panel">
+          <div class="sec-title" style="margin-bottom:16px;">Registrar Ativo</div>
+          <div class="form-grid">
+            <div class="fg"><label class="fl">Ticker</label><input class="fi" id="a-tick" placeholder="MXRF11" style="text-transform:uppercase"></div>
+            <div class="fg"><label class="fl">Tipo</label><select class="fs" id="a-tipo"><option>FII Tijolo</option><option>FII Papel</option><option>Fiagros</option><option>Ação</option><option>ETF</option><option>Renda Fixa</option><option>Cripto</option><option>Tesouro</option></select></div>
+            <div class="fg"><label class="fl">Qtd. Cotas</label><input class="fi" id="a-qtd" type="number" placeholder="0"></div>
+            <div class="fg"><label class="fl">Preço Médio (R$)</label><input class="fi" id="a-preco" type="number" placeholder="0,00"></div>
+            <div class="fg"><label class="fl">DY Mensal (%)</label><input class="fi" id="a-dy" type="number" placeholder="0.094" step="0.001"></div>
+            <div class="fg"><label class="fl">Operação</label><select class="fs" id="a-op"><option value="compra">Compra</option><option value="venda">Venda</option></select></div>
+          </div>
+          <button class="btn btn-accent" onclick="addAtivo()">+ Registrar</button>
+        </div>
+        <div class="panel">
+          <div class="panel-hd">
+            <div class="sec-title">Carteira</div>
+            <div style="font-size:11px;color:var(--text3)">Investido: <span id="a-total" style="color:var(--accent3);font-family:'DM Mono',monospace">R$ 0</span> · Renda/mês: <span id="a-renda" style="color:var(--green);font-family:'DM Mono',monospace">R$ 0</span></div>
+          </div>
+          <div class="tbl-wrap"><table><thead><tr><th>Ticker</th><th>Tipo</th><th>Qtd</th><th>PM</th><th>Total</th><th>DY Mês</th><th>Renda Mês</th><th>Op</th><th></th></tr></thead><tbody id="tb-ativos"></tbody></table></div>
+        </div>
+        <div class="grid2">
+          <div class="panel"><div class="panel-hd"><div class="sec-title">Distribuição por Ativo</div></div><div class="chart-box"><canvas id="c-cart"></canvas></div></div>
+          <div class="panel"><div class="panel-hd"><div class="sec-title">Distribuição por Tipo</div></div><div class="chart-box"><canvas id="c-cart-tipo"></canvas></div></div>
+        </div>
+      </div>
+
+      <!-- ─── MERCADO ─── -->
+      <div class="page" id="pg-mercado">
+        <div class="kpi-row" id="mkt-kpis"></div>
+
+        <!-- Tab buttons -->
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px;">
+          <button class="mkt-tab btn btn-sm" id="tab-fiis" onclick="switchMktTab('fiis')" style="background:rgba(245,200,66,0.15);color:var(--yellow);border:1px solid rgba(245,200,66,0.3);">FIIs &amp; Fiagros</button>
+          <button class="mkt-tab btn btn-sm" id="tab-acoes" onclick="switchMktTab('acoes')" style="background:transparent;border:1px solid var(--border2);color:var(--text3);">Ações</button>
+          <button class="mkt-tab btn btn-sm" id="tab-rendafixa" onclick="switchMktTab('rendafixa')" style="background:transparent;border:1px solid var(--border2);color:var(--text3);">Renda Fixa · Selic · LCI · LCA</button>
+          <button class="mkt-tab btn btn-sm" id="tab-crypto" onclick="switchMktTab('crypto')" style="background:transparent;border:1px solid var(--border2);color:var(--text3);">Cripto</button>
+          <button class="btn btn-ghost btn-sm" style="margin-left:auto;" onclick="renderMercado()">↻ Atualizar</button>
+        </div>
+
+        <!-- FIIs -->
+        <div id="mkt-fiis" class="mkt-section">
+          <div class="panel">
+            <div class="panel-hd"><div class="sec-title">Fundos de Investimento Imobiliário <span class="badge badge-yellow">FIIs · Fiagros</span></div></div>
+            <div style="font-size:11px;color:var(--text2);margin-bottom:14px;line-height:1.6;">
+              FIIs pagam dividendos mensais <b style="color:var(--green)">isentos de IR</b> para pessoa física. Avalie o <b>P/VP</b> (abaixo de 1 = desconto) e o <b>DY</b> (Dividend Yield). Segmento com alta liquidez na B3.
+            </div>
+            <div class="tbl-wrap"><table>
+              <thead><tr><th>Ticker</th><th>Segmento</th><th>Cotação</th><th>DY 12M (%)</th><th>DY Mês (%)</th><th>Renda/cota</th><th>Pagamento</th><th>P/VP</th><th>Avaliação</th></tr></thead>
+              <tbody id="tb-fiis"></tbody>
+            </table></div>
+          </div>
+        </div>
+
+        <!-- AÇÕES -->
+        <div id="mkt-acoes" class="mkt-section" style="display:none;">
+          <div class="panel">
+            <div class="panel-hd"><div class="sec-title">Ações &amp; ETFs <span class="badge badge-purple">B3 · BDRs</span></div></div>
+            <div style="font-size:11px;color:var(--text2);margin-bottom:14px;line-height:1.6;">
+              Ações pagam dividendos e JCP (Juros sobre Capital Próprio). Dividendos são <b style="color:var(--green)">isentos de IR</b>; JCP sofre retenção de 15%. Pagamento geralmente semestral ou anual.
+            </div>
+            <div class="tbl-wrap"><table>
+              <thead><tr><th>Ticker</th><th>Setor</th><th>Cotação</th><th>DY 12M (%)</th><th>Pagamento</th><th>P/VP</th><th>P/L</th><th>Avaliação</th></tr></thead>
+              <tbody id="tb-acoes"></tbody>
+            </table></div>
+          </div>
+        </div>
+
+        <!-- RENDA FIXA -->
+        <div id="mkt-rendafixa" class="mkt-section" style="display:none;">
+          <div class="panel">
+            <div class="panel-hd"><div class="sec-title">Renda Fixa · Taxa Selic · CDI · LCI · LCA · CDB</div></div>
+            <div style="font-size:11px;color:var(--text2);margin-bottom:14px;line-height:1.6;">
+              LCI e LCA são <b style="color:var(--green)">isentos de IR</b> para PF. CDB e Tesouro têm tabela regressiva de IR (22,5% até 15% conforme prazo). Todos cobertos pelo <b>FGC até R$ 250 mil</b> por instituição (exceto Tesouro Direto, garantido pelo Governo Federal).
+            </div>
+            <div class="tbl-wrap"><table>
+              <thead><tr><th>Ativo</th><th>Tipo</th><th>Rentab. Bruta</th><th>Rentab. Líquida</th><th>IR</th><th>Liquidez</th><th>Garantia</th><th>Avaliação</th></tr></thead>
+              <tbody id="tb-rendafixa"></tbody>
+            </table></div>
+          </div>
+          <!-- Selic info card -->
+          <div class="panel" style="background:linear-gradient(135deg,rgba(245,200,66,0.06),rgba(24,212,232,0.04));">
+            <div class="sec-title" style="margin-bottom:14px;">Referências Macro</div>
+            <div class="grid4" id="macro-kpis"></div>
+          </div>
+        </div>
+
+        <!-- CRIPTO -->
+        <div id="mkt-crypto" class="mkt-section" style="display:none;">
+          <div class="panel">
+            <div class="panel-hd"><div class="sec-title">Criptomoedas <span class="badge badge-red">Alta Volatilidade</span></div></div>
+            <div style="font-size:11px;color:var(--text2);margin-bottom:14px;line-height:1.6;background:rgba(240,72,90,0.06);border:1px solid rgba(240,72,90,0.2);border-radius:var(--radius2);padding:10px 12px;">
+              <b style="color:var(--red)">Atenção:</b> Criptoativos têm alta volatilidade e risco elevado. Recomenda-se no máximo 5–10% da carteira. Ganhos acima de R$ 35.000/mês são tributados em 15%. Nunca invista mais do que pode perder.
+            </div>
+            <div class="tbl-wrap"><table>
+              <thead><tr><th>Ativo</th><th>Símbolo</th><th>Preço (USD)</th><th>Market Cap</th><th>Variação 24h</th><th>Variação 7d</th><th>Categoria</th><th>Risco</th></tr></thead>
+              <tbody id="tb-crypto"></tbody>
+            </table></div>
+          </div>
+          <div class="panel">
+            <div class="sec-title" style="margin-bottom:14px;">Stablecoins — Proteção em Dólar</div>
+            <div class="tbl-wrap"><table>
+              <thead><tr><th>Ativo</th><th>Lastro</th><th>Preço (USD)</th><th>Rentab. DeFi</th><th>Risco</th><th>Uso</th></tr></thead>
+              <tbody id="tb-stable"></tbody>
+            </table></div>
+          </div>
+        </div>
+
+        <!-- Comparativo sempre visível -->
+        <div class="panel" id="mkt-comp-panel">
+          <div class="panel-hd"><div class="sec-title">Comparativo de Rendimentos Brutos <span class="badge badge-cyan">R$ 10.000 · 5 anos</span></div></div>
+          <div class="chart-box tall"><canvas id="c-mkt-comp"></canvas></div>
+        </div>
+      </div>
+
+      <!-- ─── DÍVIDAS ─── -->
+      <div class="page" id="pg-dividas">
+
+        <!-- KPIs topo -->
+        <div class="kpi-row" id="div-kpis"></div>
+
+        <div class="grid2">
+          <!-- Formulário cadastro -->
+          <div class="panel">
+            <div class="sec-title" style="margin-bottom:4px;">Cadastrar Nova Dívida</div>
+            <div style="font-size:11px;color:var(--text3);margin-bottom:16px;">Informe os dados de cada dívida para montar seu plano de quitação.</div>
+            <div class="form-grid" style="grid-template-columns:1fr 1fr;">
+              <div class="fg" style="grid-column:span 2"><label class="fl">Nome da Dívida</label><input class="fi" id="dv-nome" placeholder="Ex: Cartão Nubank"></div>
+              <div class="fg"><label class="fl">Saldo Devedor (R$)</label><input class="fi" id="dv-saldo" type="number" placeholder="5000"></div>
+              <div class="fg"><label class="fl">Taxa de Juros Mensal (%)</label><input class="fi" id="dv-taxa" type="number" placeholder="12.5" step="0.1"></div>
+              <div class="fg"><label class="fl">Parcela que paga hoje (R$)</label><input class="fi" id="dv-parcela" type="number" placeholder="200"></div>
+              <div class="fg"><label class="fl">Tipo</label><select class="fs" id="dv-tipo"><option>Cartão de Crédito</option><option>Empréstimo Pessoal</option><option>Financiamento</option><option>Cheque Especial</option><option>Outro</option></select></div>
+            </div>
+            <button class="btn btn-accent" style="width:100%;" onclick="addDivida()">+ Cadastrar Dívida</button>
+
+            <div style="margin-top:18px;padding-top:16px;border-top:1px solid var(--border);">
+              <div class="sec-title" style="margin-bottom:10px;">Estratégia de Pagamento</div>
+              <div style="display:flex;gap:8px;margin-bottom:12px;">
+                <button class="btn btn-sm" id="btn-aval" onclick="setEstrategia('avalanche')" style="flex:1;background:rgba(124,106,247,0.2);color:var(--accent3);border:1px solid var(--accent)">Avalanche</button>
+                <button class="btn btn-ghost btn-sm" id="btn-snow" onclick="setEstrategia('snowball')" style="flex:1;">Snowball</button>
+              </div>
+              <div id="estrategia-info"></div>
+            </div>
+          </div>
+
+          <!-- Gráfico evolução -->
+          <div class="panel">
+            <div class="panel-hd"><div class="sec-title">Projeção — Dívida Total ao Longo do Tempo</div></div>
+            <div style="font-size:11px;color:var(--text3);margin-bottom:12px;">Veja quando você estará livre de todas as dívidas seguindo o plano acelerado.</div>
+            <div class="chart-box tall"><canvas id="c-dividas"></canvas></div>
+            <div id="div-livre" style="margin-top:12px;text-align:center;"></div>
+          </div>
+        </div>
+
+        <!-- Lista de dívidas -->
+        <div class="panel" id="panel-debt-list">
+          <div class="panel-hd">
+            <div class="sec-title">Suas Dívidas <span class="badge badge-red" id="div-count-badge"></span></div>
+            <div style="font-size:11px;color:var(--text3);">Ordenadas por <span id="div-ordem-label" style="color:var(--accent3);">maior juros (Avalanche)</span></div>
+          </div>
+          <div id="debt-cards"></div>
+        </div>
+
+        <!-- Plano de quitação detalhado -->
+        <div class="panel">
+          <div class="panel-hd">
+            <div class="sec-title">Plano de Quitação Acelerada <span class="badge badge-red">Passo a Passo</span></div>
+          </div>
+          <div style="font-size:11px;color:var(--text2);margin-bottom:16px;line-height:1.6;background:var(--bg3);border-radius:var(--radius2);padding:12px 14px;">
+            O plano abaixo calcula quanto dinheiro extra você pode direcionar para as dívidas com base nos seus <b>recebimentos menos despesas</b>. Depois de quitar cada dívida, o valor que pagava nela é adicionado à próxima — isso é chamado de <b style="color:var(--accent3);">efeito bola de neve</b>.
+          </div>
+          <div id="plano-quitacao"></div>
+        </div>
+
+      </div>
+
+      <!-- ─── DIÁRIO ─── -->
+      <div class="page" id="pg-diario">
+        <div class="grid2">
+          <div class="panel">
+            <div class="sec-title" style="margin-bottom:16px;">Nova Entrada</div>
+            <div class="fg" style="margin-bottom:10px;"><label class="fl">Data</label><input class="fi" id="di-data" type="date"></div>
+            <div class="fg" style="margin-bottom:10px;"><label class="fl">Como foi hoje financeiramente?</label><textarea class="fta" id="di-texto" placeholder="Escreva aqui suas reflexões, decisões financeiras do dia, o que aprendeu..."></textarea></div>
+            <div class="fg" style="margin-bottom:10px;"><label class="fl">Humor Financeiro</label><select class="fs" id="di-humor"><option value="good">Produtivo — tomei boas decisões</option><option value="save">Economizei — gastei menos do planejado</option><option value="ok">Neutro — dia comum</option><option value="bad">Gastei demais — preciso melhorar</option></select></div>
+            <div class="fg" style="margin-bottom:14px;"><label class="fl">Valor envolvido (R$) — opcional</label><input class="fi" id="di-valor" type="number" placeholder="0,00"></div>
+            <button class="btn btn-accent" onclick="addDiario()">Salvar Entrada</button>
+          </div>
+          <div class="panel">
+            <div class="sec-title" style="margin-bottom:14px;">Calendário do Mês</div>
+            <div class="diary-cal" id="diary-cal"></div>
+            <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:8px;">
+              <div style="display:flex;align-items:center;gap:5px;font-size:10px;color:var(--text3)"><div style="width:10px;height:10px;border-radius:2px;background:rgba(30,217,122,0.3)"></div>Produtivo</div>
+              <div style="display:flex;align-items:center;gap:5px;font-size:10px;color:var(--text3)"><div style="width:10px;height:10px;border-radius:2px;background:rgba(24,212,232,0.3)"></div>Economizei</div>
+              <div style="display:flex;align-items:center;gap:5px;font-size:10px;color:var(--text3)"><div style="width:10px;height:10px;border-radius:2px;background:rgba(245,200,66,0.3)"></div>Neutro</div>
+              <div style="display:flex;align-items:center;gap:5px;font-size:10px;color:var(--text3)"><div style="width:10px;height:10px;border-radius:2px;background:rgba(240,72,90,0.3)"></div>Gastei demais</div>
+            </div>
+          </div>
+        </div>
+        <div class="panel">
+          <div class="sec-title" style="margin-bottom:16px;">Entradas Recentes</div>
+          <div id="diary-list"></div>
+        </div>
+      </div>
+
+      <!-- ─── SIMULADORES ─── -->
+      <div class="page" id="pg-simuladores">
+        <div class="grid2">
+          <div class="panel">
+            <div class="sec-title" style="margin-bottom:16px;">Juros Compostos <span class="badge badge-purple">Com Aportes</span></div>
+            <div class="form-grid" style="grid-template-columns:1fr 1fr;">
+              <div class="fg"><label class="fl">Capital inicial (R$)</label><input class="fi" id="jc-ci" type="number" value="1000"></div>
+              <div class="fg"><label class="fl">Aporte mensal (R$)</label><input class="fi" id="jc-ap" type="number" value="500"></div>
+              <div class="fg"><label class="fl">Taxa (%)</label><input class="fi" id="jc-taxa" type="number" value="1.0" step="0.01"></div>
+              <div class="fg"><label class="fl">Taxa é</label><select class="fs" id="jc-tfq"><option value="m">Mensal</option><option value="a">Anual</option></select></div>
+              <div class="fg"><label class="fl">Período</label><input class="fi" id="jc-n" type="number" value="120"></div>
+              <div class="fg"><label class="fl">Período em</label><select class="fs" id="jc-per"><option value="m">Meses</option><option value="a">Anos</option></select></div>
+            </div>
+            <button class="btn btn-accent" style="margin-bottom:14px;" onclick="calcJC()">Calcular</button>
+            <div id="jc-result"></div>
+          </div>
+          <div class="panel"><div class="panel-hd"><div class="sec-title">Evolução do Montante</div></div><div class="chart-box tall"><canvas id="c-jc"></canvas></div></div>
+        </div>
+        <div class="panel">
+          <div class="panel-hd"><div class="sec-title">Comparativo CDB × FII × Selic × Poupança</div></div>
+          <div class="form-grid" style="grid-template-columns:repeat(auto-fit,minmax(150px,1fr))">
+            <div class="fg"><label class="fl">Capital (R$)</label><input class="fi" id="cmp-cap" type="number" value="10000"></div>
+            <div class="fg"><label class="fl">Período (anos)</label><input class="fi" id="cmp-anos" type="number" value="5"></div>
+          </div>
+          <button class="btn btn-ghost btn-sm" style="margin-bottom:14px;" onclick="calcComparativo()">Comparar</button>
+          <div class="chart-box tall"><canvas id="c-cmp"></canvas></div>
+        </div>
+        <div class="panel">
+          <div class="sec-title" style="margin-bottom:14px;">Juros Simples</div>
+          <div class="form-grid">
+            <div class="fg"><label class="fl">Capital (R$)</label><input class="fi" id="js-c" type="number" placeholder="1000"></div>
+            <div class="fg"><label class="fl">Taxa (%/período)</label><input class="fi" id="js-t" type="number" placeholder="2.5"></div>
+            <div class="fg"><label class="fl">Períodos</label><input class="fi" id="js-n" type="number" placeholder="12"></div>
+          </div>
+          <button class="btn btn-ghost btn-sm" style="margin-bottom:10px;" onclick="calcJS()">Calcular</button>
+          <div id="js-result" style="font-family:'DM Mono',monospace;color:var(--cyan);font-size:16px;"></div>
+        </div>
+      </div>
+
+      <!-- ─── CALCULADORAS ─── -->
+      <div class="page" id="pg-calculadoras">
+        <div style="max-width:340px;margin:0 auto;">
+          <div class="panel">
+            <div class="sec-title" style="margin-bottom:14px;">Calculadora</div>
+            <div class="calc-disp"><div class="calc-expr" id="ce"></div><div id="cd">0</div></div>
+            <div class="calc-grid">
+              <button class="cb cb-clr" onclick="ck('C')">C</button>
+              <button class="cb cb-op" onclick="ck('±')">±</button>
+              <button class="cb cb-op" onclick="ck('%')">%</button>
+              <button class="cb cb-op" onclick="ck('/')">÷</button>
+              <button class="cb cb-num" onclick="ck('7')">7</button>
+              <button class="cb cb-num" onclick="ck('8')">8</button>
+              <button class="cb cb-num" onclick="ck('9')">9</button>
+              <button class="cb cb-op" onclick="ck('*')">×</button>
+              <button class="cb cb-num" onclick="ck('4')">4</button>
+              <button class="cb cb-num" onclick="ck('5')">5</button>
+              <button class="cb cb-num" onclick="ck('6')">6</button>
+              <button class="cb cb-op" onclick="ck('-')">−</button>
+              <button class="cb cb-num" onclick="ck('1')">1</button>
+              <button class="cb cb-num" onclick="ck('2')">2</button>
+              <button class="cb cb-num" onclick="ck('3')">3</button>
+              <button class="cb cb-op" onclick="ck('+')">+</button>
+              <button class="cb cb-num" style="grid-column:span 2" onclick="ck('0')">0</button>
+              <button class="cb cb-num" onclick="ck('.')">.</button>
+              <button class="cb cb-eq" onclick="ck('=')">=</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ─── EDUCAÇÃO ─── -->
+      <div class="page" id="pg-educacao">
+        <div class="panel" style="background:linear-gradient(135deg,rgba(124,106,247,0.08),rgba(30,217,122,0.04));border-color:var(--border2);margin-bottom:18px;">
+          <div style="font-family:'Syne',sans-serif;font-size:20px;font-weight:800;margin-bottom:6px;">Educação Financeira</div>
+          <div style="font-size:13px;color:var(--text2);line-height:1.6;">Clique em qualquer card para expandir e aprender. O conhecimento é o investimento com maior retorno.</div>
+        </div>
+        <div class="edu-grid" id="edu-grid"></div>
+      </div>
+
+      <!-- ─── RADAR ─── -->
+      <div class="page" id="pg-radar">
+        <div class="panel" style="margin-bottom:16px;">
+          <div style="font-family:'Syne',sans-serif;font-size:16px;font-weight:700;margin-bottom:4px;">Radar de Notícias</div>
+          <div style="font-size:12px;color:var(--text3);">Economia · Investimentos · Tecnologia · Geopolítica</div>
+        </div>
+        <div class="news-grid" id="news-grid"></div>
+      </div>
+
+
+      <!-- ─── REINICIAR DADOS ─── -->
+      <div class="page" id="pg-resetar">
+        <div style="max-width:560px;margin:40px auto;">
+          <div class="panel" style="text-align:center;border-color:rgba(240,72,90,0.3);">
+            <div style="font-size:48px;margin-bottom:16px;opacity:0.6;">↺</div>
+            <div style="font-family:'Syne',sans-serif;font-size:22px;font-weight:800;margin-bottom:8px;">Reiniciar Dados</div>
+            <div style="font-size:13px;color:var(--text2);line-height:1.7;margin-bottom:28px;">
+              Use esta opção para apagar todos os dados e começar do zero.<br>
+              <b style="color:var(--red)">Esta ação é irreversível.</b> Todos os recebimentos, despesas, ativos, dívidas e entradas do diário serão permanentemente apagados.
+            </div>
+
+            <!-- O que será apagado -->
+            <div style="background:var(--bg3);border-radius:var(--radius2);padding:16px 20px;margin-bottom:24px;text-align:left;">
+              <div style="font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:1px;font-weight:700;margin-bottom:12px;">O que será apagado</div>
+              <div id="reset-preview" style="display:grid;grid-template-columns:1fr 1fr;gap:10px;"></div>
+            </div>
+
+            <!-- Opções seletivas -->
+            <div style="background:var(--bg3);border-radius:var(--radius2);padding:16px 20px;margin-bottom:24px;text-align:left;">
+              <div style="font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:1px;font-weight:700;margin-bottom:12px;">Selecione o que deseja apagar</div>
+              <div style="display:flex;flex-direction:column;gap:8px;">
+                <label style="display:flex;align-items:center;gap:10px;cursor:pointer;font-size:13px;">
+                  <input type="checkbox" id="rst-recs" checked style="width:16px;height:16px;accent-color:var(--accent);"> Recebimentos
+                </label>
+                <label style="display:flex;align-items:center;gap:10px;cursor:pointer;font-size:13px;">
+                  <input type="checkbox" id="rst-desps" checked style="width:16px;height:16px;accent-color:var(--accent);"> Despesas
+                </label>
+                <label style="display:flex;align-items:center;gap:10px;cursor:pointer;font-size:13px;">
+                  <input type="checkbox" id="rst-ativos" checked style="width:16px;height:16px;accent-color:var(--accent);"> Ativos (carteira)
+                </label>
+                <label style="display:flex;align-items:center;gap:10px;cursor:pointer;font-size:13px;">
+                  <input type="checkbox" id="rst-dividas" checked style="width:16px;height:16px;accent-color:var(--accent);"> Dívidas
+                </label>
+                <label style="display:flex;align-items:center;gap:10px;cursor:pointer;font-size:13px;">
+                  <input type="checkbox" id="rst-diario" checked style="width:16px;height:16px;accent-color:var(--accent);"> Diário financeiro
+                </label>
+              </div>
+            </div>
+
+            <!-- Campo de confirmação -->
+            <div style="margin-bottom:20px;">
+              <div style="font-size:11px;color:var(--text3);margin-bottom:8px;">Para confirmar, digite <b style="color:var(--red);font-family:'DM Mono',monospace;">REINICIAR</b> abaixo:</div>
+              <input class="fi" id="rst-confirm" placeholder="Digite REINICIAR" style="text-align:center;font-family:'DM Mono',monospace;font-size:14px;letter-spacing:2px;border-color:rgba(240,72,90,0.3);">
+            </div>
+
+            <div style="display:flex;gap:10px;">
+              <button class="btn btn-ghost" style="flex:1;" onclick="goPage('dashboard',document.querySelector('.sb-item'))">Cancelar</button>
+              <button class="btn" onclick="executarReset()" style="flex:1;background:var(--red2);color:var(--red);border:1px solid var(--red3);padding:12px;">Apagar Dados Selecionados</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /content -->
+  </main>
+</div>
+
+<!-- ══════════ CELEBRATION ══════════ -->
+<div id="celebration">
+  <div class="celeb-box">
+    <canvas id="celeb-canvas" style="position:absolute;inset:0;pointer-events:none;border-radius:24px;"></canvas>
+    <div style="position:relative;z-index:2;">
+      <div class="celeb-badge">Dívida Quitada</div>
+      <div class="celeb-title">Mais uma corrente<br>foi <span class="celeb-debt-name" id="celeb-debt-name">quebrada.</span></div>
+      <div class="celeb-phrase">"A liberdade financeira não é um destino — é um caminho que você escolheu percorrer."</div>
+      <div class="celeb-stats" id="celeb-stats"></div>
+      <div class="celeb-bonus" id="celeb-bonus"></div>
+      <div style="display:flex;gap:10px;">
+        <button class="btn btn-ghost" style="flex:1;" onclick="closeCelebration()">Continuar</button>
+        <button class="btn btn-accent" style="flex:1;" onclick="shareScore()">Compartilhar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════ MODAL PAGAMENTO PARCIAL ══════════ -->
+<div id="modal-pagamento" style="display:none;position:fixed;inset:0;z-index:9995;background:rgba(0,0,0,0.85);backdrop-filter:blur(8px);align-items:center;justify-content:center;">
+  <div style="background:var(--card);border:1px solid var(--border2);border-radius:24px;padding:36px 32px;max-width:440px;width:95vw;box-shadow:var(--shadow);">
+    <div style="font-family:'Syne',sans-serif;font-size:20px;font-weight:800;margin-bottom:4px;">Registrar Pagamento</div>
+    <div id="mp-divida-nome" style="font-size:12px;color:var(--accent3);font-family:'DM Mono',monospace;margin-bottom:20px;"></div>
+
+    <!-- Info da dívida atual -->
+    <div id="mp-info" style="background:var(--bg3);border-radius:var(--radius2);padding:14px;margin-bottom:20px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;"></div>
+
+    <!-- Formulário -->
+    <div style="display:flex;flex-direction:column;gap:12px;margin-bottom:20px;">
+      <div class="fg">
+        <label class="fl">Valor pago (R$)</label>
+        <input class="fi" id="mp-valor" type="number" placeholder="Ex: 800" oninput="previewPagamento()">
+      </div>
+      <div class="fg">
+        <label class="fl">Data do pagamento</label>
+        <input class="fi" id="mp-data" type="date">
+      </div>
+      <div class="fg">
+        <label class="fl">Observação (opcional)</label>
+        <input class="fi" id="mp-obs" placeholder="Ex: Parcela de março">
+      </div>
+    </div>
+
+    <!-- Preview do recálculo em tempo real -->
+    <div id="mp-preview" style="display:none;background:var(--bg3);border:1px solid var(--border2);border-radius:var(--radius2);padding:14px;margin-bottom:20px;">
+      <div style="font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:1px;margin-bottom:10px;font-weight:700;">Recálculo em tempo real</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+        <div>
+          <div style="font-size:9px;color:var(--text3);margin-bottom:2px;">Deste valor, foram juros</div>
+          <div id="mp-juros-val" style="font-family:'DM Mono',monospace;font-size:14px;color:var(--red);font-weight:500;"></div>
+        </div>
+        <div>
+          <div style="font-size:9px;color:var(--text3);margin-bottom:2px;">Abateu do saldo</div>
+          <div id="mp-abate-val" style="font-family:'DM Mono',monospace;font-size:14px;color:var(--green);font-weight:500;"></div>
+        </div>
+        <div>
+          <div style="font-size:9px;color:var(--text3);margin-bottom:2px;">Novo saldo devedor</div>
+          <div id="mp-novo-saldo" style="font-family:'Syne',sans-serif;font-size:16px;font-weight:800;color:var(--accent3);"></div>
+        </div>
+        <div>
+          <div style="font-size:9px;color:var(--text3);margin-bottom:2px;">Novo prazo estimado</div>
+          <div id="mp-novo-prazo" style="font-family:'Syne',sans-serif;font-size:16px;font-weight:800;color:var(--cyan);"></div>
+        </div>
+      </div>
+      <div id="mp-economia" style="margin-top:10px;font-size:11px;text-align:center;"></div>
+    </div>
+
+    <div style="display:flex;gap:10px;">
+      <button class="btn btn-ghost" style="flex:1;" onclick="fecharModalPagamento()">Cancelar</button>
+      <button class="btn btn-accent" style="flex:1;" onclick="confirmarPagamento()">Confirmar Pagamento</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ PAYWALL ══════════ -->
+<div id="paywall">
+  <div class="pw-box">
+    <div class="pw-logo">LLI<span>W</span></div>
+    <div style="font-size:11px;color:var(--text3);letter-spacing:2px;text-transform:uppercase;margin-bottom:20px;font-family:'DM Mono',monospace;">Plataforma Premium</div>
+    <div class="pw-headline">Seu trial de 24h expirou.</div>
+    <div class="pw-sub">Continue sua jornada para a liberdade financeira. Acesso completo a todos os recursos, dashboards e simuladores.</div>
+    <div class="pw-price">R$ 19,90</div>
+    <div class="pw-price-sub">por mês · cancele quando quiser</div>
+    <div class="pw-pix" onclick="copyPixKey()">
+      <div class="pw-pix-label">Pague via Pix · Clique para copiar a chave</div>
+      <div class="pw-pix-key" id="pw-pix-key">lliw.financeiro@pix.com</div>
+    </div>
+    <div style="font-size:11px;color:var(--text3);margin-bottom:16px;">Após o pagamento, você receberá a chave de ativação por WhatsApp ou e-mail.</div>
+    <div class="pw-divider">Já tenho uma chave</div>
+    <input class="pw-key-input" id="pw-key-input" placeholder="LLIW-XXXX-XXXX" maxlength="14">
+    <div class="pw-err" id="pw-err">Chave inválida ou já utilizada.</div>
+    <button class="btn btn-accent" style="width:100%;padding:14px;font-size:14px;" onclick="activateKey()">Ativar Chave</button>
+    <div style="margin-top:14px;text-align:center;">
+      <button onclick="resetTrialForTest()" style="background:none;border:none;color:var(--text4);font-size:10px;cursor:pointer;font-family:'DM Mono',monospace;">Reiniciar período de teste</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ TOAST ══════════ -->
+<div id="toast"></div>
+
+<script>
+// ═══════════════════ DATA ═══════════════════
+const S={
+  recs: JSON.parse(localStorage.getItem('lliw_recs')||'[]'),
+  desps: JSON.parse(localStorage.getItem('lliw_desps')||'[]'),
+  ativos: JSON.parse(localStorage.getItem('lliw_ativos')||'[]'),
+  dividas: JSON.parse(localStorage.getItem('lliw_dividas')||'[]'),
+  diario: JSON.parse(localStorage.getItem('lliw_diario')||'[]'),
+  ob: JSON.parse(localStorage.getItem('lliw_ob')||'null'),
+  user: null,
+  trialStart: localStorage.getItem('lliw_trial')||null,
+  premium: localStorage.getItem('lliw_premium')||null,
+  estrategia: 'avalanche',
+  meta: parseFloat(localStorage.getItem('lliw_meta')||'500'),
+};
+const VALID_KEYS = ['LLIW-2024-X7K9','LLIW-LIFE-AB3Z','LLIW-TEST-1234','LLIW-DEMO-9999'];
+const USERS = {}; // Credenciais gerenciadas pelo Firebase futuramente
+const fBRL = v => new Intl.NumberFormat('pt-BR',{style:'currency',currency:'BRL'}).format(v||0);
+const fPct = v => (v||0).toFixed(1)+'%';
+const MONTHS = ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
+let charts = {};
+function save(){
+  localStorage.setItem('lliw_recs',JSON.stringify(S.recs));
+  localStorage.setItem('lliw_desps',JSON.stringify(S.desps));
+  localStorage.setItem('lliw_ativos',JSON.stringify(S.ativos));
+  localStorage.setItem('lliw_dividas',JSON.stringify(S.dividas));
+  localStorage.setItem('lliw_diario',JSON.stringify(S.diario));
+  localStorage.setItem('lliw_meta',S.meta);
+  // Salvar na nuvem Firebase
+  if(S.user&&S.user.uid&&window.fbSave){
+    window.fbSave(S.user.uid,{
+      recs:S.recs,
+      desps:S.desps,
+      ativos:S.ativos,
+      dividas:S.dividas,
+      diario:S.diario,
+      trialStart:S.trialStart||'',
+      premium:S.premium||'',
+      updatedAt:new Date().toISOString()
+    });
+  }
+}
+function killChart(id){if(charts[id]){charts[id].destroy();delete charts[id];}}
+function mkChart(id,cfg){killChart(id);const c=document.getElementById(id);if(!c)return;charts[id]=new Chart(c,cfg);return charts[id];}
+Chart.defaults.color='#4a4a6a';Chart.defaults.borderColor='#1a1a2e';Chart.defaults.font.family="'DM Mono',monospace";Chart.defaults.font.size=10;
+
+// ═══════════════════ QUOTES ═══════════════════
+const QUOTES = [
+  {t:"O preço é o que você paga. O valor é o que você recebe.",a:"Warren Buffett"},
+  {t:"Não poupamos para poupar, poupamos para investir.",a:"Benjamin Graham"},
+  {t:"Os ricos investem seu dinheiro e gastam o que sobra. Os pobres gastam seu dinheiro e investem o que sobra.",a:"Robert Kiyosaki"},
+  {t:"O investimento em conhecimento paga o melhor juro.",a:"Benjamin Franklin"},
+  {t:"A regra número um é nunca perder dinheiro. A regra número dois é nunca esquecer a regra número um.",a:"Warren Buffett"},
+  {t:"Uma pessoa que não controla seu dinheiro é controlada pela falta dele.",a:"Gustavo Cerbasi"},
+  {t:"Compre quando há sangue nas ruas, mesmo que o sangue seja seu.",a:"Baron Rothschild"},
+  {t:"Diversificação é a única refeição grátis em finanças.",a:"Harry Markowitz"},
+  {t:"O maior risco é não correr nenhum risco.",a:"Peter Lynch"},
+  {t:"Poupar é ganhar. Cada real poupado é um passo em direção à liberdade.",a:"Luiz Barsi"},
+  {t:"Pense antes de gastar. Se você não sabe para onde vai, qualquer estrada serve.",a:"Ray Dalio"},
+  {t:"A inflação é o imposto que todos pagam sem perceber.",a:"Milton Friedman"},
+  {t:"O mercado de curto prazo é uma máquina de votar; de longo prazo, uma máquina de pesar.",a:"Benjamin Graham"},
+  {t:"Não é quanto você ganha que importa. É quanto você guarda.",a:"Robert Kiyosaki"},
+];
+function setQuote(){
+  const q=QUOTES[Math.floor(Math.random()*QUOTES.length)];
+  document.getElementById('lq-text').textContent='"'+q.t+'"';
+  document.getElementById('lq-author').textContent='— '+q.a;
+}
+
+// ═══════════════════ AUTH ═══════════════════
+function showLogin(){document.getElementById('login-form').style.display='';document.getElementById('register-form').style.display='none';document.getElementById('forgot-form').style.display='none';}
+function showRegister(){document.getElementById('login-form').style.display='none';document.getElementById('register-form').style.display='';document.getElementById('forgot-form').style.display='none';}
+function showForgot(){document.getElementById('login-form').style.display='none';document.getElementById('register-form').style.display='none';document.getElementById('forgot-form').style.display='';}
+function doLogin(){
+  const em=document.getElementById('li-email').value.trim().toLowerCase();
+  const pw=document.getElementById('li-pass').value;
+  const err=document.getElementById('li-err');
+  if(!em||!pw){err.textContent='Preencha e-mail e senha.';err.style.display='block';return;}
+  // Verificar se Firebase carregou
+  if(typeof window.fbLogin !== 'function'){
+    // Fallback local se Firebase não disponível
+    const stored=JSON.parse(localStorage.getItem('lliw_users')||'{}');
+    if(stored[em]===pw){
+      err.style.display='none';
+      S.user={email:em,name:em.split('@')[0],uid:em};
+      if(!S.trialStart){S.trialStart=Date.now().toString();localStorage.setItem('lliw_trial',S.trialStart);}
+      const firstTime=!localStorage.getItem('lliw_ob_done_'+em);
+      if(firstTime){showOnboarding();}else{launchApp();}
+    } else {
+      err.textContent='E-mail ou senha incorretos.';err.style.color='var(--red)';err.style.display='block';
+    }
+    return;
+  }
+  err.textContent='Entrando...';err.style.display='block';err.style.color='var(--text3)';
+  window.fbLogin(em,pw).then(async cred=>{
+    err.style.display='none';
+    const uid=cred.user.uid;
+    S.user={email:em,name:em.split('@')[0],uid};
+    if(!S.trialStart){S.trialStart=Date.now().toString();localStorage.setItem('lliw_trial',S.trialStart);}
+    // Carregar dados da nuvem
+    const cloudData=await window.fbLoad(uid);
+    if(cloudData){
+      if(cloudData.recs) S.recs=cloudData.recs;
+      if(cloudData.desps) S.desps=cloudData.desps;
+      if(cloudData.ativos) S.ativos=cloudData.ativos;
+      if(cloudData.dividas) S.dividas=cloudData.dividas;
+      if(cloudData.diario) S.diario=cloudData.diario;
+      if(cloudData.trialStart) S.trialStart=cloudData.trialStart;
+      if(cloudData.premium) S.premium=cloudData.premium;
+    }
+    const firstTime=!localStorage.getItem('lliw_ob_done_'+em);
+    if(firstTime){showOnboarding();}else{launchApp();}
+  }).catch(e=>{
+    err.textContent='E-mail ou senha incorretos.';
+    err.style.color='var(--red)';err.style.display='block';
+  });
+}
+function doRegister(){
+  const nm=document.getElementById('reg-name').value.trim();
+  const em=document.getElementById('reg-email').value.trim().toLowerCase();
+  const pw=document.getElementById('reg-pass').value;
+  const err=document.getElementById('reg-err');
+  if(!nm||!em||pw.length<6){err.textContent='Preencha todos os campos (senha mín. 6 caracteres).';err.style.display='block';return;}
+  if(typeof window.fbRegister !== 'function'){
+    // Fallback local
+    const stored=JSON.parse(localStorage.getItem('lliw_users')||'{}');
+    if(stored[em]){err.textContent='E-mail já cadastrado.';err.style.display='block';return;}
+    stored[em]=pw;localStorage.setItem('lliw_users',JSON.stringify(stored));
+    S.user={email:em,name:nm,uid:em};
+    S.trialStart=Date.now().toString();localStorage.setItem('lliw_trial',S.trialStart);
+    showOnboarding();return;
+  }
+  err.textContent='Criando conta...';err.style.display='block';err.style.color='var(--text3)';
+  window.fbRegister(em,pw).then(cred=>{
+    err.style.display='none';
+    const uid=cred.user.uid;
+    S.user={email:em,name:nm,uid};
+    S.trialStart=Date.now().toString();
+    localStorage.setItem('lliw_trial',S.trialStart);
+    showOnboarding();
+  }).catch(e=>{
+    let msg='Erro ao criar conta.';
+    if(e.code==='auth/email-already-in-use') msg='E-mail já cadastrado.';
+    if(e.code==='auth/invalid-email') msg='E-mail inválido.';
+    if(e.code==='auth/weak-password') msg='Senha muito fraca (mín. 6 caracteres).';
+    err.textContent=msg;err.style.color='var(--red)';err.style.display='block';
+  });
+}
+function doForgot(){
+  const em=document.getElementById('fgt-email').value.trim().toLowerCase();
+  const err=document.getElementById('fgt-err');
+  if(!em){err.textContent='Informe seu e-mail.';err.style.display='block';return;}
+  window.fbForgot(em).then(()=>{
+    document.getElementById('fgt-ok').style.display='block';
+    err.style.display='none';
+    toast('Link de recuperação enviado!','t-ok');
+  }).catch(e=>{
+    err.textContent='E-mail não encontrado no sistema.';
+    err.style.display='block';
+  });
+}
+function doLogout(){
+  window.fbSignOut().then(()=>{
+    S.user=null;
+    S.recs=[];S.desps=[];S.ativos=[];S.dividas=[];S.diario=[];
+    document.getElementById('app').style.display='none';
+    document.getElementById('login-screen').style.display='flex';
+    setQuote();
+  });
+}
+
+// ═══════════════════ ONBOARDING ═══════════════════
+const OB_Q = [
+  {q:"Você possui dívidas ativas?",opts:["Sim, várias","Sim, algumas","Não tenho dívidas","Não sei ao certo"],k:"dividas"},
+  {q:"Sobra dinheiro no fim do mês?",opts:["Sempre sobra","Às vezes sobra","Quase nunca sobra","Nunca sobra"],k:"sobra"},
+  {q:"Você investe regularmente?",opts:["Sim, todo mês","Às vezes invisto","Nunca investi","Quero começar agora"],k:"investe"},
+  {q:"Você sabe para onde vai seu dinheiro?",opts:["Sim, controlo tudo","Parcialmente","Não tenho controle","Sei mas não registro"],k:"controle"},
+  {q:"Qual seu maior objetivo financeiro?",opts:["Quitar minhas dívidas","Começar a investir","Ter uma reserva de emergência","Conquistar liberdade financeira"],k:"objetivo"},
+];
+let obStep=0, obAnswers={};
+function showOnboarding(){
+  document.getElementById('login-screen').style.display='none';
+  document.getElementById('onboarding-screen').classList.add('active');
+  obStep=0;obAnswers={};renderOB();
+}
+function renderOB(){
+  var stepDots = '';
+  for(var si=0; si<OB_Q.length; si++){
+    var cls = si<obStep ? 'done' : si===obStep ? 'active' : '';
+    stepDots += '<div class="ob-step-dot '+cls+'"></div>';
+  }
+  document.getElementById('ob-steps').innerHTML = stepDots;
+
+  var q = OB_Q[obStep];
+  var optsHtml = '';
+  for(var oi=0; oi<q.opts.length; oi++){
+    optsHtml += '<button class="ob-option" onclick="selectOB('+oi+')">'
+      + q.opts[oi] + '</button>';
+  }
+
+  document.getElementById('ob-content').innerHTML =
+    '<div class="ob-title">' + q.q + '</div>'
+    + '<div class="ob-sub" style="font-size:13px;color:var(--text2);margin-bottom:24px;line-height:1.6;">Responda com honestidade — usamos isso para personalizar sua experiência.</div>'
+    + '<div class="ob-options">' + optsHtml + '</div>'
+    + '<div class="ob-nav">'
+    +   '<div class="ob-progress">' + (obStep+1) + ' de ' + OB_Q.length + '</div>'
+    +   '<button onclick="finishOB()" style="background:none;border:none;color:var(--text3);font-size:11px;cursor:pointer;">Pular →</button>'
+    + '</div>';
+}
+
+function selectOB(i){
+  var val=OB_Q[obStep].opts[i];
+  obAnswers[OB_Q[obStep].k]=val;
+  document.querySelectorAll('.ob-option').forEach((b,j)=>{b.classList.toggle('selected',j===i);});
+  setTimeout(()=>{
+    obStep++;
+    if(obStep>=OB_Q.length){finishOB();}else{renderOB();}
+  },350);
+}
+function finishOB(){
+  S.ob=obAnswers;localStorage.setItem('lliw_ob',JSON.stringify(obAnswers));
+  localStorage.setItem('lliw_ob_done_'+S.user.email,'1');
+  document.getElementById('onboarding-screen').classList.remove('active');
+  launchApp();
+}
+
+// ═══════════════════ LAUNCH APP ═══════════════════
+function launchApp(){
+  document.getElementById('login-screen').style.display='none';
+  document.getElementById('onboarding-screen').classList.remove('active');
+  document.getElementById('app').style.display='block';
+  document.getElementById('sb-av').textContent=(S.user?.name||'U')[0].toUpperCase();
+  document.getElementById('sb-nm').textContent=S.user?.name||'Usuário';
+  updateDate();setInterval(updateDate,60000);
+  startTrialTimer();
+  const today=new Date().toISOString().split('T')[0];
+  ['r-data','d-data','di-data'].forEach(id=>{const el=document.getElementById(id);if(el)el.value=today;});
+  // Migrar dívidas antigas sem campo pagamentos
+  S.dividas = S.dividas.map(d => ({...d, pagamentos: d.pagamentos||[], saldoInicial: d.saldoInicial||d.saldoOriginal||d.saldo}));
+  save();
+  renderTicker();renderDashboard();renderEducacao();renderRadar();
+  checkPaywall();
+}
+function updateDate(){
+  document.getElementById('top-date').textContent=new Date().toLocaleDateString('pt-BR',{weekday:'short',day:'2-digit',month:'short',year:'numeric'});
+}
+
+// ═══════════════════ TRIAL TIMER ═══════════════════
+function startTrialTimer(){
+  if(S.premium){document.getElementById('sb-trial').style.display='none';return;}
+  updateTimer();setInterval(updateTimer,1000);
+}
+function updateTimer(){
+  if(S.premium)return;
+
+  const start=parseInt(S.trialStart||Date.now());
+  const elapsed=Date.now()-start;
+  const remaining=Math.max(0,86400000-elapsed);
+  if(remaining===0){openPaywall();return;}
+  const h=Math.floor(remaining/3600000);
+  const m=Math.floor((remaining%3600000)/60000);
+  const s=Math.floor((remaining%60000)/1000);
+  document.getElementById('trial-timer').textContent=`${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+}
+function checkPaywall(){
+  // Verificar trial
+  if(!S.premium&&S.trialStart&&Date.now()-parseInt(S.trialStart)>86400000)openPaywall();
+}
+function resetTrialForTest(){
+  S.trialStart=Date.now().toString();
+  localStorage.setItem('lliw_trial',S.trialStart);
+  document.getElementById('paywall').style.display='none';
+  toast('Trial reiniciado — 24h a partir de agora','t-info');
+}
+function openPaywall(){document.getElementById('paywall').style.display='flex';}
+function activateKey(){
+  const k=document.getElementById('pw-key-input').value.trim().toUpperCase();
+  const err=document.getElementById('pw-err');
+  if(VALID_KEYS.includes(k)||k.startsWith('LLIW-')){
+    S.premium=k;localStorage.setItem('lliw_premium',k);
+    document.getElementById('paywall').style.display='none';
+    document.getElementById('sb-trial').style.display='none';
+    err.style.display='none';
+    toast('Acesso Premium ativado! Bem-vindo.','t-ok');
+  } else {err.style.display='block';}
+}
+function copyPixKey(){
+  const k=document.getElementById('pw-pix-key').textContent;
+  navigator.clipboard.writeText(k).then(()=>toast('Chave Pix copiada!','t-info'));
+}
+
+// ═══════════════════ NAVIGATION ═══════════════════
+const PAGE_TITLES={dashboard:'Dashboard',recebimentos:'Recebimentos',despesas:'Despesas',planejamento:'Planejamento',ativos:'Meus Ativos',mercado:'Mercado',dividas:'Gestão de Dívidas',diario:'Diário Financeiro',simuladores:'Simuladores',calculadoras:'Calculadora',educacao:'Educação Financeira',radar:'Radar de Notícias',resetar:'Reiniciar Dados'};
+function goPage(id,el){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.sb-item').forEach(n=>n.classList.remove('active'));
+  document.getElementById('pg-'+id).classList.add('active');
+  if(el)el.classList.add('active');
+  document.getElementById('page-title').textContent=PAGE_TITLES[id]||id;
+  document.getElementById('sidebar').classList.remove('open');
+  const renders={dashboard:renderDashboard,recebimentos:renderRec,despesas:renderDesp,planejamento:renderPlan,ativos:renderAtivos,mercado:renderMercado,dividas:renderDividas,diario:renderDiario,simuladores:()=>{calcJC();calcComparativo();},radar:renderRadar,resetar:renderResetar};
+  if(renders[id])renders[id]();
+}
+function toggleSidebar(){document.getElementById('sidebar').classList.toggle('open');}
+
+// ═══════════════════ TOAST ═══════════════════
+function toast(msg,type='t-ok'){
+  const t=document.getElementById('toast');
+  t.innerHTML=`<span>${type==='t-ok'?'✓':type==='t-err'?'✕':'ℹ'}</span> ${msg}`;
+  t.className=`toast ${type} show`;
+  setTimeout(()=>t.classList.remove('show'),3000);
+}
+
+// ═══════════════════ SCORE ═══════════════════
+function calcScore(){
+  const totalRec=S.recs.reduce((s,r)=>s+r.valor,0);
+  const totalDesp=S.desps.reduce((s,r)=>s+r.valor,0);
+  const totalInvest=S.ativos.reduce((s,a)=>s+(a.qtd*a.preco),0);
+  const totalDividas=S.dividas.reduce((s,d)=>s+d.saldo,0);
+  const rendaPassiva=S.ativos.reduce((s,a)=>s+(a.qtd*a.preco*(a.dy/100)),0);
+  let score=50,tips=[];
+  if(totalRec>0){
+    const pct=totalDesp/totalRec;
+    if(pct<0.5){score+=15;}else if(pct<0.7){score+=5;}else if(pct>0.9){score-=20;tips.push({icon:'↑',color:'var(--red)',txt:'Despesas comprometem mais de 90% da renda'});}
+    const invPct=totalInvest/(totalRec*12||1);
+    if(invPct>0.5){score+=20;}else if(invPct>0.2){score+=10;}else{tips.push({icon:'◈',color:'var(--yellow)',txt:'Aumentar o patrimônio investido melhora seu score'});}
+  }
+  if(totalDividas>0){
+    const divRec=totalDividas/(totalRec||1);
+    if(divRec>2){score-=25;tips.push({icon:'⚠',color:'var(--red)',txt:'Dívidas altas em relação à renda — priorize quitação'});}
+    else if(divRec>1){score-=12;}
+    else{score-=5;}
+  } else if(S.dividas.length===0&&S.recs.length>0){score+=10;}
+  if(rendaPassiva>0){
+    const rpPct=rendaPassiva/(totalRec||1);
+    if(rpPct>0.3){score+=15;} else if(rpPct>0.1){score+=8;} else{tips.push({icon:'◉',color:'var(--cyan)',txt:'Aumentar renda passiva reduz dependência do salário'});}
+  }
+  if(S.diario.length>7)score+=3;
+  score=Math.max(0,Math.min(100,Math.round(score)));
+  const statuses=[
+    {min:0,max:20,label:'Endividado',color:'var(--red)'},
+    {min:21,max:40,label:'Consciente',color:'var(--yellow)'},
+    {min:41,max:60,label:'Equilibrado',color:'var(--gold)'},
+    {min:61,max:80,label:'Construindo',color:'var(--cyan)'},
+    {min:81,max:95,label:'Independente',color:'var(--green)'},
+    {min:96,max:100,label:'Soberano',color:'var(--accent3)'},
+  ];
+  const st=statuses.find(s=>score>=s.min&&score<=s.max)||statuses[0];
+  if(tips.length===0)tips.push({icon:'✓',color:'var(--green)',txt:'Continue assim! Registre mais dados para análise precisa.'});
+  return{score,status:st,tips};
+}
+function renderScoreRing(score,color){
+  const r=58,circ=2*Math.PI*r,dash=circ*(score/100);
+  return`<div class="score-ring"><svg width="140" height="140" viewBox="0 0 140 140">
+    <circle cx="70" cy="70" r="${r}" fill="none" stroke="var(--bg4)" stroke-width="10"/>
+    <circle cx="70" cy="70" r="${r}" fill="none" stroke="${color}" stroke-width="10" stroke-dasharray="${dash} ${circ}" stroke-linecap="round" style="transition:stroke-dasharray 1s ease"/>
+  </svg>
+  <div class="ring-inner"><div class="score-num" style="color:${color}">${score}</div><div class="score-status" style="color:${color}">${''}</div></div></div>`;
+}
+function updateTopScore(){
+  const {score,status}=calcScore();
+  const el=document.getElementById('top-score-val');
+  if(el){el.textContent=status.label;el.style.color=status.color;}
+  document.getElementById('sb-status-label').textContent=status.label;
+}
+
+// ═══════════════════ TICKER ═══════════════════
+const TICKER_DATA=[
+  {n:'SELIC',v:'13,25%',c:'+0.25',up:true},{n:'CDI',v:'13,15%',c:'+0.24',up:true},
+  {n:'IBOV',v:'132.847',c:'+1,2%',up:true},{n:'USD',v:'R$5,92',c:'-0,3%',up:false},
+  {n:'EUR',v:'R$6,41',c:'+0,1%',up:true},{n:'BTC',v:'$84.2k',c:'+2,1%',up:true},
+  {n:'IPCA',v:'4,83%',c:'-0,1',up:false},{n:'IGP-M',v:'6,12%',c:'+0,2',up:true},
+];
+function renderTicker(){
+  document.getElementById('ticker').innerHTML=TICKER_DATA.map(t=>`
+    <div class="tick-item"><div class="tick-name">${t.n}</div><div class="tick-val">${t.v}</div>
+    <div class="tick-chg ${t.up?'tick-up':'tick-dn'}">${t.up?'▲':'▼'} ${t.c}</div></div>`).join('');
+}
+
+// ═══════════════════ DASHBOARD ═══════════════════
+function renderDashboard(){
+  updateTopScore();
+  const now=new Date(),tm=now.getMonth(),ty=now.getFullYear();
+  const mRec=S.recs.filter(r=>{const d=new Date(r.data+'T12:00');return d.getMonth()===tm&&d.getFullYear()===ty;}).reduce((s,r)=>s+r.valor,0);
+  const mDesp=S.desps.filter(d=>{const dt=new Date(d.data+'T12:00');return dt.getMonth()===tm&&dt.getFullYear()===ty;}).reduce((s,d)=>s+d.valor,0);
+  const tInvest=S.ativos.reduce((s,a)=>s+(a.qtd*a.preco),0);
+  const tRenda=S.ativos.reduce((s,a)=>s+(a.qtd*a.preco*(a.dy/100)),0);
+  const tDividas=S.dividas.reduce((s,d)=>s+d.saldo,0);
+  const saldo=mRec-mDesp;
+  const pct=mRec>0?(mDesp/mRec)*100:0;
+  // KPIs
+  document.getElementById('dash-kpis').innerHTML=`
+    <div class="kpi"><div class="kpi-top" style="background:var(--green)"></div><div class="kpi-icon">↓</div><div class="kpi-lbl">Receitas (mês)</div><div class="kpi-val">${fBRL(mRec)}</div><div class="kpi-sub neutral">Mês atual</div></div>
+    <div class="kpi"><div class="kpi-top" style="background:var(--red)"></div><div class="kpi-icon">↑</div><div class="kpi-lbl">Despesas (mês)</div><div class="kpi-val">${fBRL(mDesp)}</div><div class="kpi-sub ${pct>80?'dn':'up'}">${fPct(pct)} da renda</div></div>
+    <div class="kpi"><div class="kpi-top" style="background:var(--accent)"></div><div class="kpi-icon">◈</div><div class="kpi-lbl">Saldo</div><div class="kpi-val" style="color:${saldo>=0?'var(--green)':'var(--red)'}">${fBRL(saldo)}</div><div class="kpi-sub ${saldo>=0?'up':'dn'}">${saldo>=0?'Positivo':'Negativo'}</div></div>
+    <div class="kpi"><div class="kpi-top" style="background:var(--cyan)"></div><div class="kpi-icon">◉</div><div class="kpi-lbl">Patrimônio</div><div class="kpi-val">${fBRL(tInvest)}</div><div class="kpi-sub up">Investido</div></div>
+    <div class="kpi"><div class="kpi-top" style="background:var(--yellow)"></div><div class="kpi-icon">%</div><div class="kpi-lbl">Renda Passiva</div><div class="kpi-val">${fBRL(tRenda)}</div><div class="kpi-sub up">por mês</div></div>
+    <div class="kpi"><div class="kpi-top" style="background:var(--red)"></div><div class="kpi-icon">⚠</div><div class="kpi-lbl">Total Dívidas</div><div class="kpi-val" style="color:${tDividas>0?'var(--red)':'var(--green)'}">${fBRL(tDividas)}</div><div class="kpi-sub ${tDividas>0?'dn':'up'}">${tDividas>0?'Em aberto':'Livre de dívidas'}</div></div>`;
+  // Charts — 6m labels
+  const labels=[],recArr=[],despArr=[],salInvArr=[],rpArr=[];
+  for(let i=5;i>=0;i--){
+    const d=new Date(ty,tm-i,1);const m=d.getMonth(),y=d.getFullYear();
+    labels.push(MONTHS[m]+'/'+String(y).slice(2));
+    const rM=S.recs.filter(r=>{const dt=new Date(r.data+'T12:00');return dt.getMonth()===m&&dt.getFullYear()===y;}).reduce((s,r)=>s+r.valor,0);
+    const dM=S.desps.filter(r=>{const dt=new Date(r.data+'T12:00');return dt.getMonth()===m&&dt.getFullYear()===y;}).reduce((s,r)=>s+r.valor,0);
+    recArr.push(rM);despArr.push(dM);
+    salInvArr.push(rM>0?Math.min((tInvest/(rM||1))*10,100):0);
+    rpArr.push(tRenda*(0.85+i*0.03));
+  }
+  const CO={responsive:true,maintainAspectRatio:false,plugins:{legend:{display:true,labels:{boxWidth:8,padding:10,color:'#4a4a6a'}}},scales:{x:{grid:{color:'rgba(255,255,255,0.03)'}},y:{grid:{color:'rgba(255,255,255,0.03)'}}}};
+  mkChart('c-rd',{type:'bar',data:{labels,datasets:[{label:'Receitas',data:recArr,backgroundColor:'rgba(30,217,122,0.65)',borderRadius:5,borderSkipped:false},{label:'Despesas',data:despArr,backgroundColor:'rgba(240,72,90,0.65)',borderRadius:5,borderSkipped:false}]},options:{...CO}});
+  // Despesas por categoria donut
+  const catMap={};S.desps.forEach(d=>{catMap[d.categoria]=(catMap[d.categoria]||0)+d.valor;});
+  const cKeys=Object.keys(catMap);
+  const COLORS=['#7c6af7','#1ed97a','#f0485a','#f5c842','#18d4e8','#ff8c42','#c084fc','#38bdf8','#fb923c'];
+  mkChart('c-desp-cat',{type:'doughnut',data:{labels:cKeys.length?cKeys:['Sem dados'],datasets:[{data:cKeys.length?cKeys.map(k=>catMap[k]):[1],backgroundColor:COLORS,borderWidth:0,hoverOffset:6}]},options:{responsive:true,maintainAspectRatio:false,cutout:'65%',plugins:{legend:{position:'right',labels:{boxWidth:8,padding:10,color:'#4a4a6a'}}}}});
+  // % Salário Investido
+  mkChart('c-sal-inv',{type:'line',data:{labels,datasets:[{label:'% Investido',data:salInvArr,borderColor:'var(--accent)',backgroundColor:'rgba(124,106,247,0.08)',fill:true,tension:0.4,pointRadius:3,pointBackgroundColor:'var(--accent)'}]},options:{...CO,plugins:{legend:{display:false}},scales:{x:{grid:{color:'rgba(255,255,255,0.03)'}},y:{grid:{color:'rgba(255,255,255,0.03)'},max:100,ticks:{callback:v=>v+'%'}}}}});
+  // Renda Passiva
+  mkChart('c-rp',{type:'line',data:{labels,datasets:[{label:'Renda Passiva',data:rpArr,borderColor:'var(--green)',backgroundColor:'rgba(30,217,122,0.07)',fill:true,tension:0.4,pointRadius:3}]},options:{...CO,plugins:{legend:{display:false}}}});
+  // Rings
+  const rings=[
+    {pct:Math.min(pct,100),color:'var(--red)',label:'Comprometido'},
+    {pct:Math.min(mRec>0?(tRenda/mRec)*100:0,100),color:'var(--green)',label:'Renda Passiva'},
+    {pct:Math.min(tDividas>0?Math.max(0,100-(tDividas/(mRec*12||1))*100):100,100),color:'var(--cyan)',label:'Saúde Dívidas'},
+  ];
+  document.getElementById('dash-rings').innerHTML=rings.map(r=>{
+    const circ=2*Math.PI*42,dash=circ*(r.pct/100);
+    return`<div class="ring-item"><div class="ring-svg-wrap"><svg width="100" height="100" viewBox="0 0 100 100"><circle cx="50" cy="50" r="42" fill="none" stroke="var(--bg4)" stroke-width="8"/><circle cx="50" cy="50" r="42" fill="none" stroke="${r.color}" stroke-width="8" stroke-dasharray="${dash} ${circ}" stroke-linecap="round"/></svg><div class="ring-inner"><div class="ring-pct" style="color:${r.color}">${r.pct.toFixed(0)}%</div></div></div><div class="ring-label">${r.label}</div></div>`;
+  }).join('');
+  // Score
+  const {score,status,tips}=calcScore();
+  document.getElementById('score-ring-wrap').innerHTML=renderScoreRing(score,status.color)+`<div style="font-family:'Syne',sans-serif;font-size:20px;font-weight:800;color:${status.color};text-align:center;margin-top:8px;">${status.label}</div><div style="font-size:10px;color:var(--text3);text-align:center;">${score}/100</div>`;
+  document.getElementById('score-tips').innerHTML='<div style="font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;font-weight:700;">O que impacta seu score</div>'+tips.map(t=>`<div class="score-tip"><div class="score-tip-icon" style="background:rgba(255,255,255,0.05);color:${t.color}">${t.icon}</div><span>${t.txt}</span></div>`).join('');
+  // Projeção patrimonial 5/10/20 anos
+  const projLabels=['Hoje','1 ano','2 anos','3 anos','5 anos','10 anos','20 anos'];
+  const projYears=[0,1,2,3,5,10,20];
+  const monthlyAporte=S.recs.reduce((s,r)=>s+r.valor,0)/Math.max(1,new Set(S.recs.map(r=>r.data?.slice(0,7))).size)*0.2;
+  const projData=projYears.map(y=>{
+    const n=y*12,i=0.01;
+    return tInvest*Math.pow(1+i,n)+monthlyAporte*((Math.pow(1+i,n)-1)/i);
+  });
+  mkChart('c-proj',{type:'line',data:{labels:projLabels,datasets:[{label:'Patrimônio Projetado',data:projData,borderColor:'var(--accent)',backgroundColor:'rgba(124,106,247,0.06)',fill:true,tension:0.4,pointRadius:5,pointBackgroundColor:'var(--accent)'}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{grid:{color:'rgba(255,255,255,0.03)'}},y:{grid:{color:'rgba(255,255,255,0.03)'},ticks:{callback:v=>fBRL(v)}}}}});
+}
+
+// ═══════════════════ RECEBIMENTOS ═══════════════════
+function addRec(){
+  const origem=document.getElementById('r-origem').value.trim();
+  const cat=document.getElementById('r-cat').value;
+  const valor=parseFloat(document.getElementById('r-valor').value)||0;
+  const data=document.getElementById('r-data').value;
+  const tipo=document.getElementById('r-tipo').value;
+  if(!data||!valor){toast('Preencha valor e data','t-err');return;}
+  S.recs.push({id:Date.now(),origem,categoria:cat,valor,data,tipo});
+  save();renderRec();toast('Recebimento registrado!');
+  document.getElementById('r-origem').value='';document.getElementById('r-valor').value='';
+}
+function renderRec(){
+  const tb=document.getElementById('tb-rec');
+  const sorted=[...S.recs].sort((a,b)=>new Date(b.data)-new Date(a.data));
+  const total=sorted.reduce((s,r)=>s+r.valor,0);
+  document.getElementById('r-total').textContent=fBRL(total);
+  document.getElementById('r-total-badge').textContent=sorted.length+' lançamentos';
+  tb.innerHTML=sorted.map(r=>`<tr>
+    <td class="td-mono">${r.data?new Date(r.data+'T12:00').toLocaleDateString('pt-BR'):'-'}</td>
+    <td>${r.origem||'—'}</td><td>${r.categoria}</td>
+    <td><span class="td-tag" style="background:rgba(30,217,122,0.12);color:var(--green)">${r.tipo}</span></td>
+    <td class="td-up">${fBRL(r.valor)}</td>
+    <td><button class="btn btn-xs btn-red" onclick="S.recs=S.recs.filter(x=>x.id!==${r.id});save();renderRec();">✕</button></td>
+  </tr>`).join('')||'<tr><td colspan="6" style="text-align:center;color:var(--text4);padding:20px;">Nenhum lançamento ainda</td></tr>';
+}
+
+// ═══════════════════ DESPESAS ═══════════════════
+function addDesp(){
+  const desc=document.getElementById('d-desc').value.trim();
+  const cat=document.getElementById('d-cat').value;
+  const valor=parseFloat(document.getElementById('d-valor').value)||0;
+  const data=document.getElementById('d-data').value;
+  const rec=document.getElementById('d-rec').value;
+  const limit=parseFloat(document.getElementById('d-limit').value)||0;
+  if(!data||!valor){toast('Preencha valor e data','t-err');return;}
+  // alert check
+  if(limit>0&&valor>limit)toast(`Alerta: despesa acima do limite de ${fBRL(limit)}!`,'t-info');
+  S.desps.push({id:Date.now(),descricao:desc,categoria:cat,valor,data,recorrencia:rec,limite:limit});
+  save();renderDesp();toast('Despesa registrada!');
+  document.getElementById('d-desc').value='';document.getElementById('d-valor').value='';document.getElementById('d-limit').value='';
+}
+function renderDesp(){
+  const tb=document.getElementById('tb-desp');
+  const sorted=[...S.desps].sort((a,b)=>new Date(b.data)-new Date(a.data));
+  const total=sorted.reduce((s,d)=>s+d.valor,0);
+  document.getElementById('d-total').textContent=fBRL(total);
+  tb.innerHTML=sorted.map(d=>{
+    const isDivida = d.categoria==='Pagamento de Dívida';
+    const catBg = isDivida ? 'rgba(240,72,90,0.12)' : 'rgba(124,106,247,0.1)';
+    const catColor = isDivida ? 'var(--red)' : 'var(--accent3)';
+    return `<tr>
+      <td class="td-mono">${d.data?new Date(d.data+'T12:00').toLocaleDateString('pt-BR'):'-'}</td>
+      <td>${isDivida?'<span style="font-size:9px;background:rgba(240,72,90,0.12);color:var(--red);padding:1px 5px;border-radius:3px;margin-right:4px;">DÍVIDA</span>':''}${d.descricao||'—'}</td>
+      <td><span class="td-tag" style="background:${catBg};color:${catColor}">${d.categoria}</span></td>
+      <td><span class="td-tag" style="background:rgba(124,106,247,0.08);color:var(--text3)">${d.recorrencia}</span></td>
+      <td class="td-dn">${fBRL(d.valor)}</td>
+      <td><button class="btn btn-xs btn-red" onclick="S.desps=S.desps.filter(x=>x.id!==${d.id});save();renderDesp();">✕</button></td>
+    </tr>`;
+  }).join('')||'<tr><td colspan="6" style="text-align:center;color:var(--text4);padding:20px;">Nenhuma despesa ainda</td></tr>';
+}
+
+// ═══════════════════ PLANEJAMENTO ═══════════════════
+function renderPlan(){
+  const totalRec=S.recs.reduce((s,r)=>s+r.valor,0);
+  const totalDesp=S.desps.reduce((s,d)=>s+d.valor,0);
+  const saldo=totalRec-totalDesp;
+  const pct=totalRec>0?(totalDesp/totalRec)*100:0;
+  const tInvest=S.ativos.reduce((s,a)=>s+(a.qtd*a.preco),0);
+  document.getElementById('plan-kpis').innerHTML=`
+    <div class="kpi"><div class="kpi-top" style="background:var(--green)"></div><div class="kpi-lbl">Total Receitas</div><div class="kpi-val">${fBRL(totalRec)}</div></div>
+    <div class="kpi"><div class="kpi-top" style="background:var(--red)"></div><div class="kpi-lbl">Total Despesas</div><div class="kpi-val">${fBRL(totalDesp)}</div></div>
+    <div class="kpi"><div class="kpi-top" style="background:var(--accent)"></div><div class="kpi-lbl">Saldo Acumulado</div><div class="kpi-val" style="color:${saldo>=0?'var(--green)':'var(--red)'}">${fBRL(saldo)}</div></div>
+    <div class="kpi"><div class="kpi-top" style="background:var(--yellow)"></div><div class="kpi-lbl">% Comprometido</div><div class="kpi-val">${fPct(pct)}</div></div>`;
+  // 50-30-20
+  const p50=totalRec*0.5,p30=totalRec*0.3,p20=totalRec*0.2;
+  const catDesp={};S.desps.forEach(d=>{catDesp[d.categoria]=(catDesp[d.categoria]||0)+d.valor;});
+  const necessidades=(catDesp['Moradia']||0)+(catDesp['Alimentação']||0)+(catDesp['Saúde']||0)+(catDesp['Transporte']||0);
+  const desejos=(catDesp['Lazer']||0)+(catDesp['Assinaturas']||0);
+  const invest=(catDesp['Investimento']||0)+tInvest*0.05;
+  mkChart('c-5030',{type:'bar',data:{labels:['Necessidades (50%)','Desejos (30%)','Investimentos (20%)'],datasets:[
+    {label:'Ideal',data:[p50,p30,p20],backgroundColor:'rgba(124,106,247,0.3)',borderRadius:5,borderSkipped:false},
+    {label:'Real',data:[necessidades,desejos,invest],backgroundColor:['rgba(240,72,90,0.7)','rgba(245,200,66,0.7)','rgba(30,217,122,0.7)'],borderRadius:5,borderSkipped:false}
+  ]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:true,labels:{boxWidth:8,padding:10,color:'#4a4a6a'}}},scales:{x:{grid:{color:'rgba(255,255,255,0.03)'}},y:{grid:{color:'rgba(255,255,255,0.03)'}}}}});
+  document.getElementById('plan-5030-detail').innerHTML=`
+    <div>Necessidades: <b style="color:var(--text)">${fBRL(necessidades)}</b> / ideal ${fBRL(p50)}</div>
+    <div>Desejos: <b style="color:var(--text)">${fBRL(desejos)}</b> / ideal ${fBRL(p30)}</div>
+    <div>Investimentos: <b style="color:var(--text)">${fBRL(invest)}</b> / ideal ${fBRL(p20)}</div>`;
+  // Meta barra
+  const meta=parseFloat(document.getElementById('meta-val').value)||S.meta;
+  S.meta=meta;save();
+  const metaReal=S.desps.filter(d=>d.categoria==='Investimento').reduce((s,d)=>s+d.valor,0);
+  const metaPct=Math.min((metaReal/meta)*100,100);
+  document.getElementById('meta-bar').style.width=metaPct+'%';
+  document.getElementById('meta-pct-label').textContent=fPct(metaPct)+' — '+fBRL(metaReal)+' de '+fBRL(meta);
+  // Anual bar
+  const cKeys=Object.keys(catDesp);
+  const COLORS=['#7c6af7','#1ed97a','#f0485a','#f5c842','#18d4e8','#ff8c42','#c084fc','#38bdf8'];
+  mkChart('c-plan-anual',{type:'bar',data:{labels:cKeys.length?cKeys:['Sem dados'],datasets:[{label:'Total',data:cKeys.length?cKeys.map(k=>catDesp[k]):[0],backgroundColor:COLORS,borderRadius:8,borderSkipped:false}]},options:{responsive:true,maintainAspectRatio:false,indexAxis:'y',plugins:{legend:{display:false}},scales:{x:{grid:{color:'rgba(255,255,255,0.03)'}},y:{grid:{color:'rgba(255,255,255,0.03)'}}}}});
+}
+function calcFire(){
+  const aporte=parseFloat(document.getElementById('fire-aporte').value)||0;
+  const rent=parseFloat(document.getElementById('fire-rent').value)||12;
+  const gasto=parseFloat(document.getElementById('fire-gasto').value)||5000;
+  const pat=parseFloat(document.getElementById('fire-pat').value)||0;
+  const target=gasto*12/((rent/100)*0.9);
+  const i=rent/100/12;let meses=0,acc=pat;
+  while(acc<target&&meses<600){acc=acc*(1+i)+aporte;meses++;}
+  const anos=Math.floor(meses/12),mesesR=meses%12;
+  document.getElementById('fire-result').innerHTML=`
+    <div style="background:var(--bg3);border-radius:var(--radius2);padding:14px;">
+      <div style="font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;">Meta FIRE</div>
+      <div style="font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:var(--accent3);margin-bottom:8px;">${fBRL(target)}</div>
+      <div style="font-size:12px;color:var(--text2);">Com aportes de ${fBRL(aporte)}/mês a ${rent}%/ano, você atingirá a independência financeira em:</div>
+      <div style="font-family:'Syne',sans-serif;font-size:26px;font-weight:800;color:var(--green);margin-top:8px;">${meses>=600?'+50 anos':(anos+' anos e '+mesesR+' meses')}</div>
+    </div>`;
+}
+
+// ═══════════════════ ATIVOS ═══════════════════
+function addAtivo(){
+  const tick=document.getElementById('a-tick').value.trim().toUpperCase();
+  const tipo=document.getElementById('a-tipo').value;
+  const qtd=parseFloat(document.getElementById('a-qtd').value)||0;
+  const preco=parseFloat(document.getElementById('a-preco').value)||0;
+  const dy=parseFloat(document.getElementById('a-dy').value)||0;
+  const op=document.getElementById('a-op').value;
+  if(!tick||!qtd||!preco){toast('Preencha ticker, qtd e preço','t-err');return;}
+  const idx=S.ativos.findIndex(a=>a.ticker===tick);
+  if(idx>=0){
+    if(op==='compra'){const a=S.ativos[idx];const tot=(a.qtd*a.preco)+(qtd*preco);const nq=a.qtd+qtd;S.ativos[idx]={...a,qtd:nq,preco:tot/nq,dy};}
+    else{S.ativos[idx].qtd=Math.max(0,S.ativos[idx].qtd-qtd);if(S.ativos[idx].qtd===0)S.ativos.splice(idx,1);}
+  } else if(op==='compra'){S.ativos.push({id:Date.now(),ticker:tick,tipo,qtd,preco,dy,op});}
+  save();renderAtivos();toast(op==='compra'?`${tick} adicionado!`:`${tick} — venda registrada!`);
+  document.getElementById('a-tick').value='';document.getElementById('a-qtd').value='';document.getElementById('a-preco').value='';document.getElementById('a-dy').value='';
+}
+function getTipoStyle(tipo){
+  if(tipo.includes('Tijolo'))return{cls:'badge-yellow',bg:'rgba(245,200,66,0.12)',c:'var(--yellow)'};
+  if(tipo.includes('Papel')||tipo.includes('Fiagros'))return{cls:'badge-cyan',bg:'rgba(24,212,232,0.12)',c:'var(--cyan)'};
+  if(tipo==='Ação'||tipo==='ETF')return{cls:'badge-purple',bg:'rgba(124,106,247,0.12)',c:'var(--accent3)'};
+  if(tipo==='Cripto')return{cls:'badge-red',bg:'rgba(240,72,90,0.12)',c:'var(--red)'};
+  return{cls:'badge-green',bg:'rgba(30,217,122,0.12)',c:'var(--green)'};
+}
+function renderAtivos(){
+  const total=S.ativos.reduce((s,a)=>s+(a.qtd*a.preco),0);
+  const renda=S.ativos.reduce((s,a)=>s+(a.qtd*a.preco*(a.dy/100)),0);
+  document.getElementById('a-total').textContent=fBRL(total);
+  document.getElementById('a-renda').textContent=fBRL(renda);
+  const tb=document.getElementById('tb-ativos');
+  tb.innerHTML=S.ativos.map(a=>{
+    const tot=a.qtd*a.preco,rm=tot*(a.dy/100),st=getTipoStyle(a.tipo);
+    return`<tr>
+      <td style="font-family:'Syne',sans-serif;font-weight:700;font-size:13px;">${a.ticker}</td>
+      <td><span class="td-tag" style="background:${st.bg};color:${st.c}">${a.tipo}</span></td>
+      <td class="td-mono">${a.qtd.toFixed(0)}</td>
+      <td class="td-mono">${fBRL(a.preco)}</td>
+      <td class="td-mono">${fBRL(tot)}</td>
+      <td class="td-mono">${a.dy.toFixed(3)}%</td>
+      <td class="td-up">${fBRL(rm)}</td>
+      <td><span style="color:${a.op==='venda'?'var(--red)':'var(--green)'};font-size:10px">${a.op==='venda'?'Venda':'Compra'}</span></td>
+      <td><button class="btn btn-xs btn-red" onclick="S.ativos=S.ativos.filter(x=>x.id!==${a.id});save();renderAtivos();">✕</button></td>
+    </tr>`;
+  }).join('')||'<tr><td colspan="9" style="text-align:center;color:var(--text4);padding:20px;">Nenhum ativo cadastrado</td></tr>';
+  if(S.ativos.length){
+    const COLORS=['#7c6af7','#1ed97a','#f0485a','#f5c842','#18d4e8','#ff8c42','#c084fc','#38bdf8'];
+    mkChart('c-cart',{type:'doughnut',data:{labels:S.ativos.map(a=>a.ticker),datasets:[{data:S.ativos.map(a=>a.qtd*a.preco),backgroundColor:COLORS,borderWidth:0,hoverOffset:6}]},options:{responsive:true,maintainAspectRatio:false,cutout:'60%',plugins:{legend:{position:'right',labels:{boxWidth:8,padding:10,color:'#4a4a6a'}}}}});
+    const tipoMap={};S.ativos.forEach(a=>{tipoMap[a.tipo]=(tipoMap[a.tipo]||0)+(a.qtd*a.preco);});
+    mkChart('c-cart-tipo',{type:'doughnut',data:{labels:Object.keys(tipoMap),datasets:[{data:Object.values(tipoMap),backgroundColor:COLORS,borderWidth:0,hoverOffset:6}]},options:{responsive:true,maintainAspectRatio:false,cutout:'60%',plugins:{legend:{position:'right',labels:{boxWidth:8,padding:10,color:'#4a4a6a'}}}}});
+  }
+}
+
+// ═══════════════════ MERCADO ═══════════════════
+// ═══ MARKET DATA ═══
+const MKT_FIIS=[
+  {t:'MXRF11',seg:'FII Papel',c:9.40,dy12:1.134,dym:0.094,rendaCota:0.094,pag:'Mensal',pvp:1.00,av:'Neutro'},
+  {t:'VGHF11',seg:'FII Papel',c:7.57,dy12:1.077,dym:0.090,rendaCota:0.068,pag:'Mensal',pvp:0.89,av:'Compra'},
+  {t:'BTCI11',seg:'FII Papel',c:9.15,dy12:1.125,dym:0.094,rendaCota:0.086,pag:'Mensal',pvp:0.90,av:'Compra'},
+  {t:'CXAG11',seg:'FII Tijolo',c:73.50,dy12:8.849,dym:0.737,rendaCota:0.541,pag:'Mensal',pvp:0.64,av:'Compra'},
+  {t:'HSLG11',seg:'FII Tijolo',c:82.86,dy12:9.10,dym:0.758,rendaCota:0.628,pag:'Mensal',pvp:0.88,av:'Compra'},
+  {t:'XPML11',seg:'FII Tijolo',c:96.50,dy12:8.75,dym:0.729,rendaCota:0.703,pag:'Mensal',pvp:0.95,av:'Compra'},
+  {t:'MALL11',seg:'FII Tijolo',c:87.20,dy12:9.20,dym:0.767,rendaCota:0.668,pag:'Mensal',pvp:0.91,av:'Compra'},
+  {t:'SNAG11',seg:'Fiagros',c:9.61,dy12:1.269,dym:0.106,rendaCota:0.102,pag:'Mensal',pvp:0.94,av:'Compra'},
+  {t:'GGRC11',seg:'FII Tijolo',c:102.40,dy12:9.50,dym:0.792,rendaCota:0.811,pag:'Mensal',pvp:0.87,av:'Compra'},
+  {t:'ALZR11',seg:'FII Tijolo',c:111.30,dy12:8.90,dym:0.742,rendaCota:0.825,pag:'Mensal',pvp:0.93,av:'Neutro'},
+];
+const MKT_ACOES=[
+  {t:'BBAS3',setor:'Banco',c:18.48,dy12:2.377,pag:'Semestral',pvp:0.58,pl:4.2,av:'Compra'},
+  {t:'BBDC4',setor:'Banco',c:15.56,dy12:1.243,pag:'Semestral',pvp:0.95,pl:7.1,av:'Neutro'},
+  {t:'ITUB4',setor:'Banco',c:32.80,dy12:3.10,pag:'Mensal',pvp:1.85,pl:8.4,av:'Compra'},
+  {t:'PETR4',setor:'Petróleo',c:36.90,dy12:12.50,pag:'Semestral',pvp:1.10,pl:4.8,av:'Neutro'},
+  {t:'VALE3',setor:'Mineração',c:58.20,dy12:8.30,pag:'Semestral',pvp:1.20,pl:5.1,av:'Neutro'},
+  {t:'WEGE3',setor:'Industrial',c:41.50,dy12:1.80,pag:'Trimestral',pvp:8.20,pl:28.0,av:'Compra'},
+  {t:'TAEE11',setor:'Energia',c:35.10,dy12:9.80,pag:'Mensal',pvp:1.15,pl:7.2,av:'Compra'},
+  {t:'EGIE3',setor:'Energia',c:44.80,dy12:8.40,pag:'Semestral',pvp:2.10,pl:9.3,av:'Compra'},
+  {t:'CXSE3',setor:'Seguro',c:18.20,dy12:4.50,pag:'Anual',pvp:2.30,pl:10.1,av:'Neutro'},
+  {t:'SCHD',setor:'ETF EUA',c:null,dy12:3.50,pag:'Trimestral',pvp:null,pl:null,av:'Compra'},
+];
+const MKT_RENDAFIXA=[
+  {t:'Tesouro Selic 2027',tipo:'Tesouro Direto',bruta:'13,25%aa',liquida:'~11,26%aa',ir:'Sim (15–22,5%)',liq:'Diária (D+1)',garantia:'Governo Federal',av:'Compra'},
+  {t:'Tesouro IPCA+ 2035',tipo:'Tesouro Direto',bruta:'IPCA + 6,20%',liquida:'IPCA + ~5,27%',ir:'Sim (15–22,5%)',liq:'Diária (D+1)',garantia:'Governo Federal',av:'Compra'},
+  {t:'CDB 110% CDI',tipo:'CDB',bruta:'14,47%aa',liquida:'~12,30%aa',ir:'Sim (15–22,5%)',liq:'Vencimento',garantia:'FGC R$250k',av:'Compra'},
+  {t:'CDB 120% CDI',tipo:'CDB',bruta:'15,78%aa',liquida:'~13,41%aa',ir:'Sim (15–22,5%)',liq:'Vencimento',garantia:'FGC R$250k',av:'Compra'},
+  {t:'LCI 95% CDI',tipo:'LCI',bruta:'12,49%aa',liquida:'12,49%aa',ir:'Isento PF',liq:'Carência 90d',garantia:'FGC R$250k',av:'Compra'},
+  {t:'LCI 100% CDI',tipo:'LCI',bruta:'13,15%aa',liquida:'13,15%aa',ir:'Isento PF',liq:'Carência 90d',garantia:'FGC R$250k',av:'Compra'},
+  {t:'LCA 90% CDI',tipo:'LCA',bruta:'11,84%aa',liquida:'11,84%aa',ir:'Isento PF',liq:'Carência 90d',garantia:'FGC R$250k',av:'Neutro'},
+  {t:'LCA 95% CDI',tipo:'LCA',bruta:'12,49%aa',liquida:'12,49%aa',ir:'Isento PF',liq:'Carência 90d',garantia:'FGC R$250k',av:'Compra'},
+  {t:'Poupança',tipo:'Poupança',bruta:'6,17%aa',liquida:'6,17%aa',ir:'Isento PF',liq:'Mensal',garantia:'FGC R$250k',av:'Evitar'},
+];
+const MKT_CRYPTO=[
+  {t:'Bitcoin',s:'BTC',preco:84200,mcap:'US$ 1,65T',v24h:'+2,1%',v7d:'+8,4%',cat:'Reserva de Valor',risco:'Alto'},
+  {t:'Ethereum',s:'ETH',preco:3280,mcap:'US$ 394B',v24h:'+1,4%',v7d:'+5,2%',cat:'Smart Contracts',risco:'Alto'},
+  {t:'BNB',s:'BNB',preco:580,mcap:'US$ 84B',v24h:'+0,8%',v7d:'+3,1%',cat:'Exchange Token',risco:'Alto'},
+  {t:'Solana',s:'SOL',preco:148,mcap:'US$ 68B',v24h:'+3,2%',v7d:'+12,1%',cat:'Smart Contracts',risco:'Muito Alto'},
+  {t:'Cardano',s:'ADA',preco:0.45,mcap:'US$ 16B',v24h:'-0,4%',v7d:'+1,8%',cat:'Smart Contracts',risco:'Muito Alto'},
+  {t:'Polkadot',s:'DOT',preco:6.80,mcap:'US$ 9B',v24h:'+1,1%',v7d:'+4,2%',cat:'Interoperabilidade',risco:'Muito Alto'},
+];
+const MKT_STABLE=[
+  {t:'Tether',s:'USDT',preco:1.00,lastro:'Dólar USD',defi:'4–8%aa',risco:'Baixo',uso:'Proteção cambial, trading'},
+  {t:'USD Coin',s:'USDC',preco:1.00,lastro:'Dólar USD',defi:'4–6%aa',risco:'Baixo',uso:'DeFi, remessas internacionais'},
+  {t:'Dai',s:'DAI',preco:1.00,lastro:'Cripto-colateral',defi:'3–5%aa',risco:'Médio',uso:'DeFi descentralizado'},
+];
+
+let currentMktTab='fiis';
+function switchMktTab(tab){
+  currentMktTab=tab;
+  document.querySelectorAll('.mkt-section').forEach(s=>s.style.display='none');
+  document.getElementById('mkt-'+tab).style.display='block';
+  // reset all tab styles
+  ['fiis','acoes','rendafixa','crypto'].forEach(t=>{
+    const btn=document.getElementById('tab-'+t);
+    if(!btn)return;
+    btn.style.background='transparent';btn.style.borderColor='var(--border2)';btn.style.color='var(--text3)';
+  });
+  // active tab highlight
+  const colors={fiis:'var(--yellow)',acoes:'var(--accent3)',rendafixa:'var(--cyan)',crypto:'var(--red)'};
+  const bgs={fiis:'rgba(245,200,66,0.15)',acoes:'rgba(124,106,247,0.15)',rendafixa:'rgba(24,212,232,0.15)',crypto:'rgba(240,72,90,0.15)'};
+  const borders={fiis:'rgba(245,200,66,0.3)',acoes:'rgba(124,106,247,0.3)',rendafixa:'rgba(24,212,232,0.3)',crypto:'rgba(240,72,90,0.3)'};
+  const btn=document.getElementById('tab-'+tab);
+  if(btn){btn.style.background=bgs[tab];btn.style.borderColor=borders[tab];btn.style.color=colors[tab];}
+}
+
+function renderMercado(){
+  // KPIs
+  document.getElementById('mkt-kpis').innerHTML=`
+    <div class="kpi"><div class="kpi-top" style="background:var(--yellow)"></div><div class="kpi-lbl">Taxa Selic</div><div class="kpi-val">13,25%</div><div class="kpi-sub up">ao ano · COPOM</div></div>
+    <div class="kpi"><div class="kpi-top" style="background:var(--cyan)"></div><div class="kpi-lbl">CDI</div><div class="kpi-val">13,15%</div><div class="kpi-sub up">ao ano</div></div>
+    <div class="kpi"><div class="kpi-top" style="background:var(--red)"></div><div class="kpi-lbl">IPCA 12M</div><div class="kpi-val">4,83%</div><div class="kpi-sub dn">meta: 3,0%</div></div>
+    <div class="kpi"><div class="kpi-top" style="background:var(--accent)"></div><div class="kpi-lbl">Dólar (USD)</div><div class="kpi-val">R$ 5,92</div><div class="kpi-sub dn">▼ -0,3% hoje</div></div>
+    <div class="kpi"><div class="kpi-top" style="background:var(--green)"></div><div class="kpi-lbl">Ibovespa</div><div class="kpi-val">132.847</div><div class="kpi-sub up">▲ +1,2% hoje</div></div>
+    <div class="kpi"><div class="kpi-top" style="background:var(--gold)"></div><div class="kpi-lbl">Bitcoin</div><div class="kpi-val">$84.200</div><div class="kpi-sub up">▲ +2,1% 24h</div></div>`;
+
+  // FIIs table
+  const avC={Compra:'var(--green)',Neutro:'var(--yellow)',Evitar:'var(--red)'};
+  document.getElementById('tb-fiis').innerHTML=MKT_FIIS.map(m=>`<tr>
+    <td style="font-family:'Syne',sans-serif;font-weight:700;font-size:13px;">${m.t}</td>
+    <td><span class="td-tag" style="background:rgba(245,200,66,0.12);color:var(--yellow)">${m.seg}</span></td>
+    <td class="td-mono">${fBRL(m.c)}</td>
+    <td class="td-up">${m.dy12.toFixed(3)}%</td>
+    <td class="td-mono">${m.dym.toFixed(3)}%</td>
+    <td class="td-up">${fBRL(m.rendaCota)}</td>
+    <td><span class="td-tag" style="background:rgba(124,106,247,0.1);color:var(--accent3)">${m.pag}</span></td>
+    <td class="td-mono" style="color:${m.pvp<1?'var(--green)':'var(--yellow)'}">${m.pvp.toFixed(2)}</td>
+    <td><span class="td-tag" style="color:${avC[m.av]};background:${avC[m.av]}22">${m.av}</span></td>
+  </tr>`).join('');
+
+  // Ações table
+  document.getElementById('tb-acoes').innerHTML=MKT_ACOES.map(m=>`<tr>
+    <td style="font-family:'Syne',sans-serif;font-weight:700;font-size:13px;">${m.t}</td>
+    <td><span class="td-tag" style="background:rgba(124,106,247,0.12);color:var(--accent3)">${m.setor}</span></td>
+    <td class="td-mono">${m.c!=null?fBRL(m.c):'—'}</td>
+    <td class="td-up">${m.dy12.toFixed(2)}%</td>
+    <td><span class="td-tag" style="background:rgba(245,200,66,0.1);color:var(--yellow)">${m.pag}</span></td>
+    <td class="td-mono" style="color:${m.pvp!=null&&m.pvp<1.5?'var(--green)':'var(--yellow)'}">${m.pvp!=null?m.pvp.toFixed(2):'—'}</td>
+    <td class="td-mono">${m.pl!=null?m.pl.toFixed(1)+'x':'—'}</td>
+    <td><span class="td-tag" style="color:${avC[m.av]};background:${avC[m.av]}22">${m.av}</span></td>
+  </tr>`).join('');
+
+  // Renda Fixa table
+  document.getElementById('tb-rendafixa').innerHTML=MKT_RENDAFIXA.map(m=>{
+    const irColor=m.ir==='Isento PF'?'var(--green)':'var(--text2)';
+    const avColor=m.av==='Compra'?'var(--green)':m.av==='Evitar'?'var(--red)':'var(--yellow)';
+    return`<tr>
+      <td style="font-family:'Syne',sans-serif;font-weight:700;font-size:12px;">${m.t}</td>
+      <td><span class="td-tag" style="background:rgba(24,212,232,0.12);color:var(--cyan)">${m.tipo}</span></td>
+      <td class="td-up">${m.bruta}</td>
+      <td style="color:var(--green);font-family:'DM Mono',monospace;font-size:11px;font-weight:700;">${m.liquida}</td>
+      <td style="color:${irColor};font-size:11px;">${m.ir}</td>
+      <td class="td-mono">${m.liq}</td>
+      <td class="td-mono" style="color:var(--text3)">${m.garantia}</td>
+      <td><span class="td-tag" style="color:${avColor};background:${avColor}22">${m.av}</span></td>
+    </tr>`;
+  }).join('');
+
+  // Macro KPIs
+  document.getElementById('macro-kpis').innerHTML=`
+    <div style="background:var(--bg3);border:1px solid var(--border2);border-radius:var(--radius2);padding:16px;">
+      <div style="font-size:9px;color:var(--text3);text-transform:uppercase;letter-spacing:1px;margin-bottom:4px;">Selic Meta</div>
+      <div style="font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:var(--yellow)">13,25%</div>
+      <div style="font-size:10px;color:var(--text3);margin-top:2px;">Reunião: Mar/2025</div>
+    </div>
+    <div style="background:var(--bg3);border:1px solid var(--border2);border-radius:var(--radius2);padding:16px;">
+      <div style="font-size:9px;color:var(--text3);text-transform:uppercase;letter-spacing:1px;margin-bottom:4px;">CDI Acumulado</div>
+      <div style="font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:var(--cyan)">13,15%</div>
+      <div style="font-size:10px;color:var(--text3);margin-top:2px;">Referência anual</div>
+    </div>
+    <div style="background:var(--bg3);border:1px solid var(--border2);border-radius:var(--radius2);padding:16px;">
+      <div style="font-size:9px;color:var(--text3);text-transform:uppercase;letter-spacing:1px;margin-bottom:4px;">IPCA 12M</div>
+      <div style="font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:var(--red)">4,83%</div>
+      <div style="font-size:10px;color:var(--text3);margin-top:2px;">Acima da meta de 3%</div>
+    </div>
+    <div style="background:var(--bg3);border:1px solid var(--border2);border-radius:var(--radius2);padding:16px;">
+      <div style="font-size:9px;color:var(--text3);text-transform:uppercase;letter-spacing:1px;margin-bottom:4px;">IGP-M 12M</div>
+      <div style="font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:var(--accent3)">6,12%</div>
+      <div style="font-size:10px;color:var(--text3);margin-top:2px;">Índice de aluguel</div>
+    </div>`;
+
+  // Cripto table
+  document.getElementById('tb-crypto').innerHTML=MKT_CRYPTO.map(m=>{
+    const up=m.v24h.startsWith('+');
+    const up7=m.v7d.startsWith('+');
+    const riscoColor={'Alto':'var(--yellow)','Muito Alto':'var(--red)','Médio':'var(--yellow)'}[m.risco]||'var(--text3)';
+    return`<tr>
+      <td style="font-family:'Syne',sans-serif;font-weight:700;font-size:13px;">${m.t}</td>
+      <td><span class="td-tag" style="background:rgba(212,168,67,0.15);color:var(--gold)">${m.s}</span></td>
+      <td class="td-mono">$${m.preco.toLocaleString('pt-BR')}</td>
+      <td class="td-mono" style="color:var(--text2)">${m.mcap}</td>
+      <td class="${up?'td-up':'td-dn'}">${m.v24h}</td>
+      <td class="${up7?'td-up':'td-dn'}">${m.v7d}</td>
+      <td><span class="td-tag" style="background:rgba(240,72,90,0.1);color:var(--red)">${m.cat}</span></td>
+      <td style="color:${riscoColor};font-size:11px;font-weight:600;">${m.risco}</td>
+    </tr>`;
+  }).join('');
+
+  // Stablecoins table
+  document.getElementById('tb-stable').innerHTML=MKT_STABLE.map(m=>`<tr>
+    <td style="font-family:'Syne',sans-serif;font-weight:700;font-size:13px;">${m.t}</td>
+    <td><span class="td-tag" style="background:rgba(212,168,67,0.15);color:var(--gold)">${m.s}</span></td>
+    <td class="td-mono">$${m.preco.toFixed(2)}</td>
+    <td class="td-mono" style="color:var(--text2)">${m.lastro}</td>
+    <td class="td-up">${m.defi}</td>
+    <td style="color:${m.risco==='Baixo'?'var(--green)':'var(--yellow)'};font-size:11px;font-weight:600;">${m.risco}</td>
+    <td style="font-size:11px;color:var(--text2)">${m.uso}</td>
+  </tr>`).join('');
+
+  // Comparativo chart
+  const compLabels=['Tesouro Selic','CDB 110%','LCI 100%','FII Médio','Ações (DY)','Poupança','Bitcoin*'];
+  const rates=[13.25,14.47,13.15,11.0,8.5,6.17,120];
+  const cap=10000,anos=5,n=anos*12;
+  const compData=rates.map((r,i)=>{
+    if(i===6)return cap*Math.pow(1+r/100,anos); // bitcoin simplificado
+    return cap*Math.pow(1+r/100/12,n);
+  });
+  mkChart('c-mkt-comp',{type:'bar',data:{labels:compLabels,datasets:[{label:'Montante em 5 anos (R$ 10.000)',data:compData,backgroundColor:['#18d4e8','#7c6af7','#1ed97a','#f5c842','#a599ff','#f04a5a','#d4a843'],borderRadius:8,borderSkipped:false}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>' '+fBRL(c.raw)}}},scales:{x:{grid:{color:'rgba(255,255,255,0.03)'}},y:{grid:{color:'rgba(255,255,255,0.03)'},ticks:{callback:v=>fBRL(v)}}}}});
+
+  switchMktTab(currentMktTab);
+}
+
+// ═══════════════════ DÍVIDAS ═══════════════════
+function addDivida(){
+  const nome=document.getElementById('dv-nome').value.trim();
+  const saldo=parseFloat(document.getElementById('dv-saldo').value)||0;
+  const taxa=parseFloat(document.getElementById('dv-taxa').value)||0;
+  const parcela=parseFloat(document.getElementById('dv-parcela').value)||0;
+  const tipo=document.getElementById('dv-tipo').value;
+  if(!nome||!saldo||!taxa){toast('Preencha nome, saldo e taxa','t-err');return;}
+  S.dividas.push({id:Date.now(),nome,saldo,saldoOriginal:saldo,saldoInicial:saldo,taxa,parcela,tipo,pagamentos:[]});
+  save();renderDividas();toast('Dívida cadastrada!');
+  document.getElementById('dv-nome').value='';document.getElementById('dv-saldo').value='';document.getElementById('dv-taxa').value='';document.getElementById('dv-parcela').value='';
+}
+function setEstrategia(e){
+  S.estrategia=e;
+  document.getElementById('btn-aval').style.background=e==='avalanche'?'rgba(124,106,247,0.2)':'transparent';
+  document.getElementById('btn-aval').style.borderColor=e==='avalanche'?'var(--accent)':'var(--border2)';
+  document.getElementById('btn-snow').style.background=e==='snowball'?'rgba(30,217,122,0.2)':'transparent';
+  document.getElementById('btn-snow').style.borderColor=e==='snowball'?'var(--green)':'var(--border2)';
+  renderDividas();
+}
+
+// ═══════════════════ PAGAMENTO PARCIAL ═══════════════════
+let _mpId = null;
+
+
+function toggleHistPag(id){
+  const el = document.getElementById('hist-pag-'+id);
+  const ico = document.getElementById('hist-toggle-'+id);
+  if(!el) return;
+  if(el.style.display==='none'){
+    el.style.display='block';
+    if(ico) ico.textContent='▲';
+  } else {
+    el.style.display='none';
+    if(ico) ico.textContent='▼';
+  }
+}
+
+
+function confirmarQuitacao(id){
+  var d=S.dividas.find(function(x){return x.id===id;});
+  if(!d) return;
+  if(!confirm('Marcar "'+d.nome+'" como totalmente quitada?')) return;
+  quitarDivida(id, false);
+}
+
+function confirmarExclusaoDivida(id){
+  var d=S.dividas.find(function(x){return x.id===id;});
+  if(!d) return;
+  if(!confirm('Excluir a dívida "'+d.nome+'"? Esta ação não pode ser desfeita.')) return;
+  S.dividas=S.dividas.filter(function(x){return x.id!==id;});
+  save();
+  renderDividas();
+  toast('Dívida excluída.','t-info');
+}
+
+function abrirModalPagamento(id){
+  const d = S.dividas.find(x=>x.id===id);
+  if(!d) return;
+  _mpId = id;
+  const jurosM = d.saldo*(d.taxa/100);
+
+  document.getElementById('mp-divida-nome').textContent = d.nome + ' — ' + d.tipo;
+  document.getElementById('mp-info').innerHTML =
+    '<div><div style="font-size:9px;color:var(--text3);text-transform:uppercase;letter-spacing:1px;margin-bottom:3px;">Saldo Devedor</div><div style="font-family:\'Syne\',sans-serif;font-size:16px;font-weight:800;color:var(--red);">' + fBRL(d.saldo) + '</div></div>' +
+    '<div><div style="font-size:9px;color:var(--text3);text-transform:uppercase;letter-spacing:1px;margin-bottom:3px;">Juros deste mês</div><div style="font-family:\'DM Mono\',monospace;font-size:16px;color:var(--yellow);">' + fBRL(jurosM) + '</div></div>' +
+    '<div><div style="font-size:9px;color:var(--text3);text-transform:uppercase;letter-spacing:1px;margin-bottom:3px;">Taxa mensal</div><div style="font-family:\'DM Mono\',monospace;font-size:16px;color:var(--text);">' + d.taxa + '%</div></div>';
+
+  const today = new Date().toISOString().split('T')[0];
+  document.getElementById('mp-data').value = today;
+  document.getElementById('mp-valor').value = '';
+  document.getElementById('mp-obs').value = '';
+  document.getElementById('mp-preview').style.display = 'none';
+
+  document.getElementById('modal-pagamento').style.display = 'flex';
+}
+
+function fecharModalPagamento(){
+  document.getElementById('modal-pagamento').style.display = 'none';
+  _mpId = null;
+}
+
+function previewPagamento(){
+  const d = S.dividas.find(x=>x.id===_mpId);
+  if(!d) return;
+  const valor = parseFloat(document.getElementById('mp-valor').value)||0;
+  if(!valor){ document.getElementById('mp-preview').style.display='none'; return; }
+
+  const jurosM = d.saldo*(d.taxa/100);
+  const jurosNoPag = Math.min(valor, jurosM);
+  const abate = Math.max(0, valor - jurosM);
+  const novoSaldo = Math.max(0, d.saldo - abate);
+  const novaParcelaMes = d.parcela;
+  const novoJurosM = novoSaldo*(d.taxa/100);
+  const novoPrazo = novaParcelaMes > novoJurosM
+    ? Math.ceil(Math.log(novaParcelaMes/(novaParcelaMes - novoJurosM)) / Math.log(1 + d.taxa/100))
+    : 999;
+  const prazoAtual = d.parcela > jurosM
+    ? Math.ceil(Math.log(d.parcela/(d.parcela - jurosM)) / Math.log(1 + d.taxa/100))
+    : 999;
+  const economia = prazoAtual < 999 && novoPrazo < 999 ? Math.max(0, prazoAtual - novoPrazo) : 0;
+
+  document.getElementById('mp-preview').style.display = 'block';
+  document.getElementById('mp-juros-val').textContent = fBRL(jurosNoPag);
+  document.getElementById('mp-abate-val').textContent = fBRL(abate);
+  document.getElementById('mp-novo-saldo').textContent = fBRL(novoSaldo);
+  document.getElementById('mp-novo-prazo').textContent = novoPrazo >= 999 ? 'Revisar parcela' : novoPrazo + ' meses';
+
+  const eco = document.getElementById('mp-economia');
+  if(economia > 0){
+    eco.innerHTML = '<span style="color:var(--green);font-weight:600;">Este pagamento economiza ' + economia + ' meses de dívida!</span>';
+  } else if(abate > 0){
+    eco.innerHTML = '<span style="color:var(--accent3);">Saldo reduzido. Continue pagando regularmente.</span>';
+  } else {
+    eco.innerHTML = '<span style="color:var(--yellow);">Atenção: pagamento cobre apenas os juros, sem abater o saldo.</span>';
+  }
+}
+
+function confirmarPagamento(){
+  const d = S.dividas.find(x=>x.id===_mpId);
+  if(!d) return;
+  const valor = parseFloat(document.getElementById('mp-valor').value)||0;
+  const data = document.getElementById('mp-data').value;
+  const obs = document.getElementById('mp-obs').value.trim();
+
+  if(!valor || !data){ toast('Informe o valor e a data do pagamento','t-err'); return; }
+  if(valor <= 0){ toast('O valor deve ser maior que zero','t-err'); return; }
+
+  // Calcular decomposição juros + abatimento
+  const jurosM = d.saldo*(d.taxa/100);
+  const jurosNoPag = Math.min(valor, jurosM);
+  const abate = Math.max(0, valor - jurosM);
+  const novoSaldo = Math.max(0, d.saldo - abate);
+
+  // Calcular prazo anterior e novo para mostrar na confirmação
+  const prazoAntes = d.parcela > jurosM
+    ? Math.ceil(Math.log(d.parcela/(d.parcela - jurosM)) / Math.log(1 + d.taxa/100))
+    : 999;
+  const novoJurosM = novoSaldo*(d.taxa/100);
+  const novoPrazo = d.parcela > novoJurosM && novoSaldo > 0
+    ? Math.ceil(Math.log(d.parcela/(d.parcela - novoJurosM)) / Math.log(1 + d.taxa/100))
+    : (novoSaldo === 0 ? 0 : 999);
+
+  // Registrar pagamento no histórico da dívida
+  const pagamento = {
+    id: Date.now(),
+    data,
+    valor,
+    juros: jurosNoPag,
+    abate,
+    saldoAntes: d.saldo,
+    saldoDepois: novoSaldo,
+    prazoAntes,
+    prazoDepois: novoPrazo,
+    obs
+  };
+  if(!d.pagamentos) d.pagamentos = [];
+  d.pagamentos.push(pagamento);
+
+  // Atualizar saldo devedor
+  d.saldo = novoSaldo;
+
+  // Lançar automaticamente em Despesas
+  S.desps.push({
+    id: Date.now()+1,
+    descricao: 'Pagamento — ' + d.nome + (obs ? ' ('+obs+')' : ''),
+    categoria: 'Pagamento de Dívida',
+    valor,
+    data,
+    recorrencia: 'Única',
+    limite: 0,
+    _divida: d.id  // referência para identificação
+  });
+
+  save();
+  fecharModalPagamento();
+  renderDividas();
+  renderDesp();
+
+  // Verificar se quitou
+  if(novoSaldo <= 0){
+    const totalJurosEconomizados = d.saldoInicial*(d.taxa/100)*prazoAntes;
+    setTimeout(()=>{ quitarDivida(d.id, true); }, 400);
+  } else {
+    const economia = prazoAntes < 999 && novoPrazo < 999 ? Math.max(0, prazoAntes - novoPrazo) : 0;
+    const msg = abate > 0
+      ? 'Pagamento registrado! Saldo: ' + fBRL(novoSaldo) + (economia > 0 ? ' · ' + economia + ' meses economizados' : '')
+      : 'Pagamento registrado! (Apenas juros cobertos — saldo inalterado)';
+    toast(msg, 't-ok');
+  }
+}
+
+function renderDividas(){
+  const sorted=[...S.dividas].sort(function(a,b){
+    return S.estrategia==='avalanche' ? b.taxa-a.taxa : a.saldo-b.saldo;
+  });
+  const totalDiv=sorted.reduce(function(s,d){return s+d.saldo;},0);
+  const totalJurosM=sorted.reduce(function(s,d){return s+(d.saldo*(d.taxa/100));},0);
+
+  // Estrategia info
+  var info=document.getElementById('estrategia-info');
+  if(info){
+    if(S.estrategia==='avalanche')
+      info.innerHTML='<b style="color:var(--accent3)">Avalanche</b> — Ataca primeiro a dívida com <b>maior taxa de juros</b>. Economiza mais no total.';
+    else
+      info.innerHTML='<b style="color:var(--green)">Snowball</b> — Ataca primeiro a dívida com <b>menor saldo</b>. Gera vitórias mais rápidas.';
+  }
+  var ol=document.getElementById('div-ordem-label');
+  if(ol) ol.textContent=S.estrategia==='avalanche'?'maior juros (Avalanche)':'menor saldo (Snowball)';
+
+  // KPIs
+  var kd=document.getElementById('div-kpis');
+  if(kd) kd.innerHTML=
+    '<div class="kpi"><div class="kpi-top" style="background:var(--red)"></div><div class="kpi-lbl">Total Dívidas</div><div class="kpi-val" style="color:var(--red)">'+fBRL(totalDiv)+'</div></div>'+
+    '<div class="kpi"><div class="kpi-top" style="background:var(--yellow)"></div><div class="kpi-lbl">Juros pagos/mês</div><div class="kpi-val">'+fBRL(totalJurosM)+'</div><div class="kpi-sub dn">só em juros</div></div>'+
+    '<div class="kpi"><div class="kpi-top" style="background:var(--accent)"></div><div class="kpi-lbl">Qtd. Dívidas</div><div class="kpi-val">'+sorted.length+'</div></div>'+
+    '<div class="kpi"><div class="kpi-top" style="background:var(--cyan)"></div><div class="kpi-lbl">Maior taxa</div><div class="kpi-val">'+(sorted.length?sorted[0].taxa.toFixed(1)+'%/mês':'—')+'</div><div class="kpi-sub dn">prioridade 1</div></div>';
+
+  var cb=document.getElementById('div-count-badge');
+  if(cb) cb.textContent=sorted.length+' cadastradas';
+
+  // Disponível para amortização
+  var mR=new Set(S.recs.map(function(r){return r.data&&r.data.slice(0,7);})).size||1;
+  var mD=new Set(S.desps.map(function(d){return d.data&&d.data.slice(0,7);})).size||1;
+  var mediaRec=S.recs.reduce(function(s,r){return s+r.valor;},0)/mR;
+  var mediaDesp=S.desps.reduce(function(s,d){return s+d.valor;},0)/mD;
+  var disponivel=Math.max(0,(mediaRec-mediaDesp)*0.7);
+
+  // Cards
+  var dc=document.getElementById('debt-cards');
+  if(!dc) return;
+
+  if(!sorted.length){
+    dc.innerHTML='<div style="text-align:center;padding:32px;font-family:\'Syne\',sans-serif;font-size:16px;font-weight:700;color:var(--green);">Nenhuma dívida cadastrada!<br><span style="font-size:12px;color:var(--text3);font-family:\'DM Sans\',sans-serif;">Cadastre suas dívidas acima para montar seu plano.</span></div>';
+    renderDividasGrafico(sorted,disponivel);
+    return;
+  }
+
+  var html='';
+  for(var i=0;i<sorted.length;i++){
+    var d=sorted[i];
+    var jurosM=d.saldo*(d.taxa/100);
+    var extra=i===0?disponivel:0;
+    var parcelaAcel=d.parcela+extra;
+    var nMin=d.parcela>jurosM ? Math.ceil(Math.log(d.parcela/(d.parcela-jurosM))/Math.log(1+d.taxa/100)) : 999;
+    var nAcel=parcelaAcel>jurosM ? Math.ceil(Math.log(parcelaAcel/(parcelaAcel-jurosM))/Math.log(1+d.taxa/100)) : 999;
+    var pct=Math.max(0,Math.min(100,100-(d.saldo/((d.saldoInicial||d.saldoOriginal||d.saldo)||1))*100));
+    var isPriority=i===0;
+    var pBarColor=pct>70?'var(--green)':pct>30?'var(--yellow)':'var(--red)';
+    var borderC=isPriority?'var(--accent)':'var(--border2)';
+    var numPag=d.pagamentos?d.pagamentos.length:0;
+
+    // Historico de pagamentos HTML
+    var histHtml='';
+    if(numPag>0){
+      var pagRows='';
+      var pags=d.pagamentos.slice().reverse();
+      for(var j=0;j<pags.length;j++){
+        var p=pags[j];
+        pagRows+='<div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:6px;padding:8px 0;border-bottom:1px solid var(--border);font-size:11px;">'
+          +'<div><div style="color:var(--text3);font-size:9px;margin-bottom:2px;">Data</div>'
+          +'<div style="font-family:\'DM Mono\',monospace;">'+new Date(p.data+'T12:00').toLocaleDateString('pt-BR')+'</div></div>'
+          +'<div><div style="color:var(--text3);font-size:9px;margin-bottom:2px;">Valor pago</div>'
+          +'<div style="font-family:\'DM Mono\',monospace;color:var(--text);">'+fBRL(p.valor)+'</div></div>'
+          +'<div><div style="color:var(--text3);font-size:9px;margin-bottom:2px;">Juros / Abate</div>'
+          +'<div><span style="color:var(--red);font-family:\'DM Mono\',monospace;">'+fBRL(p.juros)+'</span>'
+          +' / <span style="color:var(--green);font-family:\'DM Mono\',monospace;">'+fBRL(p.abate)+'</span></div></div>'
+          +'<div><div style="color:var(--text3);font-size:9px;margin-bottom:2px;">Saldo após</div>'
+          +'<div style="font-family:\'DM Mono\',monospace;color:var(--accent3);">'+fBRL(p.saldoDepois)+'</div></div>'
+          +(p.obs?'<div style="grid-column:span 4;color:var(--text3);font-style:italic;font-size:9px;">'+p.obs+'</div>':'')
+          +'</div>';
+      }
+      histHtml='<div style="border-top:1px solid var(--border);padding-top:10px;margin-top:4px;">'
+        +'<div onclick="toggleHistPag('+d.id+')" style="cursor:pointer;display:flex;align-items:center;justify-content:space-between;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--text3);">'
+        +'<span>Histórico de pagamentos ('+numPag+')</span><span id="hist-toggle-'+d.id+'">▼</span></div>'
+        +'<div id="hist-pag-'+d.id+'" style="display:none;margin-top:8px;">'+pagRows+'</div>'
+        +'</div>';
+    }
+
+    html+='<div style="background:var(--bg3);border:2px solid '+borderC+';border-radius:var(--radius);padding:20px;margin-bottom:14px;position:relative;">'
+      // Badge prioridade
+      +(isPriority?'<div style="position:absolute;top:-1px;right:16px;background:var(--accent);color:#fff;font-size:9px;font-weight:700;padding:3px 12px;border-radius:0 0 8px 8px;letter-spacing:1px;">PRIORIDADE 1</div>':'')
+      // Cabeçalho
+      +'<div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:14px;margin-top:'+(isPriority?'8px':'0')+'">'
+        +'<div>'
+          +'<div style="font-family:\'Syne\',sans-serif;font-size:18px;font-weight:800;margin-bottom:5px;">'+d.nome+'</div>'
+          +'<span style="font-size:10px;background:rgba(124,106,247,0.12);color:var(--accent3);padding:2px 8px;border-radius:20px;font-weight:700;">'+d.tipo+'</span>'
+        +'</div>'
+        +'<div style="text-align:right;">'
+          +'<div style="font-family:\'Syne\',sans-serif;font-size:24px;font-weight:800;color:var(--red);">'+fBRL(d.saldo)+'</div>'
+          +'<div style="font-size:10px;color:var(--text3);">saldo devedor atual</div>'
+          +(d.saldoInicial&&d.saldoInicial!==d.saldo?'<div style="font-size:10px;color:var(--text3);">original: '+fBRL(d.saldoInicial)+'</div>':'')
+        +'</div>'
+      +'</div>'
+      // 3 métricas
+      +'<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:14px;">'
+        +'<div style="background:var(--bg4);border-radius:var(--radius2);padding:12px;">'
+          +'<div style="font-size:9px;color:var(--text3);text-transform:uppercase;letter-spacing:1px;margin-bottom:4px;">Juros este mês</div>'
+          +'<div style="font-family:\'DM Mono\',monospace;font-size:15px;color:var(--red);">'+fBRL(jurosM)+'</div>'
+          +'<div style="font-size:9px;color:var(--text3);">'+d.taxa+'% ao mês</div>'
+        +'</div>'
+        +'<div style="background:var(--bg4);border-radius:var(--radius2);padding:12px;">'
+          +'<div style="font-size:9px;color:var(--text3);text-transform:uppercase;letter-spacing:1px;margin-bottom:4px;">Parcela mínima</div>'
+          +'<div style="font-family:\'DM Mono\',monospace;font-size:15px;color:var(--text);">'+fBRL(d.parcela)+'</div>'
+          +'<div style="font-size:9px;color:var(--text3);">definida no cadastro</div>'
+        +'</div>'
+        +'<div style="background:var(--bg4);border-radius:var(--radius2);padding:12px;">'
+          +'<div style="font-size:9px;color:var(--text3);text-transform:uppercase;letter-spacing:1px;margin-bottom:4px;">Pagamentos feitos</div>'
+          +'<div style="font-family:\'Syne\',sans-serif;font-size:15px;font-weight:700;color:var(--cyan);">'+numPag+'</div>'
+          +'<div style="font-size:9px;color:var(--text3);">'+(numPag>0?'total: '+fBRL(d.pagamentos.reduce(function(s,p){return s+p.valor;},0)):'nenhum ainda')+'</div>'
+        +'</div>'
+      +'</div>'
+      // Comparativo sem plano x com plano
+      +'<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px;">'
+        +'<div style="background:rgba(240,72,90,0.06);border:1px solid rgba(240,72,90,0.2);border-radius:var(--radius2);padding:12px;text-align:center;">'
+          +'<div style="font-size:9px;color:var(--text3);margin-bottom:5px;">Pagando só a mínima</div>'
+          +'<div style="font-family:\'Syne\',sans-serif;font-size:22px;font-weight:800;color:var(--red);">'+(nMin>=999?'Nunca':nMin+' meses')+'</div>'
+          +'<div style="font-size:9px;color:var(--text3);">'+(nMin>=999?'parcela não cobre os juros':'para quitar')+'</div>'
+        +'</div>'
+        +'<div style="background:rgba(30,217,122,0.06);border:1px solid rgba(30,217,122,0.2);border-radius:var(--radius2);padding:12px;text-align:center;">'
+          +'<div style="font-size:9px;color:var(--text3);margin-bottom:5px;">Com plano acelerado</div>'
+          +'<div style="font-family:\'Syne\',sans-serif;font-size:22px;font-weight:800;color:var(--green);">'+(nAcel>=999?'Aumente a parcela':nAcel+' meses')+'</div>'
+          +'<div style="font-size:9px;color:var(--green);">'+(nMin<999&&nAcel<999&&nMin>nAcel?'economiza '+Math.max(0,nMin-nAcel)+' meses':'plano ativo')+'</div>'
+        +'</div>'
+      +'</div>'
+      // Barra progresso
+      +'<div style="margin-bottom:14px;">'
+        +'<div style="display:flex;justify-content:space-between;font-size:10px;color:var(--text3);margin-bottom:5px;">'
+          +'<span>Progresso de quitação</span><span>'+pct.toFixed(0)+'%</span></div>'
+        +'<div style="background:var(--bg4);border-radius:4px;height:7px;overflow:hidden;">'
+          +'<div style="width:'+pct+'%;height:100%;border-radius:4px;background:'+pBarColor+';transition:width 0.8s;"></div></div>'
+      +'</div>'
+      // BOTÕES — o ponto crítico
+      +'<div style="display:grid;grid-template-columns:2fr 1fr 1fr;gap:8px;margin-bottom:10px;">'
+        +'<button class="btn btn-accent" onclick="abrirModalPagamento('+d.id+')" style="padding:12px;font-size:13px;">+ Registrar Pagamento</button>'        +'<button class="btn btn-green" onclick="confirmarQuitacao('+d.id+')" style="padding:12px;font-size:12px;">Quitada</button>'        +'<button class="btn btn-ghost" onclick="confirmarExclusaoDivida('+d.id+')" style="padding:12px;font-size:12px;">Excluir</button>'      +'</div>'
+      // Histórico
+      +histHtml
+    +'</div>';
+  }
+  dc.innerHTML=html;
+
+  // Plano de quitação detalhado
+  var pq=document.getElementById('plano-quitacao');
+  if(pq){
+    var extraAcum=disponivel;
+    var totalM=0;
+    var planHtml='<div style="background:var(--bg3);border:1px solid var(--border2);border-radius:var(--radius2);padding:14px 16px;margin-bottom:16px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;">'
+      +'<div><div style="font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:1px;margin-bottom:3px;">Valor disponível para amortização extra</div>'
+      +'<div style="font-family:\'DM Mono\',monospace;font-size:20px;color:var(--green);">'+fBRL(disponivel)+'/mês</div>'
+      +'<div style="font-size:10px;color:var(--text3);">70% do saldo livre (receitas − despesas médias)</div></div>'
+    +'</div>';
+
+    for(var i=0;i<sorted.length;i++){
+      var d=sorted[i];
+      var jurosM=d.saldo*(d.taxa/100);
+      var parcelaT=d.parcela+extraAcum;
+      var n=parcelaT>jurosM ? Math.ceil(Math.log(parcelaT/(parcelaT-jurosM))/Math.log(1+d.taxa/100)) : 999;
+      var totalJuros=n<999?jurosM*n:0;
+      totalM+=n<999?n:0;
+      var extAntes=extraAcum;
+      if(n<999) extraAcum+=d.parcela;
+
+      planHtml+='<div style="display:flex;gap:14px;padding:16px 0;border-bottom:1px solid var(--border);align-items:flex-start;">'
+        +'<div style="width:34px;height:34px;border-radius:50%;background:'+(i===0?'var(--accent)':'var(--bg4)')+';border:2px solid '+(i===0?'var(--accent)':'var(--border2)')+';display:flex;align-items:center;justify-content:center;font-family:\'Syne\',sans-serif;font-weight:800;font-size:14px;color:'+(i===0?'#fff':'var(--text2)')+';flex-shrink:0;">'+(i+1)+'</div>'
+        +'<div style="flex:1;">'
+          +'<div style="font-family:\'Syne\',sans-serif;font-weight:700;font-size:14px;margin-bottom:8px;">'+d.nome
+            +' <span style="font-size:11px;font-family:\'DM Mono\',monospace;color:'+(d.taxa>5?'var(--red)':'var(--yellow)')+';">'+d.taxa+'%/mês</span></div>'
+          +'<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:8px;">'
+            +'<div style="font-size:11px;"><div style="color:var(--text3);margin-bottom:2px;">Parcela no plano</div><div style="font-family:\'DM Mono\',monospace;color:var(--cyan);">'+fBRL(parcelaT)+'</div></div>'
+            +'<div style="font-size:11px;"><div style="color:var(--text3);margin-bottom:2px;">Quitação em</div><div style="font-family:\'Syne\',sans-serif;font-weight:800;font-size:16px;color:var(--green);">'+(n>=999?'Revisar':n+' meses')+'</div></div>'
+            +'<div style="font-size:11px;"><div style="color:var(--text3);margin-bottom:2px;">Total de juros</div><div style="font-family:\'DM Mono\',monospace;color:var(--red);">'+fBRL(totalJuros)+'</div></div>'
+          +'</div>'
+          +(i<sorted.length-1&&n<999?'<div style="font-size:10px;color:var(--green);background:rgba(30,217,122,0.06);border:1px solid rgba(30,217,122,0.15);border-radius:4px;padding:5px 10px;">Após quitar: +'+fBRL(d.parcela)+'/mês vai para a próxima dívida (efeito bola de neve)</div>':'')
+        +'</div>'
+      +'</div>';
+    }
+
+    var totalAnos=Math.floor(totalM/12);
+    var totalMesesR=totalM%12;
+    planHtml+='<div style="text-align:center;padding:16px 0;font-family:\'Syne\',sans-serif;font-size:14px;font-weight:700;color:var(--accent3);">'
+      +(totalM>0?'Previsão total de quitação: '+totalAnos+'a '+totalMesesR+'m com o plano acelerado':'Informe parcelas acima da taxa de juros para calcular')
+      +'</div>';
+
+    pq.innerHTML=planHtml;
+  }
+
+  renderDividasGrafico(sorted,disponivel);
+}
+
+function renderDividasGrafico(sorted,disponivel){
+  if(!sorted||!sorted.length) return;
+  var saldos=sorted.map(function(d){return d.saldo;});
+  var maxM=72;
+  var labels=['Hoje'];
+  var totais=[saldos.reduce(function(s,v){return s+v;},0)];
+  var extraAtual=disponivel;
+
+  for(var m=1;m<=maxM;m++){
+    var newSaldos=[];
+    for(var i=0;i<saldos.length;i++){
+      if(saldos[i]<=0){newSaldos.push(0);continue;}
+      var taxa=sorted[i].taxa/100;
+      var pag=sorted[i].parcela+(i===0?extraAtual:0);
+      var novo=saldos[i]*(1+taxa)-pag;
+      if(novo<=0&&saldos[i]>0) extraAtual+=sorted[i].parcela;
+      newSaldos.push(Math.max(0,novo));
+    }
+    saldos=newSaldos;
+    var total=parseFloat(saldos.reduce(function(s,v){return s+v;},0).toFixed(2));
+    if(m%3===0||total===0||m===maxM){labels.push('M'+m);totais.push(total);}
+    if(total===0) break;
+  }
+
+  mkChart('c-dividas',{type:'line',data:{labels:labels,datasets:[
+    {label:'Total Dívidas',data:totais,borderColor:'var(--red)',backgroundColor:'rgba(240,72,90,0.08)',fill:true,tension:0.4,pointRadius:2},
+    {label:'Meta zero',data:new Array(totais.length).fill(0),borderColor:'rgba(30,217,122,0.3)',borderDash:[6,4],fill:false,pointRadius:0}
+  ]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:function(ctx){return fBRL(ctx.raw);}}}},scales:{x:{grid:{color:'rgba(255,255,255,0.03)'}},y:{grid:{color:'rgba(255,255,255,0.03)'},min:0,ticks:{callback:function(v){return fBRL(v);}}}}}});
+
+  var livre=document.getElementById('div-livre');
+  if(livre){
+    var idx=totais.findIndex(function(v){return v===0;});
+    if(idx>=0){
+      var mReal=idx*3;
+      livre.innerHTML='<div style="background:rgba(30,217,122,0.08);border:1px solid rgba(30,217,122,0.2);border-radius:var(--radius2);padding:12px 16px;font-family:\'Syne\',sans-serif;font-size:15px;font-weight:700;color:var(--green);">Livre de dívidas em ~'+Math.floor(mReal/12)+' anos e '+mReal%12+' meses</div>';
+    } else {
+      livre.innerHTML='<div style="font-size:11px;color:var(--text3);text-align:center;padding:10px;">Aumente as parcelas para ver a projeção completa de quitação.</div>';
+    }
+  }
+}
+function quitarDivida(id, jaQuitado){
+  const d=S.dividas.find(x=>x.id===id);
+  if(!d)return;
+  // Calcular total já pago e juros economizados
+  const totalPago = d.pagamentos ? d.pagamentos.reduce((s,p)=>s+p.valor,0) : d.saldoInicial||d.saldoOriginal||d.saldo;
+  const prazoOriginal = d.parcela > 0 ? Math.ceil(d.saldoInicial/(d.parcela)) : 12;
+  const jurosEconomizados = d.pagamentos && d.pagamentos.length > 0
+    ? d.pagamentos.reduce((s,p)=>s+p.juros,0)
+    : d.saldo*(d.taxa/100)*12;
+  // Se não foi quitado via pagamento, registrar último pagamento em despesas
+  if(!jaQuitado && d.saldo > 0){
+    S.desps.push({
+      id: Date.now()+1,
+      descricao: 'Quitação Total — ' + d.nome,
+      categoria: 'Pagamento de Dívida',
+      valor: d.saldo,
+      data: new Date().toISOString().split('T')[0],
+      recorrencia: 'Única',
+      limite: 0,
+      _divida: d.id
+    });
+  }
+  S.dividas=S.dividas.filter(x=>x.id!==id);
+  save();renderDividas();renderDesp();
+  showCelebration(d.nome, totalPago, jurosEconomizados);
+}
+
+// ═══════════════════ CELEBRATION ═══════════════════
+function showCelebration(nome,valor,juros){
+  const cel=document.getElementById('celebration');
+  cel.style.display='flex';
+  document.getElementById('celeb-debt-name').textContent=nome;
+  document.getElementById('celeb-stats').innerHTML=`
+    <div class="celeb-stat"><div class="celeb-stat-l">Valor Quitado</div><div class="celeb-stat-v" style="color:var(--green)">${fBRL(valor)}</div></div>
+    <div class="celeb-stat"><div class="celeb-stat-l">Juros Economizados</div><div class="celeb-stat-v" style="color:var(--accent3)">${fBRL(juros)}</div></div>`;
+  const dvsLeft=S.dividas.length;
+  const bonus=dvsLeft===0?'+30 dias grátis adicionados + badge SOBERANO desbloqueado':'+7 dias grátis adicionados à sua conta';
+  document.getElementById('celeb-bonus').textContent=bonus;
+  // Extend trial
+  if(S.trialStart&&!S.premium){
+    const extension=dvsLeft===0?30*24*60*60*1000:7*24*60*60*1000;
+    S.trialStart=(parseInt(S.trialStart)-extension).toString();
+    localStorage.setItem('lliw_trial',S.trialStart);
+  }
+  // Particles
+  const canvas=document.getElementById('celeb-canvas');
+  const ctx=canvas.getContext('2d');
+  canvas.width=canvas.parentElement.offsetWidth;
+  canvas.height=canvas.parentElement.offsetHeight;
+  const parts=Array.from({length:60},()=>({x:Math.random()*canvas.width,y:-10,vx:(Math.random()-0.5)*2,vy:Math.random()*3+1,size:Math.random()*4+2,color:['#d4a843','#7c6af7','#1ed97a','#f5c842'][Math.floor(Math.random()*4)],alpha:1}));
+  let af;function animate(){ctx.clearRect(0,0,canvas.width,canvas.height);parts.forEach(p=>{p.x+=p.vx;p.y+=p.vy;p.alpha-=0.008;ctx.globalAlpha=Math.max(0,p.alpha);ctx.fillStyle=p.color;ctx.fillRect(p.x,p.y,p.size,p.size);});ctx.globalAlpha=1;af=requestAnimationFrame(animate);}
+  animate();
+  setTimeout(()=>cancelAnimationFrame(af),4000);
+}
+function closeCelebration(){document.getElementById('celebration').style.display='none';}
+function shareScore(){
+  const {score,status}=calcScore();
+  toast(`Score ${score} — ${status.label} · LLIW`,'t-info');
+  closeCelebration();
+}
+
+// ═══════════════════ DIÁRIO ═══════════════════
+function addDiario(){
+  const data=document.getElementById('di-data').value;
+  const texto=document.getElementById('di-texto').value.trim();
+  const humor=document.getElementById('di-humor').value;
+  const valor=parseFloat(document.getElementById('di-valor').value)||0;
+  if(!data||!texto){toast('Preencha data e texto','t-err');return;}
+  S.diario=S.diario.filter(d=>d.data!==data);
+  S.diario.push({id:Date.now(),data,texto,humor,valor});
+  save();renderDiario();toast('Entrada salva!');
+  document.getElementById('di-texto').value='';document.getElementById('di-valor').value='';
+}
+function renderDiario(){
+  const now=new Date();const m=now.getMonth(),y=now.getFullYear();
+  const daysInMonth=new Date(y,m+1,0).getDate();
+  const firstDay=new Date(y,m,1).getDay();
+  const cal=document.getElementById('diary-cal');
+  let html='';
+  for(let i=0;i<firstDay;i++)html+='<div></div>';
+  for(let d=1;d<=daysInMonth;d++){
+    const dateStr=`${y}-${String(m+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+    const entry=S.diario.find(e=>e.data===dateStr);
+    const isToday=d===now.getDate();
+    html+=`<div class="cal-day ${entry?'has-entry mood-'+entry.humor:''} ${isToday?'today':''}" title="${entry?entry.texto:''}">${d}</div>`;
+  }
+  cal.innerHTML=html;
+  const sorted=[...S.diario].sort((a,b)=>new Date(b.data)-new Date(a.data));
+  const moodLabels={good:'Produtivo',save:'Economizei',ok:'Neutro',bad:'Gastei demais'};
+  const moodColors={good:'var(--green)',save:'var(--cyan)',ok:'var(--yellow)',bad:'var(--red)'};
+  document.getElementById('diary-list').innerHTML=sorted.slice(0,10).map(e=>`
+    <div class="diary-entry">
+      <div class="diary-entry-hd">
+        <span class="diary-entry-date">${new Date(e.data+'T12:00').toLocaleDateString('pt-BR',{weekday:'long',day:'2-digit',month:'long'})}</span>
+        <div style="display:flex;align-items:center;gap:8px;">
+          ${e.valor?('<span style="font-family:\'DM Mono\',monospace;font-size:11px;color:var(--text3)">'+fBRL(e.valor)+'</span>'):''}
+          <span class="td-tag" style="background:${moodColors[e.humor]}22;color:${moodColors[e.humor]}">${moodLabels[e.humor]}</span>
+          <button class="btn btn-xs btn-red" onclick="S.diario=S.diario.filter(x=>x.id!==${e.id});save();renderDiario();">✕</button>
+        </div>
+      </div>
+      <div class="diary-entry-text">${e.texto}</div>
+    </div>`).join('')||'<div style="text-align:center;color:var(--text4);padding:20px;">Nenhuma entrada ainda. Comece hoje!</div>';
+}
+
+// ═══════════════════ SIMULADORES ═══════════════════
+function calcJC(){
+  let ci=parseFloat(document.getElementById('jc-ci').value)||0;
+  let aporte=parseFloat(document.getElementById('jc-ap').value)||0;
+  let taxa=parseFloat(document.getElementById('jc-taxa').value)||0;
+  const tfq=document.getElementById('jc-tfq').value;
+  let n=parseFloat(document.getElementById('jc-n').value)||0;
+  const per=document.getElementById('jc-per').value;
+  if(tfq==='a')taxa=Math.pow(1+taxa/100,1/12)-1; else taxa=taxa/100;
+  if(per==='a')n=n*12;
+  let m=ci;const labels=[],vals=[],aportArr=[];
+  const step=Math.max(1,Math.floor(n/24));
+  for(let i=0;i<=n;i++){
+    if(i>0)m=m*(1+taxa)+aporte;
+    if(i%step===0||i===n){labels.push('M'+i);vals.push(parseFloat(m.toFixed(2)));aportArr.push(ci+aporte*i);}
+  }
+  const totalAp=ci+aporte*n,juros=m-totalAp;
+  document.getElementById('jc-result').innerHTML=`
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;">
+      <div style="background:var(--bg3);border-radius:var(--radius2);padding:12px;"><div style="font-size:9px;color:var(--text3);text-transform:uppercase;letter-spacing:1px;margin-bottom:4px;">Montante Final</div><div style="font-family:'Syne',sans-serif;font-size:18px;font-weight:700;color:var(--green)">${fBRL(m)}</div></div>
+      <div style="background:var(--bg3);border-radius:var(--radius2);padding:12px;"><div style="font-size:9px;color:var(--text3);text-transform:uppercase;letter-spacing:1px;margin-bottom:4px;">Total Aportado</div><div style="font-family:'Syne',sans-serif;font-size:18px;font-weight:700;color:var(--accent3)">${fBRL(totalAp)}</div></div>
+      <div style="background:var(--bg3);border-radius:var(--radius2);padding:12px;"><div style="font-size:9px;color:var(--text3);text-transform:uppercase;letter-spacing:1px;margin-bottom:4px;">Juros Ganhos</div><div style="font-family:'Syne',sans-serif;font-size:18px;font-weight:700;color:var(--yellow)">${fBRL(juros)}</div></div>
+    </div>`;
+  mkChart('c-jc',{type:'line',data:{labels,datasets:[
+    {label:'Montante',data:vals,borderColor:'var(--accent)',backgroundColor:'rgba(124,106,247,0.07)',fill:true,tension:0.4,pointRadius:0},
+    {label:'Aportado',data:aportArr,borderColor:'var(--text3)',borderDash:[4,4],fill:false,tension:0,pointRadius:0}
+  ]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:true,labels:{boxWidth:8,padding:10,color:'#4a4a6a'}}},scales:{x:{grid:{color:'rgba(255,255,255,0.03)'}},y:{grid:{color:'rgba(255,255,255,0.03)'},ticks:{callback:v=>fBRL(v)}}}}});
+}
+function calcComparativo(){
+  const cap=parseFloat(document.getElementById('cmp-cap').value)||10000;
+  const anos=parseFloat(document.getElementById('cmp-anos').value)||5;
+  const n=anos*12;
+  const calc=(taxa)=>cap*Math.pow(1+taxa/100,n);
+  const data=[calc(13.25/12),calc(14.47/12),calc(1.134),calc(6.17/12)];
+  mkChart('c-cmp',{type:'bar',data:{labels:['Tesouro Selic\n(13,25%aa)','CDB 110% CDI\n(14,47%aa)','FII Médio\n(~13,6%aa)','Poupança\n(6,17%aa)'],datasets:[{data,backgroundColor:['#18d4e8','#7c6af7','#1ed97a','#f04a5a'],borderRadius:8,borderSkipped:false}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{grid:{color:'rgba(255,255,255,0.03)'}},y:{grid:{color:'rgba(255,255,255,0.03)'},ticks:{callback:v=>fBRL(v)}}}}});
+}
+function calcJS(){
+  const c=parseFloat(document.getElementById('js-c').value)||0;
+  const t=parseFloat(document.getElementById('js-t').value)||0;
+  const n=parseFloat(document.getElementById('js-n').value)||0;
+  const j=c*(t/100)*n;
+  document.getElementById('js-result').innerHTML=`Juros: ${fBRL(j)}  ·  Montante: ${fBRL(c+j)}`;
+}
+
+// ═══════════════════ CALCULADORA ═══════════════════
+let CS={v:'0',expr:'',op:'',lv:0,hasOp:false};
+function ck(k){
+  const d=document.getElementById('cd'),e=document.getElementById('ce');
+  if(k==='C'){CS={v:'0',expr:'',op:'',lv:0,hasOp:false};}
+  else if(k==='±'){CS.v=String(-parseFloat(CS.v));}
+  else if(k==='%'){CS.v=String(parseFloat(CS.v)/100);}
+  else if(['+','-','*','/'].includes(k)){CS.expr=CS.v+' '+({'+':'+','-':'−','*':'×','/':'÷'}[k]);CS.lv=parseFloat(CS.v);CS.op=k;CS.hasOp=true;CS.v='0';}
+  else if(k==='='){
+    const a=CS.lv,b=parseFloat(CS.v);
+    let r={'+':a+b,'-':a-b,'*':a*b,'/':b?a/b:NaN}[CS.op]||b;
+    CS.expr=CS.lv+' '+({'+':'+','-':'−','*':'×','/':'÷'}[CS.op]||'')+' '+b+' =';
+    CS.v=isNaN(r)?'Erro':String(parseFloat(r.toFixed(10)));CS.hasOp=false;
+  } else if(k==='.'){if(!CS.v.includes('.'))CS.v+='.';}
+  else{CS.v=CS.hasOp&&CS.v==='0'?k:CS.v==='0'?k:CS.v+k;}
+  d.textContent=CS.v.length>12?parseFloat(CS.v).toExponential(4):CS.v;
+  e.textContent=CS.expr;
+}
+
+// ═══════════════════ EDUCAÇÃO ═══════════════════
+const EDU=[
+  {icon:'%',bg:'rgba(124,106,247,0.15)',title:'Juros Simples',sub:'O básico do dinheiro',body:`<b>Juros simples</b> são calculados sempre sobre o capital inicial, sem considerar os juros já acumulados.<br><br>Se você investe R$ 1.000 a 2% ao mês por 12 meses:<br><div class="edu-formula">J = C × i × n = 1000 × 0,02 × 12 = R$ 240</div>Útil para calcular parcelas de financiamentos de curto prazo.`},
+  {icon:'∑',bg:'rgba(30,217,122,0.15)',title:'Juros Compostos',sub:'O poder dos juros sobre juros',body:`<b>Juros compostos</b> são calculados sobre o capital inicial mais os juros já acumulados. São a base da construção de riqueza.<br><br><div class="edu-formula">M = C × (1 + i)ⁿ</div>R$ 1.000 a 1%/mês por 12 meses = <b>R$ 1.126,83</b><br>vs. juros simples: R$ 1.240 — mas os compostos crescem <i>exponencialmente</i> no longo prazo. Einstein chamou de "a 8ª maravilha do mundo".`},
+  {icon:'⬡',bg:'rgba(245,200,66,0.15)',title:'Taxa Selic',sub:'A taxa básica da economia',body:`A <b>Selic</b> (Sistema Especial de Liquidação e Custódia) é a taxa básica de juros da economia brasileira, definida pelo Banco Central a cada 45 dias pelo COPOM.<br><br>Ela influencia:<br>· Rendimento do Tesouro Selic<br>· Taxa do CDI<br>· Crédito pessoal e financiamentos<br>· Câmbio e inflação<br><br>Quando a Selic sobe, o crédito fica mais caro mas investimentos em renda fixa rendem mais.`},
+  {icon:'◈',bg:'rgba(24,212,232,0.15)',title:'CDI',sub:'O índice dos bancos',body:`O <b>CDI</b> (Certificado de Depósito Interbancário) é a taxa que os bancos cobram entre si para empréstimos de curtíssimo prazo.<br><br>Sempre muito próximo da Selic (geralmente 0,1% abaixo). É a referência para:<br>· CDBs (ex: "CDB 110% do CDI")<br>· Fundos DI<br>· Contas remuneradas<br><br>Um CDB a 110% do CDI com CDI em 13,15%/ano = 14,47%/ano.`},
+  {icon:'◉',bg:'rgba(212,168,67,0.15)',title:'CDB',sub:'Certificado de Depósito Bancário',body:`O <b>CDB</b> é um título emitido por bancos para captar dinheiro. Você empresta dinheiro ao banco e ele te paga juros.<br><br>· Protegido pelo FGC até R$ 250 mil por instituição<br>· Pode ser pré-fixado, pós-fixado (% do CDI) ou IPCA+<br>· Liquidez varia: alguns têm resgate diário, outros no vencimento<br><br>Prefira CDBs de bancos menores com taxas acima de 110% do CDI.`},
+  {icon:'◎',bg:'rgba(240,72,90,0.15)',title:'LCI e LCA',sub:'Isenção de Imposto de Renda',body:`<b>LCI</b> (Letras de Crédito Imobiliário) e <b>LCA</b> (Letras de Crédito do Agronegócio) são investimentos isentos de IR para pessoa física.<br><br>Por isso, uma LCI a 10% líquida pode ser melhor que um CDB a 13% tributado:<br><div class="edu-formula">CDB 13% - IR 15% = ~11% líquido</div>Verifique sempre o rendimento líquido antes de comparar. Também têm cobertura do FGC.`},
+  {icon:'▤',bg:'rgba(124,106,247,0.15)',title:'FIIs — Fundos de Investimento Imobiliário',sub:'Imóveis sem comprar imóvel',body:`Os <b>FIIs</b> permitem investir em imóveis a partir de R$ 10. Você compra cotas na bolsa e recebe aluguéis mensais (dividendos) isentos de IR.<br><br>Tipos principais:<br>· <b>Tijolo</b> — imóveis físicos (shoppings, galpões, lajes)<br>· <b>Papel</b> — CRIs e CRAs (crédito imobiliário)<br>· <b>Fiagros</b> — crédito do agronegócio<br><br>Avalie sempre o P/VP (abaixo de 1 = desconto) e o DY (Dividend Yield).`},
+  {icon:'◐',bg:'rgba(30,217,122,0.15)',title:'Renda Ativa vs Passiva',sub:'A diferença que muda tudo',body:`<b>Renda Ativa</b> — você troca tempo por dinheiro (salário, freelance). Quando para de trabalhar, para de receber.<br><br><b>Renda Passiva</b> — seu dinheiro trabalha por você (dividendos, aluguéis, juros). Você recebe mesmo dormindo.<br><br>A jornada para a liberdade financeira é:<br>1. Usar a renda ativa para construir ativos<br>2. Os ativos geram renda passiva<br>3. Quando a renda passiva cobre seus gastos = <b>FIRE</b>`},
+  {icon:'✦',bg:'rgba(245,200,66,0.15)',title:'Regra 50-30-20',sub:'O orçamento simplificado',body:`Uma das regras de finanças pessoais mais práticas:<br><br>· <b>50%</b> para Necessidades (moradia, alimentação, saúde, transporte)<br>· <b>30%</b> para Desejos (lazer, restaurantes, assinaturas)<br>· <b>20%</b> para Investimentos e reserva de emergência<br><br>Adapte os percentuais para sua realidade. Se tem dívidas, direcione parte dos 20% para quitá-las primeiro.`},
+  {icon:'★',bg:'rgba(124,106,247,0.15)',title:'FIRE — Independência Financeira',sub:'Quando o dinheiro trabalha por você',body:`<b>FIRE</b> (Financial Independence, Retire Early) é o movimento de acumular patrimônio suficiente para viver de renda passiva.<br><br>A fórmula básica (Regra dos 4%):<br><div class="edu-formula">Patrimônio = Gastos anuais / 0,04</div>Gastando R$ 5.000/mês = R$ 60.000/ano → Patrimônio necessário: <b>R$ 1.500.000</b><br><br>Com esse patrimônio investido a 5,5%/ano líquido, você nunca toca no principal.`},
+  {icon:'◒',bg:'rgba(24,212,232,0.15)',title:'Cripto e Ativos Digitais',sub:'O novo mundo financeiro',body:`Criptomoedas são moedas digitais descentralizadas que funcionam em blockchain.<br><br>Principais:<br>· <b>Bitcoin (BTC)</b> — reserva de valor digital, o ouro digital<br>· <b>Ethereum (ETH)</b> — plataforma de contratos inteligentes<br>· <b>Stablecoins (USDT/USDC)</b> — atreladas ao dólar, baixo risco<br><br>Alta volatilidade = alto risco. Limite a no máximo 5-10% da carteira. Nunca invista mais do que pode perder.`},
+  {icon:'∿',bg:'rgba(240,72,90,0.15)',title:'Reserva de Emergência',sub:'O alicerce de tudo',body:`Antes de qualquer investimento, você precisa de uma reserva de emergência: <b>6 a 12 meses dos seus gastos mensais</b> em um investimento de altíssima liquidez.<br><br>Onde guardar: Tesouro Selic, CDB com liquidez diária ou conta remunerada.<br><br>Ela serve para imprevistos (desemprego, doença, reparos) sem precisar resgatar investimentos ou contrair dívidas. Sem ela, qualquer contratempos destrói sua estratégia financeira.`},
+];
+function renderEducacao(){
+  document.getElementById('edu-grid').innerHTML=EDU.map((e,i)=>`
+    <div class="edu-card" id="edu-${i}" onclick="toggleEdu(${i})">
+      <div class="edu-card-hd">
+        <div class="edu-icon" style="background:${e.bg}">${e.icon}</div>
+        <div><div class="edu-card-title">${e.title}</div><div class="edu-card-sub">${e.sub}</div></div>
+      </div>
+      <div class="edu-body">${e.body}</div>
+    </div>`).join('');
+}
+function toggleEdu(i){document.getElementById('edu-'+i).classList.toggle('open');}
+
+// ═══════════════════ RADAR ═══════════════════
+const NEWS=[
+  {src:'InfoMoney',cat:'Economia',catColor:'var(--green)',title:'Selic em 13,25%: o que muda para seus investimentos em renda fixa',time:'2h atrás',url:'#'},
+  {src:'Valor Econômico',cat:'Mercado',catColor:'var(--accent3)',title:'Ibovespa sobe 1,2% com recuperação das blue chips e dados de emprego nos EUA',time:'3h atrás',url:'#'},
+  {src:'Cointelegraph',cat:'Cripto',catColor:'var(--yellow)',title:'Bitcoin supera US$ 84.000 em semana de otimismo institucional',time:'4h atrás',url:'#'},
+  {src:'Reuters Brasil',cat:'Geopolítica',catColor:'var(--red)',title:'Fed sinaliza manutenção dos juros americanos diante de incertezas comerciais',time:'5h atrás',url:'#'},
+  {src:'InfoMoney',cat:'FIIs',catColor:'var(--cyan)',title:'FIIs de papel lideram ganhos em março com alta do CDI e CRIs indexados',time:'6h atrás',url:'#'},
+  {src:'Exame',cat:'Tecnologia',catColor:'var(--accent)',title:'Open Finance avança e bancos disputam dados de clientes para ofertas personalizadas',time:'8h atrás',url:'#'},
+  {src:'Bloomberg BR',cat:'Geopolítica',catColor:'var(--red)',title:'Tensões comerciais EUA-China pressionam mercados emergentes e real',time:'10h atrás',url:'#'},
+  {src:'Cointelegraph',cat:'Cripto',catColor:'var(--yellow)',title:'Ethereum ETF registra maior volume em 3 meses com entrada de capital institucional',time:'12h atrás',url:'#'},
+  {src:'Valor Econômico',cat:'Economia',catColor:'var(--green)',title:'IPCA de fevereiro surpreende e reforça cautela do Banco Central com cortes de juros',time:'14h atrás',url:'#'},
+];
+function renderRadar(){
+  document.getElementById('news-grid').innerHTML=NEWS.map(n=>`
+    <div class="news-card" onclick="window.open('${n.url}','_blank')">
+      <div><span class="news-cat" style="background:${n.catColor}22;color:${n.catColor}">${n.cat}</span></div>
+      <div class="news-source" style="color:var(--text3)">${n.src}</div>
+      <div class="news-title">${n.title}</div>
+      <div class="news-time">${n.time}</div>
+    </div>`).join('');
+}
+
+
+// ═══════════════════ RESET ═══════════════════
+function renderResetar(){
+  var rp=document.getElementById('reset-preview');
+  if(!rp) return;
+  rp.innerHTML=
+    '<div style="background:var(--bg4);border-radius:var(--radius2);padding:10px 12px;">'
+      +'<div style="font-size:9px;color:var(--text3);text-transform:uppercase;letter-spacing:1px;margin-bottom:3px;">Recebimentos</div>'
+      +'<div style="font-family:Syne,sans-serif;font-size:20px;font-weight:700;color:var(--text);">'+S.recs.length+'</div>'
+      +'<div style="font-size:10px;color:var(--text3);">lançamentos</div>'
+    +'</div>'
+    +'<div style="background:var(--bg4);border-radius:var(--radius2);padding:10px 12px;">'
+      +'<div style="font-size:9px;color:var(--text3);text-transform:uppercase;letter-spacing:1px;margin-bottom:3px;">Despesas</div>'
+      +'<div style="font-family:Syne,sans-serif;font-size:20px;font-weight:700;color:var(--text);">'+S.desps.length+'</div>'
+      +'<div style="font-size:10px;color:var(--text3);">lançamentos</div>'
+    +'</div>'
+    +'<div style="background:var(--bg4);border-radius:var(--radius2);padding:10px 12px;">'
+      +'<div style="font-size:9px;color:var(--text3);text-transform:uppercase;letter-spacing:1px;margin-bottom:3px;">Ativos</div>'
+      +'<div style="font-family:Syne,sans-serif;font-size:20px;font-weight:700;color:var(--text);">'+S.ativos.length+'</div>'
+      +'<div style="font-size:10px;color:var(--text3);">na carteira</div>'
+    +'</div>'
+    +'<div style="background:var(--bg4);border-radius:var(--radius2);padding:10px 12px;">'
+      +'<div style="font-size:9px;color:var(--text3);text-transform:uppercase;letter-spacing:1px;margin-bottom:3px;">Dívidas</div>'
+      +'<div style="font-family:Syne,sans-serif;font-size:20px;font-weight:700;color:var(--text);">'+S.dividas.length+'</div>'
+      +'<div style="font-size:10px;color:var(--text3);">cadastradas</div>'
+    +'</div>'
+    +'<div style="background:var(--bg4);border-radius:var(--radius2);padding:10px 12px;grid-column:span 2;">'
+      +'<div style="font-size:9px;color:var(--text3);text-transform:uppercase;letter-spacing:1px;margin-bottom:3px;">Diário Financeiro</div>'
+      +'<div style="font-family:Syne,sans-serif;font-size:20px;font-weight:700;color:var(--text);">'+S.diario.length+'</div>'
+      +'<div style="font-size:10px;color:var(--text3);">entradas</div>'
+    +'</div>';
+  // Limpar campo confirmação
+  var cf=document.getElementById('rst-confirm');
+  if(cf) cf.value='';
+}
+
+function executarReset(){
+  var confirmInput=document.getElementById('rst-confirm');
+  if(!confirmInput||confirmInput.value.trim().toUpperCase()!=='REINICIAR'){
+    toast('Digite REINICIAR para confirmar','t-err');
+    confirmInput.style.borderColor='var(--red)';
+    setTimeout(function(){confirmInput.style.borderColor='rgba(240,72,90,0.3)';},2000);
+    return;
+  }
+  var apagou=[];
+  if(document.getElementById('rst-recs').checked){ S.recs=[]; apagou.push('Recebimentos'); }
+  if(document.getElementById('rst-desps').checked){ S.desps=[]; apagou.push('Despesas'); }
+  if(document.getElementById('rst-ativos').checked){ S.ativos=[]; apagou.push('Ativos'); }
+  if(document.getElementById('rst-dividas').checked){ S.dividas=[]; apagou.push('Dívidas'); }
+  if(document.getElementById('rst-diario').checked){ S.diario=[]; apagou.push('Diário'); }
+  save();
+  confirmInput.value='';
+  renderResetar();
+  toast(apagou.join(', ')+' apagados com sucesso.','t-info');
+  // Voltar ao dashboard após 1.5s
+  setTimeout(function(){
+    goPage('dashboard', document.querySelector('.sb-item'));
+  }, 1500);
+}
+
+// ═══════════════════ INIT ═══════════════════
+setQuote();
+
+// Teclas de atalho no login
+document.getElementById('li-pass').addEventListener('keydown',function(e){if(e.key==='Enter')doLogin();});
+document.getElementById('li-email').addEventListener('keydown',function(e){if(e.key==='Enter')document.getElementById('li-pass').focus();});
+
+// Estado inicial: sempre mostrar login, nunca auto-login
+// (evita problemas com localStorage corrompido)
+document.getElementById('login-screen').style.display='flex';
+document.getElementById('app').style.display='none';
+document.getElementById('onboarding-screen').classList.remove('active');
+</script>
+</body>
+</html>
