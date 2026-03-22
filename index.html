@@ -2,10 +2,22 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
+<meta http-equiv="X-Content-Type-Options" content="nosniff">
+<meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
+<meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=()">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>LLIW — Liberdade Financeira</title>
+<title>LLIW — Plataforma de Inteligência Financeira</title>
+<meta name="description" content="LLIW é uma plataforma financeira completa para controle de receitas, despesas, investimentos e dívidas. Conquiste sua liberdade financeira.">
+<meta name="keywords" content="finanças pessoais, controle financeiro, investimentos, FIIs, dívidas, liberdade financeira">
+<meta name="author" content="LLIW Finanças">
+<meta property="og:title" content="LLIW — Plataforma Financeira">
+<meta property="og:description" content="Controle suas finanças, acompanhe investimentos e conquiste a liberdade financeira.">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#05050a">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://lliw-finances.github.io/sturdy-garbanzo/">
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&display=swap" rel="stylesheet">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js" defer></script>
 <style>
 :root {
   --bg:#05050a;--bg2:#0a0a12;--bg3:#0f0f1a;--bg4:#161622;--card:#0d0d18;
@@ -320,12 +332,30 @@ tr:hover td{background:rgba(255,255,255,0.015);}
   .content{padding:16px;}
   .topbar{padding:12px 16px;}
   .menu-btn{display:flex;}
+  .kpi-row{grid-template-columns:repeat(2,1fr);}
+}
+@media(max-width:480px){
+  .kpi-row{grid-template-columns:1fr;}
+  .login-box{padding:32px 24px;}
+  .login-logo{font-size:44px;}
+  .ob-box{padding:28px 20px;}
+  .calc-grid{gap:6px;}
+  .cb{padding:12px;}
+  .content{padding:12px;}
+  .topbar{padding:10px 12px;}
+  .topbar-date{display:none;}
+}
+@media(max-width:360px){
+  .login-box{padding:24px 16px;}
+  .kpi-val{font-size:18px;}
+  .sb-logo{font-size:22px;}
+}
+@media(min-width:1440px){
+  .page-content,.content{max-width:1600px;margin:0 auto;}
+  .kpi-row{grid-template-columns:repeat(6,1fr);}
 }
 </style>
 
-
-<!-- Mercado Pago SDK -->
-<script src="https://sdk.mercadopago.com/js/v2"></script>
 <!-- Firebase SDK -->
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
@@ -382,11 +412,11 @@ tr:hover td{background:rgba(255,255,255,0.015);}
       </div>
       <div id="login-form">
         <label class="f-label">E-mail</label>
-        <input class="f-input" id="li-email" type="email" placeholder="seu@email.com" autocomplete="email">
+        <input class="f-input" id="li-email" type="email" placeholder="seu@email.com" autocomplete="email" aria-label="Endereço de e-mail" aria-required="true">
         <label class="f-label">Senha</label>
-        <input class="f-input" id="li-pass" type="password" placeholder="••••••••" autocomplete="current-password">
+        <input class="f-input" id="li-pass" type="password" placeholder="••••••••" autocomplete="current-password" aria-label="Senha" aria-required="true">
         <div class="login-err" id="li-err">E-mail ou senha incorretos.</div>
-        <button class="btn-login" onclick="doLogin()">Entrar</button>
+        <button class="btn-login" id="btn-login-submit" onclick="doLogin()">Entrar</button>
         <div class="login-links">
           <button class="login-link" onclick="showForgot()">Esqueci minha senha</button>
           <button class="login-link" onclick="showRegister()">Criar conta</button>
@@ -430,7 +460,7 @@ tr:hover td{background:rgba(255,255,255,0.015);}
 
 <!-- ══════════════════════ APP ══════════════════════ -->
 <div id="app">
-  <aside class="sidebar" id="sidebar">
+  <aside class="sidebar" role="complementary" aria-label="Menu de navegação" id="sidebar">
     <div class="sb-logo">LLI<span>W</span></div>
     <div class="sb-logo-sub">Plataforma Financeira</div>
     <div class="sb-trial" id="sb-trial">
@@ -438,7 +468,7 @@ tr:hover td{background:rgba(255,255,255,0.015);}
       <div class="sb-trial-time" id="trial-timer">23:59:59</div>
       <div class="sb-trial-sub">Restante de acesso gratuito</div>
     </div>
-    <nav class="sb-nav">
+    <nav class="sb-nav" role="navigation" aria-label="Menu principal">
       <div class="sb-section">Principal</div>
       <div class="sb-item active" onclick="goPage('dashboard',this)"><div class="sb-icon">◈</div>Dashboard</div>
       <div class="sb-item" onclick="goPage('recebimentos',this)"><div class="sb-icon">↓</div>Recebimentos</div>
@@ -467,11 +497,11 @@ tr:hover td{background:rgba(255,255,255,0.015);}
     </div>
   </aside>
 
-  <main class="main">
+  <main class="main" role="main">
     <div class="topbar">
       <div class="topbar-left">
         <div class="menu-btn" id="menu-btn" onclick="toggleSidebar()">☰</div>
-        <div class="topbar-title" id="page-title">Dashboard</div>
+        <h1 class="topbar-title" id="page-title" style="font-size:17px;font-weight:700;font-family:'Syne',sans-serif;margin:0;">Dashboard</h1>
       </div>
       <div class="topbar-right">
         <div class="topbar-date" id="top-date"></div>
@@ -889,6 +919,7 @@ tr:hover td{background:rgba(255,255,255,0.015);}
         <div class="panel" style="margin-bottom:16px;">
           <div style="font-family:'Syne',sans-serif;font-size:16px;font-weight:700;margin-bottom:4px;">Radar de Notícias</div>
           <div style="font-size:12px;color:var(--text3);">Economia · Investimentos · Tecnologia · Geopolítica</div>
+          <div style="font-size:10px;color:var(--text4);margin-top:4px;font-family:'DM Mono',monospace;">Dados ilustrativos — integração com feeds em desenvolvimento</div>
         </div>
         <div class="news-grid" id="news-grid"></div>
       </div>
@@ -1036,13 +1067,7 @@ tr:hover td{background:rgba(255,255,255,0.015);}
     <div class="pw-price">R$ 19,90</div>
     <div class="pw-price-sub">por mês · acesso imediato após pagamento</div>
 
-    <!-- Botão Mercado Pago -->
-    <button onclick="pagarComMP()" style="width:100%;padding:16px;background:#009ee3;border:none;border-radius:var(--radius2);color:#fff;font-family:'Syne',sans-serif;font-size:15px;font-weight:700;cursor:pointer;margin-bottom:12px;display:flex;align-items:center;justify-content:center;gap:10px;transition:all 0.2s;">
-      <span style="font-size:20px;">💳</span> Pagar com Mercado Pago
-    </button>
-    <div style="font-size:11px;color:var(--text3);margin-bottom:16px;text-align:center;">Pix, cartão ou boleto · Acesso liberado automaticamente</div>
-
-    <div class="pw-divider">ou copie a chave Pix manualmente</div>
+    <div class="pw-divider">Pague via Pix</div>
     <div class="pw-pix" onclick="copyPixKey()">
       <div class="pw-pix-label">Chave Pix · Clique para copiar</div>
       <div class="pw-pix-key" id="pw-pix-key">dab6e95f-1628-4455-a6fa-3e53635e0e66</div>
@@ -1175,6 +1200,10 @@ function doLogin(){
   const pw=document.getElementById('li-pass').value;
   const err=document.getElementById('li-err');
   if(!em||!pw){err.textContent='Preencha e-mail e senha.';err.style.display='block';return;}
+  // Loading state
+  const btnSubmit=document.getElementById('btn-login-submit');
+  if(btnSubmit){btnSubmit.textContent='Entrando...';btnSubmit.disabled=true;}
+  const resetBtn=function(){if(btnSubmit){btnSubmit.textContent='Entrar';btnSubmit.disabled=false;}};
   // Verificar se Firebase carregou
   if(typeof window.fbLogin !== 'function' || !window._firebaseReady){
     err.textContent='Erro de conexão. Verifique sua internet e tente novamente.';
@@ -1209,6 +1238,7 @@ function doLogin(){
     if(e&&e.code==='auth/user-disabled') msg='Conta desativada. Entre em contato.';
     err.textContent=msg;
     err.style.color='var(--red)';err.style.display='block';
+    resetBtn();
   });
 }
 function doRegister(){
@@ -1253,7 +1283,12 @@ function doForgot(){
     err.style.display='block';
   });
 }
+let _intervals = [];
 function doLogout(){
+  // Limpar todos os intervals para evitar memory leak
+  _intervals.forEach(function(id){ clearInterval(id); });
+  _intervals=[];
+  Object.keys(charts).forEach(function(k){ killChart(k); });
   window.fbSignOut().then(()=>{
     S.user=null;
     S.recs=[];S.desps=[];S.ativos=[];S.dividas=[];S.diario=[];
@@ -1279,7 +1314,7 @@ function showOnboarding(){
 }
 function renderOB(){
   var stepDots = '';
-  for(var si=0; si<OB_Q.length; si++){
+  for(let si=0; si<OB_Q.length; si++){
     var cls = si<obStep ? 'done' : si===obStep ? 'active' : '';
     stepDots += '<div class="ob-step-dot '+cls+'"></div>';
   }
@@ -1287,7 +1322,7 @@ function renderOB(){
 
   var q = OB_Q[obStep];
   var optsHtml = '';
-  for(var oi=0; oi<q.opts.length; oi++){
+  for(let oi=0; oi<q.opts.length; oi++){
     optsHtml += '<button class="ob-option" onclick="selectOB('+oi+')">'
       + q.opts[oi] + '</button>';
   }
@@ -1325,7 +1360,7 @@ function launchApp(){
   document.getElementById('app').style.display='block';
   document.getElementById('sb-av').textContent=(S.user?.name||'U')[0].toUpperCase();
   document.getElementById('sb-nm').textContent=S.user?.name||'Usuário';
-  updateDate();setInterval(updateDate,60000);
+  updateDate();_intervals.push(setInterval(updateDate,60000));
   startTrialTimer();
   const today=new Date().toISOString().split('T')[0];
   ['r-data','d-data','di-data'].forEach(id=>{const el=document.getElementById(id);if(el)el.value=today;});
@@ -1333,8 +1368,26 @@ function launchApp(){
   S.dividas = S.dividas.map(d => ({...d, pagamentos: d.pagamentos||[], saldoInicial: d.saldoInicial||d.saldoOriginal||d.saldo}));
   save();
   renderTicker();renderDashboard();renderEducacao();renderRadar();
-  checkPaywall();
-  atualizarMenuPremium();
+  // Verificar premium no Firestore (fonte de verdade)
+  if(S.user&&S.user.uid&&window._firebaseReady){
+    firebase.firestore().collection('usuarios').doc(S.user.uid).get().then(function(snap){
+      if(snap.exists){
+        const data=snap.data();
+        if(data.premium) S.premium=data.premium;
+        if(data.trialStart) S.trialStart=data.trialStart;
+        localStorage.setItem('lliw_premium',S.premium||'');
+        localStorage.setItem('lliw_trial',S.trialStart||'');
+      }
+      checkPaywall();
+      atualizarMenuPremium();
+    }).catch(function(){
+      checkPaywall();
+      atualizarMenuPremium();
+    });
+  } else {
+    checkPaywall();
+    atualizarMenuPremium();
+  }
 }
 
 function atualizarMenuPremium(){
@@ -1363,7 +1416,7 @@ function updateDate(){
 // ═══════════════════ TRIAL TIMER ═══════════════════
 function startTrialTimer(){
   if(S.premium){ return; }
-  updateTimer();setInterval(updateTimer,1000);
+  updateTimer();_intervals.push(setInterval(updateTimer,1000));
 }
 function updateTimer(){
   if(S.premium)return;
@@ -1440,6 +1493,10 @@ function goPage(id,el){
   if(el)el.classList.add('active');
   document.getElementById('page-title').textContent=PAGE_TITLES[id]||id;
   document.getElementById('sidebar').classList.remove('open');
+  // Cleanup: destruir charts da página anterior para evitar memory leak
+  const chartIds=['c-rd','c-desp-cat','c-sal-inv','c-rp','c-proj','c-5030','c-plan-anual',
+    'c-cart','c-cart-tipo','c-dividas','c-jc','c-cmp','c-mkt-comp','c-anual'];
+  chartIds.forEach(function(cid){ killChart(cid); });
   const renders={dashboard:renderDashboard,recebimentos:renderRec,despesas:renderDesp,planejamento:renderPlan,ativos:renderAtivos,mercado:renderMercado,dividas:renderDividas,diario:renderDiario,simuladores:()=>{calcJC();calcComparativo();},radar:renderRadar,resetar:renderResetar};
   if(renders[id])renders[id]();
 }
@@ -1607,8 +1664,8 @@ function renderRec(){
   document.getElementById('r-total-badge').textContent=sorted.length+' lançamentos';
   tb.innerHTML=sorted.map(r=>`<tr>
     <td class="td-mono">${r.data?new Date(r.data+'T12:00').toLocaleDateString('pt-BR'):'-'}</td>
-    <td>${r.origem||'—'}</td><td>${r.categoria}</td>
-    <td><span class="td-tag" style="background:rgba(30,217,122,0.12);color:var(--green)">${r.tipo}</span></td>
+    <td>${escHTML(r.origem||'—')}</td><td>${escHTML(r.categoria)}</td>
+    <td><span class="td-tag" style="background:rgba(30,217,122,0.12);color:var(--green)">${escHTML(r.tipo)}</span></td>
     <td class="td-up">${fBRL(r.valor)}</td>
     <td><button class="btn btn-xs btn-red" onclick="S.recs=S.recs.filter(x=>x.id!==${r.id});save();renderRec();">✕</button></td>
   </tr>`).join('')||'<tr><td colspan="6" style="text-align:center;color:var(--text4);padding:20px;">Nenhum lançamento ainda</td></tr>';
@@ -1640,7 +1697,7 @@ function renderDesp(){
     const catColor = isDivida ? 'var(--red)' : 'var(--accent3)';
     return `<tr>
       <td class="td-mono">${d.data?new Date(d.data+'T12:00').toLocaleDateString('pt-BR'):'-'}</td>
-      <td>${isDivida?'<span style="font-size:9px;background:rgba(240,72,90,0.12);color:var(--red);padding:1px 5px;border-radius:3px;margin-right:4px;">DÍVIDA</span>':''}${d.descricao||'—'}</td>
+      <td>${isDivida?'<span style="font-size:9px;background:rgba(240,72,90,0.12);color:var(--red);padding:1px 5px;border-radius:3px;margin-right:4px;">DÍVIDA</span>':''}${escHTML(d.descricao||'—')}</td>
       <td><span class="td-tag" style="background:${catBg};color:${catColor}">${d.categoria}</span></td>
       <td><span class="td-tag" style="background:rgba(124,106,247,0.08);color:var(--text3)">${d.recorrencia}</span></td>
       <td class="td-dn">${fBRL(d.valor)}</td>
@@ -1738,7 +1795,7 @@ function renderAtivos(){
   tb.innerHTML=S.ativos.map(a=>{
     const tot=a.qtd*a.preco,rm=tot*(a.dy/100),st=getTipoStyle(a.tipo);
     return`<tr>
-      <td style="font-family:'Syne',sans-serif;font-weight:700;font-size:13px;">${a.ticker}</td>
+      <td style="font-family:'Syne',sans-serif;font-weight:700;font-size:13px;">${escHTML(a.ticker)}</td>
       <td><span class="td-tag" style="background:${st.bg};color:${st.c}">${a.tipo}</span></td>
       <td class="td-mono">${a.qtd.toFixed(0)}</td>
       <td class="td-mono">${fBRL(a.preco)}</td>
@@ -2182,7 +2239,7 @@ function renderDividas(){
   }
 
   var html='';
-  for(var i=0;i<sorted.length;i++){
+  for(let i=0;i<sorted.length;i++){
     var d=sorted[i];
     var jurosM=d.saldo*(d.taxa/100);
     var extra=i===0?disponivel:0;
@@ -2200,7 +2257,7 @@ function renderDividas(){
     if(numPag>0){
       var pagRows='';
       var pags=d.pagamentos.slice().reverse();
-      for(var j=0;j<pags.length;j++){
+      for(let j=0;j<pags.length;j++){
         var p=pags[j];
         pagRows+='<div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:6px;padding:8px 0;border-bottom:1px solid var(--border);font-size:11px;">'
           +'<div><div style="color:var(--text3);font-size:9px;margin-bottom:2px;">Data</div>'
@@ -2295,7 +2352,7 @@ function renderDividas(){
       +'<div style="font-size:10px;color:var(--text3);">70% do saldo livre (receitas − despesas médias)</div></div>'
     +'</div>';
 
-    for(var i=0;i<sorted.length;i++){
+    for(let i=0;i<sorted.length;i++){
       var d=sorted[i];
       var jurosM=d.saldo*(d.taxa/100);
       var parcelaT=d.parcela+extraAcum;
@@ -2340,9 +2397,9 @@ function renderDividasGrafico(sorted,disponivel){
   var totais=[saldos.reduce(function(s,v){return s+v;},0)];
   var extraAtual=disponivel;
 
-  for(var m=1;m<=maxM;m++){
+  for(let m=1;m<=maxM;m++){
     var newSaldos=[];
-    for(var i=0;i<saldos.length;i++){
+    for(let i=0;i<saldos.length;i++){
       if(saldos[i]<=0){newSaldos.push(0);continue;}
       var taxa=sorted[i].taxa/100;
       var pag=sorted[i].parcela+(i===0?extraAtual:0);
@@ -2472,7 +2529,7 @@ function renderDiario(){
           <button class="btn btn-xs btn-red" onclick="S.diario=S.diario.filter(x=>x.id!==${e.id});save();renderDiario();">✕</button>
         </div>
       </div>
-      <div class="diary-entry-text">${e.texto}</div>
+      <div class="diary-entry-text">${escHTML(e.texto)}</div>
     </div>`).join('')||'<div style="text-align:center;color:var(--text4);padding:20px;">Nenhuma entrada ainda. Comece hoje!</div>';
 }
 
@@ -2655,82 +2712,8 @@ function executarReset(){
 
 
 // ═══════════════════ MERCADO PAGO ═══════════════════
-const MP_PUBLIC_KEY = 'APP_USR-1f6a761d-99fc-40ea-b7bc-745654c9bd4a';
-
-async function pagarComMP(){
-  try {
-    const btn = document.querySelector('[onclick="pagarComMP()"]');
-    if(btn){ btn.textContent = 'Aguarde...'; btn.disabled = true; }
-
-    // Criar preferência de pagamento via API MP
-    const response = await fetch('https://api.mercadopago.com/checkout/preferences', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer APP_USR-8256078299066581-032218-dbcc74c730f7548945b604aca1b'
-      },
-      body: JSON.stringify({
-        items: [{
-          title: 'LLIW — Plataforma Financeira Premium',
-          quantity: 1,
-          currency_id: 'BRL',
-          unit_price: 19.90
-        }],
-        payer: {
-          email: S.user ? S.user.email : ''
-        },
-        back_urls: {
-          success: 'https://lliw-finances.github.io/sturdy-garbanzo/?status=approved&uid=' + (S.user ? S.user.uid : ''),
-          failure: 'https://lliw-finances.github.io/sturdy-garbanzo/?status=failed',
-          pending: 'https://lliw-finances.github.io/sturdy-garbanzo/?status=pending'
-        },
-        auto_return: 'approved',
-        external_reference: S.user ? S.user.uid : '',
-        notification_url: 'https://us-central1-lliw-app.cloudfunctions.net/mpWebhook'
-      })
-    });
-
-    const data = await response.json();
-
-    if(data.init_point){
-      // Redirecionar para checkout MP
-      window.location.href = data.init_point;
-    } else {
-      throw new Error('Erro ao criar pagamento');
-    }
-  } catch(e) {
-    console.error('MP erro:', e);
-    const btn = document.querySelector('[onclick="pagarComMP()"]');
-    if(btn){ btn.textContent = '💳 Pagar com Mercado Pago'; btn.disabled = false; }
-    toast('Erro ao processar pagamento. Tente a chave Pix manual.','t-err');
-  }
-}
-
-// Verificar retorno do Mercado Pago
-function checkMPReturn(){
-  const params = new URLSearchParams(window.location.search);
-  const status = params.get('status');
-  const uid = params.get('uid');
-  if(status === 'approved' && uid && S.user && S.user.uid === uid){
-    // Pagamento aprovado — liberar premium
-    const chave = 'LLIW-MP-' + Date.now().toString(36).toUpperCase();
-    if(window._firebaseReady){
-      firebase.firestore().collection('chaves').doc(chave).set({ativo:true,tipo:'mp',uid:uid,criadoEm:new Date().toISOString()}).then(()=>{
-        return firebase.firestore().collection('usuarios').doc(uid).set({premium:chave,premiumAt:new Date().toISOString()},{merge:true});
-      }).then(()=>{
-        S.premium = chave;
-        document.getElementById('paywall').style.display='none';
-        atualizarMenuPremium();
-        toast('Pagamento confirmado! Acesso Premium ativado.','t-ok');
-        // Limpar URL
-        window.history.replaceState({},'',window.location.pathname);
-      });
-    }
-  } else if(status === 'failed'){
-    toast('Pagamento não aprovado. Tente novamente.','t-err');
-    window.history.replaceState({},'',window.location.pathname);
-  }
-}
+// Integração completa via Firebase Cloud Functions (próxima fase)
+// Por enquanto: fluxo manual via Pix + chave de ativação
 
 // ═══════════════════ INIT ═══════════════════
 setQuote();
@@ -2744,8 +2727,6 @@ document.getElementById('li-email').addEventListener('keydown',function(e){if(e.
 document.getElementById('login-screen').style.display='flex';
 document.getElementById('app').style.display='none';
 document.getElementById('onboarding-screen').classList.remove('active');
-// Verificar retorno do Mercado Pago
-if(window.location.search.includes('status=')) checkMPReturn();
 </script>
 </body>
 </html>
