@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-BR" dir="ltr">
 <head>
 <meta charset="UTF-8">
 <meta http-equiv="X-Content-Type-Options" content="nosniff">
@@ -7,7 +7,7 @@
 <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=()">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>LLIW — Plataforma de Inteligência Financeira</title>
-<meta name="description" content="LLIW é uma plataforma financeira completa para controle de receitas, despesas, investimentos e dívidas. Conquiste sua liberdade financeira.">
+<meta name="description" content="LLIW — Plataforma de Inteligência Financeira Brasileira. Controle receitas, despesas, dívidas e investimentos. Dashboard completo com FIIs, ações, cripto e simuladores FIRE.">
 <meta name="keywords" content="finanças pessoais, controle financeiro, investimentos, FIIs, dívidas, liberdade financeira">
 <meta name="author" content="LLIW Finanças">
 <meta property="og:title" content="LLIW — Plataforma Financeira">
@@ -424,11 +424,11 @@ tr:hover td{background:rgba(255,255,255,0.015);}
       </div>
       <div id="register-form" style="display:none">
         <label class="f-label">Nome</label>
-        <input class="f-input" id="reg-name" type="text" placeholder="Seu nome">
+        <input class="f-input" id="reg-name" aria-label="Nome completo" type="text" placeholder="Seu nome">
         <label class="f-label">E-mail</label>
-        <input class="f-input" id="reg-email" type="email" placeholder="seu@email.com">
+        <input class="f-input" id="reg-email" aria-label="E-mail para cadastro" type="email" placeholder="seu@email.com">
         <label class="f-label">Senha</label>
-        <input class="f-input" id="reg-pass" type="password" placeholder="mínimo 6 caracteres">
+        <input class="f-input" id="reg-pass" aria-label="Senha de acesso" type="password" placeholder="mínimo 6 caracteres">
         <div class="login-err" id="reg-err"></div>
         <button class="btn-login" onclick="doRegister()">Criar conta gratuita</button>
         <div class="login-links">
@@ -437,7 +437,7 @@ tr:hover td{background:rgba(255,255,255,0.015);}
       </div>
       <div id="forgot-form" style="display:none">
         <label class="f-label">Seu e-mail cadastrado</label>
-        <input class="f-input" id="fgt-email" type="email" placeholder="seu@email.com">
+        <input class="f-input" id="fgt-email" aria-label="E-mail para recuperação" type="email" placeholder="seu@email.com">
         <div class="login-err" id="fgt-err"></div>
         <div id="fgt-ok" style="display:none;color:var(--green);font-size:12px;margin-bottom:12px;">Link de recuperação enviado! Verifique seu e-mail.</div>
         <button class="btn-login" onclick="doForgot()">Enviar link de recuperação</button>
@@ -559,10 +559,10 @@ tr:hover td{background:rgba(255,255,255,0.015);}
         <div class="panel">
           <div class="sec-title" style="margin-bottom:16px;">Registrar Recebimento</div>
           <div class="form-grid">
-            <div class="fg"><label class="fl">Origem</label><input class="fi" id="r-origem" placeholder="Ex: Empresa ABC"></div>
+            <div class="fg"><label class="fl">Origem</label><input class="fi" id="r-origem" aria-label="Origem do recebimento" placeholder="Ex: Empresa ABC"></div>
             <div class="fg"><label class="fl">Categoria</label><select class="fs" id="r-cat"><option>Salário I</option><option>Salário II</option><option>Extra</option><option>Freelance</option><option>Dividendo</option><option>Aluguel</option><option>Renda Passiva</option><option>Outro</option></select></div>
-            <div class="fg"><label class="fl">Valor (R$)</label><input class="fi" id="r-valor" type="number" placeholder="0,00" min="0"></div>
-            <div class="fg"><label class="fl">Data</label><input class="fi" id="r-data" type="date"></div>
+            <div class="fg"><label class="fl">Valor (R$)</label><input class="fi" id="r-valor" type="number" placeholder="0,00" aria-label="Valor do recebimento" min="0"></div>
+            <div class="fg"><label class="fl">Data</label><input class="fi" id="r-data" aria-label="Data do recebimento" type="date"></div>
             <div class="fg"><label class="fl">Tipo</label><select class="fs" id="r-tipo"><option>Ativa</option><option>Passiva</option></select></div>
           </div>
           <button class="btn btn-accent" onclick="addRec()">+ Registrar</button>
@@ -581,12 +581,12 @@ tr:hover td{background:rgba(255,255,255,0.015);}
         <div class="panel">
           <div class="sec-title" style="margin-bottom:16px;">Registrar Despesa</div>
           <div class="form-grid">
-            <div class="fg"><label class="fl">Descrição</label><input class="fi" id="d-desc" placeholder="Ex: Aluguel"></div>
+            <div class="fg"><label class="fl">Descrição</label><input class="fi" id="d-desc" aria-label="Descrição da despesa" placeholder="Ex: Aluguel"></div>
             <div class="fg"><label class="fl">Categoria</label><select class="fs" id="d-cat"><option>Moradia</option><option>Alimentação</option><option>Transporte</option><option>Saúde</option><option>Educação</option><option>Lazer</option><option>Investimento</option><option>Pagamento de Dívida</option><option>Assinaturas</option><option>Outros</option></select></div>
-            <div class="fg"><label class="fl">Valor (R$)</label><input class="fi" id="d-valor" type="number" placeholder="0,00" min="0"></div>
-            <div class="fg"><label class="fl">Data</label><input class="fi" id="d-data" type="date"></div>
+            <div class="fg"><label class="fl">Valor (R$)</label><input class="fi" id="d-valor" type="number" placeholder="0,00" aria-label="Valor da despesa" min="0"></div>
+            <div class="fg"><label class="fl">Data</label><input class="fi" id="d-data" aria-label="Data da despesa" type="date"></div>
             <div class="fg"><label class="fl">Recorrência</label><select class="fs" id="d-rec"><option>Única</option><option>Mensal</option><option>Anual</option></select></div>
-            <div class="fg"><label class="fl">Limite Alerta (R$)</label><input class="fi" id="d-limit" type="number" placeholder="Opcional"></div>
+            <div class="fg"><label class="fl">Limite Alerta (R$)</label><input class="fi" id="d-limit" aria-label="Limite de alerta" type="number" placeholder="Opcional"></div>
           </div>
           <button class="btn btn-accent" onclick="addDesp()">+ Registrar</button>
         </div>
@@ -610,16 +610,16 @@ tr:hover td{background:rgba(255,255,255,0.015);}
           </div>
           <div class="panel">
             <div class="sec-title" style="margin-bottom:16px;">Meta de Investimento Mensal</div>
-            <div class="fg" style="margin-bottom:10px;"><label class="fl">Meta mensal (R$)</label><input class="fi" id="meta-val" type="number" placeholder="500" value="500"></div>
+            <div class="fg" style="margin-bottom:10px;"><label class="fl">Meta mensal (R$)</label><input class="fi" id="meta-val" aria-label="Meta de investimento mensal" type="number" placeholder="500" value="500"></div>
             <div class="progress-wrap" style="height:8px;margin-bottom:6px;"><div class="progress-fill" id="meta-bar" style="background:var(--accent);width:0%"></div></div>
             <div style="display:flex;justify-content:space-between;font-size:10px;color:var(--text3);margin-bottom:16px;"><span>Investido este mês</span><span id="meta-pct-label">0%</span></div>
             <div class="divider"></div>
             <div class="sec-title" style="margin-bottom:14px;margin-top:4px;">Projeção FIRE</div>
             <div class="form-grid" style="grid-template-columns:1fr 1fr;">
-              <div class="fg"><label class="fl">Aporte/mês (R$)</label><input class="fi" id="fire-aporte" type="number" value="1000"></div>
-              <div class="fg"><label class="fl">Rentab. anual (%)</label><input class="fi" id="fire-rent" type="number" value="12"></div>
-              <div class="fg"><label class="fl">Gasto mensal (R$)</label><input class="fi" id="fire-gasto" type="number" value="5000"></div>
-              <div class="fg"><label class="fl">Patrimônio atual (R$)</label><input class="fi" id="fire-pat" type="number" value="0"></div>
+              <div class="fg"><label class="fl">Aporte/mês (R$)</label><input class="fi" id="fire-aporte" aria-label="Aporte mensal FIRE" type="number" value="1000"></div>
+              <div class="fg"><label class="fl">Rentab. anual (%)</label><input class="fi" id="fire-rent" aria-label="Rentabilidade anual esperada" type="number" value="12"></div>
+              <div class="fg"><label class="fl">Gasto mensal (R$)</label><input class="fi" id="fire-gasto" aria-label="Gasto mensal na aposentadoria" type="number" value="5000"></div>
+              <div class="fg"><label class="fl">Patrimônio atual (R$)</label><input class="fi" id="fire-pat" aria-label="Patrimônio atual" type="number" value="0"></div>
             </div>
             <button class="btn btn-accent" style="margin-bottom:12px;" onclick="calcFire()">Calcular FIRE</button>
             <div id="fire-result"></div>
@@ -636,11 +636,11 @@ tr:hover td{background:rgba(255,255,255,0.015);}
         <div class="panel">
           <div class="sec-title" style="margin-bottom:16px;">Registrar Ativo</div>
           <div class="form-grid">
-            <div class="fg"><label class="fl">Ticker</label><input class="fi" id="a-tick" placeholder="MXRF11" style="text-transform:uppercase"></div>
+            <div class="fg"><label class="fl">Ticker</label><input class="fi" id="a-tick" aria-label="Ticker do ativo" placeholder="MXRF11" style="text-transform:uppercase"></div>
             <div class="fg"><label class="fl">Tipo</label><select class="fs" id="a-tipo"><option>FII Tijolo</option><option>FII Papel</option><option>Fiagros</option><option>Ação</option><option>ETF</option><option>Renda Fixa</option><option>Cripto</option><option>Tesouro</option></select></div>
-            <div class="fg"><label class="fl">Qtd. Cotas</label><input class="fi" id="a-qtd" type="number" placeholder="0"></div>
-            <div class="fg"><label class="fl">Preço Médio (R$)</label><input class="fi" id="a-preco" type="number" placeholder="0,00"></div>
-            <div class="fg"><label class="fl">DY Mensal (%)</label><input class="fi" id="a-dy" type="number" placeholder="0.094" step="0.001"></div>
+            <div class="fg"><label class="fl">Qtd. Cotas</label><input class="fi" id="a-qtd" aria-label="Quantidade de cotas" type="number" placeholder="0"></div>
+            <div class="fg"><label class="fl">Preço Médio (R$)</label><input class="fi" id="a-preco" aria-label="Preço médio de compra" type="number" placeholder="0,00"></div>
+            <div class="fg"><label class="fl">DY Mensal (%)</label><input class="fi" id="a-dy" aria-label="Dividend Yield do ativo" type="number" placeholder="0.094" step="0.001"></div>
             <div class="fg"><label class="fl">Operação</label><select class="fs" id="a-op"><option value="compra">Compra</option><option value="venda">Venda</option></select></div>
           </div>
           <button class="btn btn-accent" onclick="addAtivo()">+ Registrar</button>
@@ -680,7 +680,7 @@ tr:hover td{background:rgba(255,255,255,0.015);}
             </div>
             <div class="tbl-wrap"><table>
               <thead><tr><th>Ticker</th><th>Segmento</th><th>Cotação</th><th>DY 12M (%)</th><th>DY Mês (%)</th><th>Renda/cota</th><th>Pagamento</th><th>P/VP</th><th>Avaliação</th></tr></thead>
-              <tbody id="tb-fiis"></tbody>
+              <tbody id="tb-fiis"><tr><td colspan="8" style="text-align:center;color:var(--text4);padding:20px;font-size:12px;">Dados ilustrativos — valores de referência</td></tr></tbody>
             </table></div>
           </div>
         </div>
@@ -694,7 +694,7 @@ tr:hover td{background:rgba(255,255,255,0.015);}
             </div>
             <div class="tbl-wrap"><table>
               <thead><tr><th>Ticker</th><th>Setor</th><th>Cotação</th><th>DY 12M (%)</th><th>Pagamento</th><th>P/VP</th><th>P/L</th><th>Avaliação</th></tr></thead>
-              <tbody id="tb-acoes"></tbody>
+              <tbody id="tb-acoes"><tr><td colspan="7" style="text-align:center;color:var(--text4);padding:20px;font-size:12px;">Dados ilustrativos — valores de referência</td></tr></tbody>
             </table></div>
           </div>
         </div>
@@ -708,7 +708,7 @@ tr:hover td{background:rgba(255,255,255,0.015);}
             </div>
             <div class="tbl-wrap"><table>
               <thead><tr><th>Ativo</th><th>Tipo</th><th>Rentab. Bruta</th><th>Rentab. Líquida</th><th>IR</th><th>Liquidez</th><th>Garantia</th><th>Avaliação</th></tr></thead>
-              <tbody id="tb-rendafixa"></tbody>
+              <tbody id="tb-rendafixa"><tr><td colspan="7" style="text-align:center;color:var(--text4);padding:20px;font-size:12px;">Dados ilustrativos — valores de referência</td></tr></tbody>
             </table></div>
           </div>
           <!-- Selic info card -->
@@ -727,14 +727,14 @@ tr:hover td{background:rgba(255,255,255,0.015);}
             </div>
             <div class="tbl-wrap"><table>
               <thead><tr><th>Ativo</th><th>Símbolo</th><th>Preço (USD)</th><th>Market Cap</th><th>Variação 24h</th><th>Variação 7d</th><th>Categoria</th><th>Risco</th></tr></thead>
-              <tbody id="tb-crypto"></tbody>
+              <tbody id="tb-crypto"><tr><td colspan="6" style="text-align:center;color:var(--text4);padding:20px;font-size:12px;">Dados ilustrativos — valores de referência</td></tr></tbody>
             </table></div>
           </div>
           <div class="panel">
             <div class="sec-title" style="margin-bottom:14px;">Stablecoins — Proteção em Dólar</div>
             <div class="tbl-wrap"><table>
               <thead><tr><th>Ativo</th><th>Lastro</th><th>Preço (USD)</th><th>Rentab. DeFi</th><th>Risco</th><th>Uso</th></tr></thead>
-              <tbody id="tb-stable"></tbody>
+              <tbody id="tb-stable"><tr><td colspan="5" style="text-align:center;color:var(--text4);padding:20px;font-size:12px;">Dados ilustrativos — valores de referência</td></tr></tbody>
             </table></div>
           </div>
         </div>
@@ -758,10 +758,10 @@ tr:hover td{background:rgba(255,255,255,0.015);}
             <div class="sec-title" style="margin-bottom:4px;">Cadastrar Nova Dívida</div>
             <div style="font-size:11px;color:var(--text3);margin-bottom:16px;">Informe os dados de cada dívida para montar seu plano de quitação.</div>
             <div class="form-grid" style="grid-template-columns:1fr 1fr;">
-              <div class="fg" style="grid-column:span 2"><label class="fl">Nome da Dívida</label><input class="fi" id="dv-nome" placeholder="Ex: Cartão Nubank"></div>
-              <div class="fg"><label class="fl">Saldo Devedor (R$)</label><input class="fi" id="dv-saldo" type="number" placeholder="5000"></div>
-              <div class="fg"><label class="fl">Taxa de Juros Mensal (%)</label><input class="fi" id="dv-taxa" type="number" placeholder="12.5" step="0.1"></div>
-              <div class="fg"><label class="fl">Parcela que paga hoje (R$)</label><input class="fi" id="dv-parcela" type="number" placeholder="200"></div>
+              <div class="fg" style="grid-column:span 2"><label class="fl">Nome da Dívida</label><input class="fi" id="dv-nome" aria-label="Nome da dívida" placeholder="Ex: Cartão Nubank"></div>
+              <div class="fg"><label class="fl">Saldo Devedor (R$)</label><input class="fi" id="dv-saldo" aria-label="Saldo devedor" type="number" placeholder="5000"></div>
+              <div class="fg"><label class="fl">Taxa de Juros Mensal (%)</label><input class="fi" id="dv-taxa" aria-label="Taxa de juros mensal" type="number" placeholder="12.5" step="0.1"></div>
+              <div class="fg"><label class="fl">Parcela que paga hoje (R$)</label><input class="fi" id="dv-parcela" aria-label="Parcela mínima" type="number" placeholder="200"></div>
               <div class="fg"><label class="fl">Tipo</label><select class="fs" id="dv-tipo"><option>Cartão de Crédito</option><option>Empréstimo Pessoal</option><option>Financiamento</option><option>Cheque Especial</option><option>Outro</option></select></div>
             </div>
             <button class="btn btn-accent" style="width:100%;" onclick="addDivida()">+ Cadastrar Dívida</button>
@@ -812,10 +812,10 @@ tr:hover td{background:rgba(255,255,255,0.015);}
         <div class="grid2">
           <div class="panel">
             <div class="sec-title" style="margin-bottom:16px;">Nova Entrada</div>
-            <div class="fg" style="margin-bottom:10px;"><label class="fl">Data</label><input class="fi" id="di-data" type="date"></div>
+            <div class="fg" style="margin-bottom:10px;"><label class="fl">Data</label><input class="fi" id="di-data" aria-label="Data da entrada no diário" type="date"></div>
             <div class="fg" style="margin-bottom:10px;"><label class="fl">Como foi hoje financeiramente?</label><textarea class="fta" id="di-texto" placeholder="Escreva aqui suas reflexões, decisões financeiras do dia, o que aprendeu..."></textarea></div>
             <div class="fg" style="margin-bottom:10px;"><label class="fl">Humor Financeiro</label><select class="fs" id="di-humor"><option value="good">Produtivo — tomei boas decisões</option><option value="save">Economizei — gastei menos do planejado</option><option value="ok">Neutro — dia comum</option><option value="bad">Gastei demais — preciso melhorar</option></select></div>
-            <div class="fg" style="margin-bottom:14px;"><label class="fl">Valor envolvido (R$) — opcional</label><input class="fi" id="di-valor" type="number" placeholder="0,00"></div>
+            <div class="fg" style="margin-bottom:14px;"><label class="fl">Valor envolvido (R$) — opcional</label><input class="fi" id="di-valor" aria-label="Valor relacionado à entrada" type="number" placeholder="0,00"></div>
             <button class="btn btn-accent" onclick="addDiario()">Salvar Entrada</button>
           </div>
           <div class="panel">
@@ -841,11 +841,11 @@ tr:hover td{background:rgba(255,255,255,0.015);}
           <div class="panel">
             <div class="sec-title" style="margin-bottom:16px;">Juros Compostos <span class="badge badge-purple">Com Aportes</span></div>
             <div class="form-grid" style="grid-template-columns:1fr 1fr;">
-              <div class="fg"><label class="fl">Capital inicial (R$)</label><input class="fi" id="jc-ci" type="number" value="1000"></div>
-              <div class="fg"><label class="fl">Aporte mensal (R$)</label><input class="fi" id="jc-ap" type="number" value="500"></div>
-              <div class="fg"><label class="fl">Taxa (%)</label><input class="fi" id="jc-taxa" type="number" value="1.0" step="0.01"></div>
+              <div class="fg"><label class="fl">Capital inicial (R$)</label><input class="fi" id="jc-ci" aria-label="Capital inicial" type="number" value="1000"></div>
+              <div class="fg"><label class="fl">Aporte mensal (R$)</label><input class="fi" id="jc-ap" aria-label="Aporte mensal" type="number" value="500"></div>
+              <div class="fg"><label class="fl">Taxa (%)</label><input class="fi" id="jc-taxa" aria-label="Taxa de juros" type="number" value="1.0" step="0.01"></div>
               <div class="fg"><label class="fl">Taxa é</label><select class="fs" id="jc-tfq"><option value="m">Mensal</option><option value="a">Anual</option></select></div>
-              <div class="fg"><label class="fl">Período</label><input class="fi" id="jc-n" type="number" value="120"></div>
+              <div class="fg"><label class="fl">Período</label><input class="fi" id="jc-n" aria-label="Período" type="number" value="120"></div>
               <div class="fg"><label class="fl">Período em</label><select class="fs" id="jc-per"><option value="m">Meses</option><option value="a">Anos</option></select></div>
             </div>
             <button class="btn btn-accent" style="margin-bottom:14px;" onclick="calcJC()">Calcular</button>
@@ -856,8 +856,8 @@ tr:hover td{background:rgba(255,255,255,0.015);}
         <div class="panel">
           <div class="panel-hd"><div class="sec-title">Comparativo CDB × FII × Selic × Poupança</div></div>
           <div class="form-grid" style="grid-template-columns:repeat(auto-fit,minmax(150px,1fr))">
-            <div class="fg"><label class="fl">Capital (R$)</label><input class="fi" id="cmp-cap" type="number" value="10000"></div>
-            <div class="fg"><label class="fl">Período (anos)</label><input class="fi" id="cmp-anos" type="number" value="5"></div>
+            <div class="fg"><label class="fl">Capital (R$)</label><input class="fi" id="cmp-cap" aria-label="Capital para comparativo" type="number" value="10000"></div>
+            <div class="fg"><label class="fl">Período (anos)</label><input class="fi" id="cmp-anos" aria-label="Anos para comparativo" type="number" value="5"></div>
           </div>
           <button class="btn btn-ghost btn-sm" style="margin-bottom:14px;" onclick="calcComparativo()">Comparar</button>
           <div class="chart-box tall"><canvas id="c-cmp"></canvas></div>
@@ -865,9 +865,9 @@ tr:hover td{background:rgba(255,255,255,0.015);}
         <div class="panel">
           <div class="sec-title" style="margin-bottom:14px;">Juros Simples</div>
           <div class="form-grid">
-            <div class="fg"><label class="fl">Capital (R$)</label><input class="fi" id="js-c" type="number" placeholder="1000"></div>
-            <div class="fg"><label class="fl">Taxa (%/período)</label><input class="fi" id="js-t" type="number" placeholder="2.5"></div>
-            <div class="fg"><label class="fl">Períodos</label><input class="fi" id="js-n" type="number" placeholder="12"></div>
+            <div class="fg"><label class="fl">Capital (R$)</label><input class="fi" id="js-c" aria-label="Capital para juros simples" type="number" placeholder="1000"></div>
+            <div class="fg"><label class="fl">Taxa (%/período)</label><input class="fi" id="js-t" aria-label="Taxa de juros simples" type="number" placeholder="2.5"></div>
+            <div class="fg"><label class="fl">Períodos</label><input class="fi" id="js-n" aria-label="Período em meses" type="number" placeholder="12"></div>
           </div>
           <button class="btn btn-ghost btn-sm" style="margin-bottom:10px;" onclick="calcJS()">Calcular</button>
           <div id="js-result" style="font-family:'DM Mono',monospace;color:var(--cyan);font-size:16px;"></div>
@@ -967,7 +967,7 @@ tr:hover td{background:rgba(255,255,255,0.015);}
             <!-- Campo de confirmação -->
             <div style="margin-bottom:20px;">
               <div style="font-size:11px;color:var(--text3);margin-bottom:8px;">Para confirmar, digite <b style="color:var(--red);font-family:'DM Mono',monospace;">REINICIAR</b> abaixo:</div>
-              <input class="fi" id="rst-confirm" placeholder="Digite REINICIAR" style="text-align:center;font-family:'DM Mono',monospace;font-size:14px;letter-spacing:2px;border-color:rgba(240,72,90,0.3);">
+              <input class="fi" id="rst-confirm" aria-label="Digite REINICIAR para confirmar" placeholder="Digite REINICIAR" style="text-align:center;font-family:'DM Mono',monospace;font-size:14px;letter-spacing:2px;border-color:rgba(240,72,90,0.3);">
             </div>
 
             <div style="display:flex;gap:10px;">
@@ -1014,15 +1014,15 @@ tr:hover td{background:rgba(255,255,255,0.015);}
     <div style="display:flex;flex-direction:column;gap:12px;margin-bottom:20px;">
       <div class="fg">
         <label class="fl">Valor pago (R$)</label>
-        <input class="fi" id="mp-valor" type="number" placeholder="Ex: 800" oninput="previewPagamento()">
+        <input class="fi" id="mp-valor" aria-label="Valor do pagamento" type="number" placeholder="Ex: 800" oninput="previewPagamento()">
       </div>
       <div class="fg">
         <label class="fl">Data do pagamento</label>
-        <input class="fi" id="mp-data" type="date">
+        <input class="fi" id="mp-data" aria-label="Data do pagamento" type="date">
       </div>
       <div class="fg">
         <label class="fl">Observação (opcional)</label>
-        <input class="fi" id="mp-obs" placeholder="Ex: Parcela de março">
+        <input class="fi" id="mp-obs" aria-label="Observação do pagamento" placeholder="Ex: Parcela de março">
       </div>
     </div>
 
@@ -1076,7 +1076,7 @@ tr:hover td{background:rgba(255,255,255,0.015);}
     <!-- Aba: Chave de ativação -->
     <div id="pw-tab-chave">
       <div class="pw-divider">Digite sua chave de ativação</div>
-    <input class="pw-key-input" id="pw-key-input" placeholder="LLIW-XXXX-XXXX" maxlength="14">
+    <input class="pw-key-input" id="pw-key-input" aria-label="Chave de ativação" placeholder="LLIW-XXXX-XXXX" maxlength="14">
     <div class="pw-err" id="pw-err">Chave inválida ou já utilizada.</div>
     <button class="btn btn-accent" style="width:100%;padding:14px;font-size:14px;" onclick="activateKey()">Ativar Chave</button>
     <div style="font-size:10px;color:var(--text4);text-align:center;margin-top:8px;font-family:'DM Mono',monospace;">Receba sua chave por WhatsApp após o pagamento</div>
@@ -1140,6 +1140,7 @@ function escHTML(str){
 }
 
 const VALID_KEYS = []; // Chaves validadas no Firebase Console
+const TRIAL_DURATION_MS = 24 * 60 * 60 * 1000; // 24 horas — altere aqui para mudar o trial
 const USERS = {}; // Credenciais gerenciadas pelo Firebase futuramente
 const fBRL = v => new Intl.NumberFormat('pt-BR',{style:'currency',currency:'BRL'}).format(v||0);
 const fPct = v => (v||0).toFixed(1)+'%';
@@ -1338,15 +1339,15 @@ function showOnboarding(){
   obStep=0;obAnswers={};renderOB();
 }
 function renderOB(){
-  var stepDots = '';
+  const stepDots = '';
   for(let si=0; si<OB_Q.length; si++){
     var cls = si<obStep ? 'done' : si===obStep ? 'active' : '';
     stepDots += '<div class="ob-step-dot '+cls+'"></div>';
   }
   document.getElementById('ob-steps').innerHTML = stepDots;
 
-  var q = OB_Q[obStep];
-  var optsHtml = '';
+  const q = OB_Q[obStep];
+  const optsHtml = '';
   for(let oi=0; oi<q.opts.length; oi++){
     optsHtml += '<button class="ob-option" onclick="selectOB('+oi+')">'
       + q.opts[oi] + '</button>';
@@ -1438,7 +1439,7 @@ function updateTimer(){
 
   const start=parseInt(S.trialStart||Date.now());
   const elapsed=Date.now()-start;
-  const remaining=Math.max(0,86400000-elapsed);
+  const remaining=Math.max(0,TRIAL_DURATION_MS-elapsed);
   if(remaining===0){openPaywall();return;}
   const h=Math.floor(remaining/3600000);
   const m=Math.floor((remaining%3600000)/60000);
@@ -1450,7 +1451,7 @@ function checkPaywall(){
   // localStorage apenas como cache — não é fonte de verdade
   if(!S.premium&&S.trialStart){
     const elapsed=Date.now()-parseInt(S.trialStart);
-    if(elapsed>86400000) openPaywall();
+    if(elapsed>TRIAL_DURATION_MS) openPaywall();
   }
 }
 
@@ -1697,7 +1698,7 @@ function renderRec(){
     <td>${escHTML(r.origem||'—')}</td><td>${escHTML(r.categoria)}</td>
     <td><span class="td-tag" style="background:rgba(30,217,122,0.12);color:var(--green)">${escHTML(r.tipo)}</span></td>
     <td class="td-up">${fBRL(r.valor)}</td>
-    <td><button class="btn btn-xs btn-red" onclick="S.recs=S.recs.filter(x=>x.id!==${r.id});save();renderRec();">✕</button></td>
+    <td><button class="btn btn-xs btn-red" title="Excluir recebimento" onclick="S.recs=S.recs.filter(x=>x.id!==${r.id});save();renderRec();">✕</button></td>
   </tr>`).join('')||'<tr><td colspan="6" style="text-align:center;color:var(--text4);padding:20px;">Nenhum lançamento ainda</td></tr>';
 }
 
@@ -1731,7 +1732,7 @@ function renderDesp(){
       <td><span class="td-tag" style="background:${catBg};color:${catColor}">${d.categoria}</span></td>
       <td><span class="td-tag" style="background:rgba(124,106,247,0.08);color:var(--text3)">${d.recorrencia}</span></td>
       <td class="td-dn">${fBRL(d.valor)}</td>
-      <td><button class="btn btn-xs btn-red" onclick="S.desps=S.desps.filter(x=>x.id!==${d.id});save();renderDesp();">✕</button></td>
+      <td><button class="btn btn-xs btn-red" title="Excluir despesa" onclick="S.desps=S.desps.filter(x=>x.id!==${d.id});save();renderDesp();">✕</button></td>
     </tr>`;
   }).join('')||'<tr><td colspan="6" style="text-align:center;color:var(--text4);padding:20px;">Nenhuma despesa ainda</td></tr>';
 }
@@ -2268,7 +2269,7 @@ function renderDividas(){
     return;
   }
 
-  var html='';
+  const html ='';
   for(let i=0;i<sorted.length;i++){
     var d=sorted[i];
     var jurosM=d.saldo*(d.taxa/100);
