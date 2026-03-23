@@ -1215,9 +1215,11 @@ function doLogin(){
   window.fbLogin(em,pw).then(async cred=>{
     err.style.display='none';
     const uid=cred.user.uid;
+    // Limpar TUDO do estado anterior
+    S.premium=null;S.trialStart=null;
+    S.recs=[];S.desps=[];S.ativos=[];S.dividas=[];S.diario=[];
     S.user={email:em,name:em.split('@')[0],uid};
-    if(!S.trialStart){S.trialStart=Date.now().toString();localStorage.setItem('lliw_trial',S.trialStart);}
-    // Carregar dados da nuvem
+    // Carregar dados do Firestore
     const cloudData=await window.fbLoad(uid);
     if(cloudData){
       if(cloudData.recs) S.recs=cloudData.recs;
@@ -1259,9 +1261,15 @@ function doRegister(){
   window.fbRegister(em,pw).then(cred=>{
     err.style.display='none';
     const uid=cred.user.uid;
+    // Limpar qualquer estado anterior ANTES de configurar novo usuário
+    S.premium=null;
+    S.recs=[];S.desps=[];S.ativos=[];S.dividas=[];S.diario=[];
     S.user={email:em,name:nm,uid};
     S.trialStart=Date.now().toString();
-    localStorage.setItem('lliw_trial',S.trialStart);
+    // Salvar trialStart no Firestore imediatamente
+    if(window._firebaseReady&&window.fbSave){
+      window.fbSave(uid,{trialStart:S.trialStart,premium:null});
+    }
     showOnboarding();
   }).catch(e=>{
     let msg='Erro ao criar conta.';
