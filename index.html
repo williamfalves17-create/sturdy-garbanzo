@@ -1087,15 +1087,15 @@ tr:hover td{background:rgba(255,255,255,0.015);}
 <script>
 // ═══════════════════ DATA ═══════════════════
 const S={
-  recs: JSON.parse(localStorage.getItem('lliw_recs')||'[]'),
-  desps: JSON.parse(localStorage.getItem('lliw_desps')||'[]'),
-  ativos: JSON.parse(localStorage.getItem('lliw_ativos')||'[]'),
-  dividas: JSON.parse(localStorage.getItem('lliw_dividas')||'[]'),
-  diario: JSON.parse(localStorage.getItem('lliw_diario')||'[]'),
-  ob: JSON.parse(localStorage.getItem('lliw_ob')||'null'),
+  recs: [],
+  desps: [],
+  ativos: [],
+  dividas: [],
+  diario: [],
+  ob: null,
   user: null,
-  trialStart: localStorage.getItem('lliw_trial')||null,
-  premium: localStorage.getItem('lliw_premium')||null,
+  trialStart: null,
+  premium: null,
   estrategia: 'avalanche',
   meta: parseFloat(localStorage.getItem('lliw_meta')||'500'),
 };
@@ -1131,11 +1131,12 @@ const fPct = v => (v||0).toFixed(1)+'%';
 const MONTHS = ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
 let charts = {};
 function save(){
-  localStorage.setItem('lliw_recs',JSON.stringify(S.recs));
-  localStorage.setItem('lliw_desps',JSON.stringify(S.desps));
-  localStorage.setItem('lliw_ativos',JSON.stringify(S.ativos));
-  localStorage.setItem('lliw_dividas',JSON.stringify(S.dividas));
-  localStorage.setItem('lliw_diario',JSON.stringify(S.diario));
+  const uid=S.user?S.user.uid:'anon';
+  localStorage.setItem('lliw_recs_'+uid,JSON.stringify(S.recs));
+  localStorage.setItem('lliw_desps_'+uid,JSON.stringify(S.desps));
+  localStorage.setItem('lliw_ativos_'+uid,JSON.stringify(S.ativos));
+  localStorage.setItem('lliw_dividas_'+uid,JSON.stringify(S.dividas));
+  localStorage.setItem('lliw_diario_'+uid,JSON.stringify(S.diario));
   localStorage.setItem('lliw_meta',S.meta);
   // Salvar na nuvem Firebase
   if(S.user&&S.user.uid&&window.fbSave){
@@ -1292,6 +1293,7 @@ function doLogout(){
   window.fbSignOut().then(()=>{
     S.user=null;
     S.recs=[];S.desps=[];S.ativos=[];S.dividas=[];S.diario=[];
+    S.premium=null;S.trialStart=null;
     document.getElementById('app').style.display='none';
     document.getElementById('login-screen').style.display='flex';
     setQuote();
@@ -1374,26 +1376,10 @@ function launchApp(){
       renderDashboard();
     });
   });
-  // Verificar premium no Firestore (fonte de verdade)
-  if(S.user&&S.user.uid&&window._firebaseReady){
-    firebase.firestore().collection('usuarios').doc(S.user.uid).get().then(function(snap){
-      if(snap.exists){
-        const data=snap.data();
-        if(data.premium) S.premium=data.premium;
-        if(data.trialStart) S.trialStart=data.trialStart;
-        localStorage.setItem('lliw_premium',S.premium||'');
-        localStorage.setItem('lliw_trial',S.trialStart||'');
-      }
-      checkPaywall();
-      atualizarMenuPremium();
-    }).catch(function(){
-      checkPaywall();
-      atualizarMenuPremium();
-    });
-  } else {
-    checkPaywall();
-    atualizarMenuPremium();
-  }
+  // Premium já foi carregado do Firestore no doLogin
+  // Apenas chamar checkPaywall e atualizar menu
+  checkPaywall();
+  atualizarMenuPremium();
 }
 
 function atualizarMenuPremium(){
