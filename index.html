@@ -1394,12 +1394,7 @@ function launchApp(){
   S.dividas = S.dividas.map(d => ({...d, pagamentos: d.pagamentos||[], saldoInicial: d.saldoInicial||d.saldoOriginal||d.saldo}));
   save();
   renderTicker();renderEducacao();renderRadar();
-  // Aguardar DOM estar pintado antes de criar charts
-  requestAnimationFrame(function(){
-    requestAnimationFrame(function(){
-      renderDashboard();
-    });
-  });
+  setTimeout(function(){ renderDashboard(); }, 100);
   // Premium já foi carregado do Firestore no doLogin
   // Apenas chamar checkPaywall e atualizar menu
   checkPaywall();
@@ -1525,11 +1520,7 @@ function goPage(id,el){
   document.getElementById('page-title').textContent=PAGE_TITLES[id]||id;
   document.getElementById('sidebar').classList.remove('open');
   const renders={dashboard:renderDashboard,recebimentos:renderRec,despesas:renderDesp,planejamento:renderPlan,ativos:renderAtivos,mercado:renderMercado,dividas:renderDividas,diario:renderDiario,simuladores:function(){calcJC();calcComparativo();},radar:renderRadar,resetar:renderResetar};
-  if(renders[id]){
-    requestAnimationFrame(function(){
-      renders[id]();
-    });
-  }
+  if(renders[id]) renders[id]();
 }
 function toggleSidebar(){document.getElementById('sidebar').classList.toggle('open');}
 
