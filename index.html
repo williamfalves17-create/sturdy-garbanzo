@@ -1184,7 +1184,7 @@ input[type=range]::-moz-range-thumb{width:18px;height:18px;border-radius:50%;bac
         <div class="panel" style="margin-bottom:16px;">
           <div style="font-family:'Syne',sans-serif;font-size:16px;font-weight:700;margin-bottom:4px;">Radar de Notícias</div>
           <div style="font-size:12px;color:var(--text3);">Economia · Investimentos · Tecnologia · Geopolítica</div>
-          <div style="font-size:10px;color:var(--text4);margin-top:4px;font-family:'DM Mono',monospace;">Dados ilustrativos — integração com feeds em desenvolvimento</div>
+          <div style="font-size:10px;color:var(--text4);margin-top:4px;font-family:'DM Mono',monospace;">Notícias em tempo real via RSS</div>
         </div>
         <div class="news-grid" id="news-grid"></div>
       </div>
@@ -1767,7 +1767,7 @@ function launchApp(){
   // Migrar dívidas antigas sem campo pagamentos
   S.dividas = S.dividas.map(d => ({...d, pagamentos: d.pagamentos||[], saldoInicial: d.saldoInicial||d.saldoOriginal||d.saldo}));
   save();
-  renderTicker();renderEducacao();renderRadar();
+  renderTicker();renderEducacao();renderRadar();fetchLiveData();
   if(typeof updateGreeting==='function')updateGreeting();
   if(typeof updateDebtBadge==='function')updateDebtBadge();
   if(typeof generateNotifs==='function')generateNotifs();
@@ -2005,6 +2005,81 @@ function updateTopScore(){
   const el=document.getElementById('top-score-val');
   if(el){el.textContent=status.label;el.style.color=status.color;}
   document.getElementById('sb-status-label').textContent=status.label;
+}
+
+// ═══════════════════ DADOS AO VIVO ═══════════════════
+const LIVE_RATES={selic:null,cdi:null,ipca:null,igpm:null,usd:null,eur:null,btc:null};
+
+async function fetchLiveData(){
+  try{
+    const [rSelic,rCdi,rIpca,rIgpm,rMoedas]=await Promise.allSettled([
+      fetch('https://api.bcb.gov.br/dados/serie/bcdata.sgs/432/dados/ultimos/1?formato=json').then(r=>r.json()),
+      fetch('https://api.bcb.gov.br/dados/serie/bcdata.sgs/4389/dados/ultimos/1?formato=json').then(r=>r.json()),
+      fetch('https://api.bcb.gov.br/dados/serie/bcdata.sgs/13522/dados/ultimos/1?formato=json').then(r=>r.json()),
+      fetch('https://api.bcb.gov.br/dados/serie/bcdata.sgs/189/dados/ultimos/1?formato=json').then(r=>r.json()),
+      fetch('https://economia.awesomeapi.com.br/json/last/USD-BRL,EUR-BRL,BTC-BRL').then(r=>r.json()),
+    ]);
+
+    if(rSelic.status==='fulfilled'&&rSelic.value[0]){
+      const v=parseFloat(rSelic.value[0].valor.replace(',','.'));
+      LIVE_RATES.selic=v;
+      TICKER_DATA[0].v=v.toFixed(2).replace('.',',')+' %';
+      TICKER_DATA[0].live=true;
+    }
+    if(rCdi.status==='fulfilled'&&rCdi.value[0]){
+      const v=parseFloat(rCdi.value[0].valor.replace(',','.'));
+      LIVE_RATES.cdi=v;
+      TICKER_DATA[1].v=v.toFixed(2).replace('.',',')+' %';
+      TICKER_DATA[1].live=true;
+    }
+    if(rIpca.status==='fulfilled'&&rIpca.value[0]){
+      const v=parseFloat(rIpca.value[0].valor.replace(',','.'));
+      LIVE_RATES.ipca=v;
+      TICKER_DATA[6].v=v.toFixed(2).replace('.',',')+' %';
+      TICKER_DATA[6].live=true;
+    }
+    if(rIgpm.status==='fulfilled'&&rIgpm.value[0]){
+      const v=parseFloat(rIgpm.value[0].valor.replace(',','.'));
+      LIVE_RATES.igpm=v;
+      TICKER_DATA[7].v=v.toFixed(2).replace('.',',')+' %';
+      TICKER_DATA[7].live=true;
+    }
+    if(rMoedas.status==='fulfilled'){
+      const m=rMoedas.value;
+      if(m['USDBRL']){
+        const v=parseFloat(m['USDBRL'].bid);
+        const pct=parseFloat(m['USDBRL'].pctChange);
+        LIVE_RATES.usd=v;
+        TICKER_DATA[3].v='R$ '+v.toFixed(2).replace('.',',');
+        TICKER_DATA[3].c=(pct>=0?'+':'')+pct.toFixed(1).replace('.',',')+'%';
+        TICKER_DATA[3].up=pct>=0;
+        TICKER_DATA[3].live=true;
+      }
+      if(m['EURBRL']){
+        const v=parseFloat(m['EURBRL'].bid);
+        const pct=parseFloat(m['EURBRL'].pctChange);
+        LIVE_RATES.eur=v;
+        TICKER_DATA[4].v='R$ '+v.toFixed(2).replace('.',',');
+        TICKER_DATA[4].c=(pct>=0?'+':'')+pct.toFixed(1).replace('.',',')+'%';
+        TICKER_DATA[4].up=pct>=0;
+        TICKER_DATA[4].live=true;
+      }
+      if(m['BTCBRL']){
+        const v=parseFloat(m['BTCBRL'].bid);
+        const pct=parseFloat(m['BTCBRL'].pctChange);
+        LIVE_RATES.btc=v;
+        const btcUsd=v/(LIVE_RATES.usd||5.70);
+        TICKER_DATA[5].v='$'+Math.round(btcUsd/1000)+'k';
+        TICKER_DATA[5].c=(pct>=0?'+':'')+pct.toFixed(1).replace('.',',')+'%';
+        TICKER_DATA[5].up=pct>=0;
+        TICKER_DATA[5].live=true;
+      }
+    }
+  }catch(e){console.warn('fetchLiveData erro:',e);}
+
+  // Re-render ticker and mercado if visible
+  renderTicker();
+  if(document.getElementById('mkt-kpis')&&document.getElementById('mkt-kpis').innerHTML) renderMercado();
 }
 
 // ═══════════════════ TICKER ═══════════════════
@@ -2332,13 +2407,19 @@ function switchMktTab(tab){
 
 function renderMercado(){
   // KPIs
+  const lr=LIVE_RATES;
+  const fSelic=lr.selic?lr.selic.toFixed(2).replace('.',',')+'%':'13,25%';
+  const fCdi=lr.cdi?lr.cdi.toFixed(2).replace('.',',')+'%':'13,15%';
+  const fIpca=lr.ipca?lr.ipca.toFixed(2).replace('.',',')+'%':'4,83%';
+  const fUsd=lr.usd?'R$ '+lr.usd.toFixed(2).replace('.',','):'R$ 5,92';
+  const fBtcK=lr.btc?'$'+Math.round((lr.btc/(lr.usd||5.70))/1000)+'k':'$84.2k';
   document.getElementById('mkt-kpis').innerHTML=`
-    <div class="kpi"><div class="kpi-top" style="background:var(--yellow)"></div><div class="kpi-lbl">Taxa Selic</div><div class="kpi-val">13,25%</div><div class="kpi-sub up">ao ano · COPOM</div></div>
-    <div class="kpi"><div class="kpi-top" style="background:var(--cyan)"></div><div class="kpi-lbl">CDI</div><div class="kpi-val">13,15%</div><div class="kpi-sub up">ao ano</div></div>
-    <div class="kpi"><div class="kpi-top" style="background:var(--red)"></div><div class="kpi-lbl">IPCA 12M</div><div class="kpi-val">4,83%</div><div class="kpi-sub dn">meta: 3,0%</div></div>
-    <div class="kpi"><div class="kpi-top" style="background:var(--accent)"></div><div class="kpi-lbl">Dólar (USD)</div><div class="kpi-val">R$ 5,92</div><div class="kpi-sub dn">▼ -0,3% hoje</div></div>
+    <div class="kpi"><div class="kpi-top" style="background:var(--yellow)"></div><div class="kpi-lbl">Taxa Selic</div><div class="kpi-val">${fSelic}</div><div class="kpi-sub up">ao ano · COPOM</div></div>
+    <div class="kpi"><div class="kpi-top" style="background:var(--cyan)"></div><div class="kpi-lbl">CDI</div><div class="kpi-val">${fCdi}</div><div class="kpi-sub up">ao ano</div></div>
+    <div class="kpi"><div class="kpi-top" style="background:var(--red)"></div><div class="kpi-lbl">IPCA 12M</div><div class="kpi-val">${fIpca}</div><div class="kpi-sub dn">meta: 3,0%</div></div>
+    <div class="kpi"><div class="kpi-top" style="background:var(--accent)"></div><div class="kpi-lbl">Dólar (USD)</div><div class="kpi-val">${fUsd}</div><div class="kpi-sub">ao vivo</div></div>
     <div class="kpi"><div class="kpi-top" style="background:var(--green)"></div><div class="kpi-lbl">Ibovespa</div><div class="kpi-val">132.847</div><div class="kpi-sub up">▲ +1,2% hoje</div></div>
-    <div class="kpi"><div class="kpi-top" style="background:var(--gold)"></div><div class="kpi-lbl">Bitcoin</div><div class="kpi-val">$84.200</div><div class="kpi-sub up">▲ +2,1% 24h</div></div>`;
+    <div class="kpi"><div class="kpi-top" style="background:var(--gold)"></div><div class="kpi-lbl">Bitcoin</div><div class="kpi-val">${fBtcK}</div><div class="kpi-sub">ao vivo</div></div>`;
 
   // FIIs table
   const avC={Compra:'var(--green)',Neutro:'var(--yellow)',Evitar:'var(--red)'};
@@ -2383,26 +2464,27 @@ function renderMercado(){
   }).join('');
 
   // Macro KPIs
+  const fIgpm=lr.igpm?lr.igpm.toFixed(2).replace('.',',')+'%':'6,12%';
   document.getElementById('macro-kpis').innerHTML=`
     <div style="background:var(--bg3);border:1px solid var(--border2);border-radius:var(--radius2);padding:16px;">
       <div style="font-size:9px;color:var(--text3);text-transform:uppercase;letter-spacing:1px;margin-bottom:4px;">Selic Meta</div>
-      <div style="font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:var(--yellow)">13,25%</div>
-      <div style="font-size:10px;color:var(--text3);margin-top:2px;">Reunião: Mar/2025</div>
+      <div style="font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:var(--yellow)">${fSelic}</div>
+      <div style="font-size:10px;color:var(--text3);margin-top:2px;">${lr.selic?'Fonte: BCB (ao vivo)':'Reunião: Mar/2025'}</div>
     </div>
     <div style="background:var(--bg3);border:1px solid var(--border2);border-radius:var(--radius2);padding:16px;">
       <div style="font-size:9px;color:var(--text3);text-transform:uppercase;letter-spacing:1px;margin-bottom:4px;">CDI Acumulado</div>
-      <div style="font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:var(--cyan)">13,15%</div>
-      <div style="font-size:10px;color:var(--text3);margin-top:2px;">Referência anual</div>
+      <div style="font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:var(--cyan)">${fCdi}</div>
+      <div style="font-size:10px;color:var(--text3);margin-top:2px;">${lr.cdi?'Fonte: BCB (ao vivo)':'Referência anual'}</div>
     </div>
     <div style="background:var(--bg3);border:1px solid var(--border2);border-radius:var(--radius2);padding:16px;">
       <div style="font-size:9px;color:var(--text3);text-transform:uppercase;letter-spacing:1px;margin-bottom:4px;">IPCA 12M</div>
-      <div style="font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:var(--red)">4,83%</div>
-      <div style="font-size:10px;color:var(--text3);margin-top:2px;">Acima da meta de 3%</div>
+      <div style="font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:var(--red)">${fIpca}</div>
+      <div style="font-size:10px;color:var(--text3);margin-top:2px;">${lr.ipca?'Fonte: BCB (ao vivo)':'Acima da meta de 3%'}</div>
     </div>
     <div style="background:var(--bg3);border:1px solid var(--border2);border-radius:var(--radius2);padding:16px;">
       <div style="font-size:9px;color:var(--text3);text-transform:uppercase;letter-spacing:1px;margin-bottom:4px;">IGP-M 12M</div>
-      <div style="font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:var(--accent3)">6,12%</div>
-      <div style="font-size:10px;color:var(--text3);margin-top:2px;">Índice de aluguel</div>
+      <div style="font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:var(--accent3)">${fIgpm}</div>
+      <div style="font-size:10px;color:var(--text3);margin-top:2px;">${lr.igpm?'Fonte: BCB (ao vivo)':'Índice de aluguel'}</div>
     </div>`;
 
   // Cripto table
@@ -2434,8 +2516,9 @@ function renderMercado(){
   </tr>`).join('');
 
   // Comparativo chart
+  const _s=LIVE_RATES.selic||13.25, _c=LIVE_RATES.cdi||13.15;
   const compLabels=['Tesouro Selic','CDB 110%','LCI 100%','FII Médio','Ações (DY)','Poupança','Bitcoin*'];
-  const rates=[13.25,14.47,13.15,11.0,8.5,6.17,120];
+  const rates=[_s,_c*1.1,_c,11.0,8.5,_s*0.5+0.0875,120];
   const cap=10000,anos=5,n=anos*12;
   const compData=rates.map((r,i)=>{
     if(i===6)return cap*Math.pow(1+r/100,anos); // bitcoin simplificado
@@ -3017,8 +3100,9 @@ function calcComparativo(){
   const cap=parseFloat(document.getElementById('cmp-cap').value)||10000;
   const anos=parseFloat(document.getElementById('cmp-anos').value)||5;
   const n=anos*12;
+  const _s2=LIVE_RATES.selic||13.25, _c2=LIVE_RATES.cdi||13.15;
   const calc=(taxa)=>cap*Math.pow(1+taxa/100,n);
-  const data=[calc(13.25/12),calc(14.47/12),calc(1.134),calc(6.17/12)];
+  const data=[calc(_s2/12),calc(_c2*1.1/12),calc(1.134),calc((_s2*0.5+0.0875)/12)];
   mkChart('c-cmp',{type:'bar',data:{labels:['Tesouro Selic\n(13,25%aa)','CDB 110% CDI\n(14,47%aa)','FII Médio\n(~13,6%aa)','Poupança\n(6,17%aa)'],datasets:[{data,backgroundColor:['#18d4e8','#7c6af7','#1ed97a','#f04a5a'],borderRadius:8,borderSkipped:false}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{grid:{color:'rgba(255,255,255,0.03)'}},y:{grid:{color:'rgba(255,255,255,0.03)'},ticks:{callback:v=>fBRL(v)}}}}});
 }
 function calcJS(){
@@ -3076,25 +3160,78 @@ function renderEducacao(){
 function toggleEdu(i){document.getElementById('edu-'+i).classList.toggle('open');}
 
 // ═══════════════════ RADAR ═══════════════════
-const NEWS=[
-  {src:'InfoMoney',cat:'Economia',catColor:'var(--green)',title:'Selic em 13,25%: o que muda para seus investimentos em renda fixa',time:'2h atrás',url:'#'},
-  {src:'Valor Econômico',cat:'Mercado',catColor:'var(--accent3)',title:'Ibovespa sobe 1,2% com recuperação das blue chips e dados de emprego nos EUA',time:'3h atrás',url:'#'},
-  {src:'Cointelegraph',cat:'Cripto',catColor:'var(--yellow)',title:'Bitcoin supera US$ 84.000 em semana de otimismo institucional',time:'4h atrás',url:'#'},
-  {src:'Reuters Brasil',cat:'Geopolítica',catColor:'var(--red)',title:'Fed sinaliza manutenção dos juros americanos diante de incertezas comerciais',time:'5h atrás',url:'#'},
-  {src:'InfoMoney',cat:'FIIs',catColor:'var(--cyan)',title:'FIIs de papel lideram ganhos em março com alta do CDI e CRIs indexados',time:'6h atrás',url:'#'},
-  {src:'Exame',cat:'Tecnologia',catColor:'var(--accent)',title:'Open Finance avança e bancos disputam dados de clientes para ofertas personalizadas',time:'8h atrás',url:'#'},
-  {src:'Bloomberg BR',cat:'Geopolítica',catColor:'var(--red)',title:'Tensões comerciais EUA-China pressionam mercados emergentes e real',time:'10h atrás',url:'#'},
-  {src:'Cointelegraph',cat:'Cripto',catColor:'var(--yellow)',title:'Ethereum ETF registra maior volume em 3 meses com entrada de capital institucional',time:'12h atrás',url:'#'},
-  {src:'Valor Econômico',cat:'Economia',catColor:'var(--green)',title:'IPCA de fevereiro surpreende e reforça cautela do Banco Central com cortes de juros',time:'14h atrás',url:'#'},
+let NEWS=[];
+const RSS_FEEDS=[
+  {url:'https://www.infomoney.com.br/feed/',src:'InfoMoney',cat:'Economia',catColor:'var(--green)'},
+  {url:'https://rss.app/feeds/v1.1/tDBLMwOcOJMrDNhp.xml',src:'Valor Econômico',cat:'Mercado',catColor:'var(--accent3)'},
 ];
-function renderRadar(){
-  document.getElementById('news-grid').innerHTML=NEWS.map(n=>`
+
+function timeAgo(dateStr){
+  const now=new Date(), then=new Date(dateStr);
+  const diff=Math.floor((now-then)/60000);
+  if(diff<60) return diff+'min atrás';
+  if(diff<1440) return Math.floor(diff/60)+'h atrás';
+  return Math.floor(diff/1440)+'d atrás';
+}
+
+async function fetchNews(){
+  const grid=document.getElementById('news-grid');
+  if(!grid)return;
+  try{
+    const catColors={'economia':'var(--green)','mercado':'var(--accent3)','investimentos':'var(--cyan)','cripto':'var(--yellow)','tecnologia':'var(--accent)','politica':'var(--red)','default':'var(--text2)'};
+    const catFromTitle=(t)=>{
+      t=t.toLowerCase();
+      if(t.match(/bitcoin|ethereum|cripto|btc|eth/)) return {cat:'Cripto',color:catColors.cripto};
+      if(t.match(/selic|cdi|ipca|inflação|juros|copom/)) return {cat:'Economia',color:catColors.economia};
+      if(t.match(/ibovespa|ações|bolsa|b3|blue chip/)) return {cat:'Mercado',color:catColors.mercado};
+      if(t.match(/fii|fundo imob|dividend/)) return {cat:'Investimentos',color:catColors.investimentos};
+      if(t.match(/ia |inteligência artificial|tech|open finance/)) return {cat:'Tecnologia',color:catColors.tecnologia};
+      if(t.match(/trump|eua|china|fed|guerra|tarif/)) return {cat:'Geopolítica',color:catColors.politica};
+      return {cat:'Economia',color:catColors.economia};
+    };
+
+    const resp=await fetch('https://api.rss2json.com/v1/api.json?rss_url='+encodeURIComponent('https://www.infomoney.com.br/feed/')+'&count=12');
+    const data=await resp.json();
+    if(data.status==='ok'&&data.items){
+      NEWS=data.items.map(item=>{
+        const catInfo=catFromTitle(item.title);
+        return {
+          src:'InfoMoney',
+          cat:catInfo.cat,
+          catColor:catInfo.color,
+          title:item.title.replace(/<[^>]*>/g,''),
+          time:timeAgo(item.pubDate),
+          url:item.link
+        };
+      });
+    }
+  }catch(e){
+    console.warn('fetchNews erro:',e);
+    // Fallback estático
+    NEWS=[
+      {src:'InfoMoney',cat:'Economia',catColor:'var(--green)',title:'Carregando notícias...',time:'',url:'#'},
+    ];
+  }
+  renderRadarCards();
+}
+
+function renderRadarCards(){
+  const grid=document.getElementById('news-grid');
+  if(!grid||!NEWS.length)return;
+  grid.innerHTML=NEWS.map(n=>`
     <div class="news-card" onclick="window.open('${n.url}','_blank')">
       <div><span class="news-cat" style="background:${n.catColor}22;color:${n.catColor}">${n.cat}</span></div>
       <div class="news-source" style="color:var(--text3)">${n.src}</div>
       <div class="news-title">${n.title}</div>
       <div class="news-time">${n.time}</div>
     </div>`).join('');
+}
+
+function renderRadar(){
+  // Show loading state
+  const grid=document.getElementById('news-grid');
+  if(grid)grid.innerHTML='<div style="grid-column:1/-1;text-align:center;padding:40px;color:var(--text3);font-size:13px;">Carregando notícias em tempo real...</div>';
+  fetchNews();
 }
 
 
@@ -3439,14 +3576,13 @@ function renderConquistas(){
 }
 
 // ═══════════════════ TICKER COM DATA DE REFERÊNCIA ═══════════════════
-// Sobrescrever renderTicker para incluir data
 const _origRenderTicker=renderTicker;
 renderTicker=function(){
-  const refDate='24/03/2025';
+  const hasLive=TICKER_DATA.some(t=>t.live);
   document.getElementById('ticker').innerHTML=TICKER_DATA.map(t=>`
-    <div class="tick-item"><div class="tick-name">${t.n} <span style="font-size:7px;color:var(--text4);font-weight:400;">(ref.)</span></div><div class="tick-val">${t.v}</div>
+    <div class="tick-item"><div class="tick-name">${t.n} <span style="font-size:7px;color:${t.live?'var(--green)':'var(--text4)'};font-weight:400;">${t.live?'ao vivo':'(ref.)'}</span></div><div class="tick-val">${t.v}</div>
     <div class="tick-chg ${t.up?'tick-up':'tick-dn'}">${t.up?'▲':'▼'} ${t.c}</div></div>`).join('')
-    +'<div class="tick-item" style="min-width:fit-content;"><div class="tick-name" style="color:var(--text4);">REFERÊNCIA</div><div class="tick-val" style="font-size:11px;color:var(--text3);">'+refDate+'</div><div style="font-size:9px;color:var(--text4);">dados ilustrativos</div></div>';
+    +(hasLive?'':'<div class="tick-item" style="min-width:fit-content;"><div class="tick-name" style="color:var(--text4);">REFERÊNCIA</div><div class="tick-val" style="font-size:11px;color:var(--text3);">24/03/2025</div><div style="font-size:9px;color:var(--text4);">dados ilustrativos</div></div>');
 };
 
 
