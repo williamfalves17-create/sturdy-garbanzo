@@ -546,8 +546,6 @@ input[type=range]::-moz-range-thumb{width:18px;height:18px;border-radius:50%;bac
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
-<!-- Stripe.js SDK -->
-<script src="https://js.stripe.com/v3/"></script>
 <script>
   try {
     const firebaseConfig = {
@@ -1413,35 +1411,12 @@ input[type=range]::-moz-range-thumb{width:18px;height:18px;border-radius:50%;bac
 
     <!-- Abas de pagamento -->
     <div style="display:flex;gap:6px;margin-bottom:16px;" id="pw-tabs">
-      <button onclick="switchPwTab('stripe')" id="pw-btn-stripe" style="flex:1;padding:10px;background:var(--accent);color:#fff;border:none;border-radius:var(--radius2);font-size:12px;font-weight:700;cursor:pointer;transition:all 0.2s;">💳 Assinar</button>
-      <button onclick="switchPwTab('chave')" id="pw-btn-chave" style="flex:1;padding:10px;background:var(--bg3);color:var(--text3);border:1px solid var(--border2);border-radius:var(--radius2);font-size:12px;font-weight:700;cursor:pointer;transition:all 0.2s;">🔑 Chave</button>
+      <button onclick="switchPwTab('chave')" id="pw-btn-chave" style="flex:1;padding:10px;background:var(--accent);color:#fff;border:none;border-radius:var(--radius2);font-size:12px;font-weight:700;cursor:pointer;transition:all 0.2s;">🔑 Chave</button>
       <button onclick="switchPwTab('pix')" id="pw-btn-pix" style="flex:1;padding:10px;background:var(--bg3);color:var(--text3);border:1px solid var(--border2);border-radius:var(--radius2);font-size:12px;font-weight:700;cursor:pointer;transition:all 0.2s;">💚 Pix</button>
     </div>
 
-    <!-- Aba: Stripe Checkout (principal) -->
-    <div id="pw-tab-stripe">
-      <div style="padding:16px;background:rgba(30,217,122,0.05);border:1px solid rgba(30,217,122,0.15);border-radius:var(--radius2);margin-bottom:14px;">
-        <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">
-          <span style="font-size:16px;">🔒</span>
-          <span style="font-size:12px;color:var(--text2);font-weight:600;">Pagamento seguro via Stripe</span>
-        </div>
-        <div style="font-size:11px;color:var(--text3);line-height:1.6;">Cartão de crédito ou débito. Cobrança recorrente mensal. Cancele a qualquer momento direto no painel.</div>
-      </div>
-      <button class="btn btn-accent" id="btn-stripe-checkout" style="width:100%;padding:16px;font-size:15px;font-family:'Syne',sans-serif;font-weight:700;display:flex;align-items:center;justify-content:center;gap:8px;" onclick="startStripeCheckout()">
-        <span class="btn-text">Assinar Premium — R$ 9,99/mês</span>
-        <span class="spinner" style="display:none;"></span>
-      </button>
-      <div class="pw-err" id="pw-stripe-err" style="margin-top:8px;">Erro ao processar. Tente novamente.</div>
-      <div style="display:flex;align-items:center;justify-content:center;gap:16px;margin-top:12px;opacity:0.5;">
-        <span style="font-size:9px;color:var(--text4);font-family:'DM Mono',monospace;">Visa</span>
-        <span style="font-size:9px;color:var(--text4);font-family:'DM Mono',monospace;">Mastercard</span>
-        <span style="font-size:9px;color:var(--text4);font-family:'DM Mono',monospace;">Amex</span>
-        <span style="font-size:9px;color:var(--text4);font-family:'DM Mono',monospace;">Pix</span>
-      </div>
-    </div>
-
     <!-- Aba: Chave de ativação -->
-    <div id="pw-tab-chave" style="display:none;">
+    <div id="pw-tab-chave">
       <div class="pw-divider">Digite sua chave de ativação</div>
       <input class="pw-key-input" id="pw-key-input" aria-label="Chave de ativação" placeholder="LLIW-XXXX-XXXX" maxlength="14">
       <div class="pw-err" id="pw-err">Chave inválida ou já utilizada.</div>
@@ -1801,8 +1776,6 @@ function launchApp(){
   // Apenas chamar checkPaywall e atualizar menu
   checkPaywall();
   atualizarMenuPremium();
-  // Verificar retorno do Stripe Checkout
-  if(typeof checkStripeReturn==='function') checkStripeReturn();
 }
 
 function atualizarMenuPremium(){
@@ -1885,7 +1858,7 @@ function openPaywall(){document.getElementById('paywall').style.display='flex';}
 
 // ═══════════════════ PAYWALL TABS ═══════════════════
 function switchPwTab(tab){
-  ['stripe','chave','pix'].forEach(t=>{
+  ['chave','pix'].forEach(t=>{
     const el=document.getElementById('pw-tab-'+t);
     const btn=document.getElementById('pw-btn-'+t);
     if(el)el.style.display=t===tab?'block':'none';
@@ -1897,85 +1870,6 @@ function switchPwTab(tab){
   });
 }
 
-// ═══════════════════ STRIPE CHECKOUT ═══════════════════
-// URL da Cloud Function que cria a Checkout Session
-// Deploy: firebase deploy --only functions
-const STRIPE_CF_URL='https://us-central1-lliw-app.cloudfunctions.net/createCheckoutSession';
-
-function startStripeCheckout(){
-  const btn=document.getElementById('btn-stripe-checkout');
-  const err=document.getElementById('pw-stripe-err');
-  err.style.display='none';
-  if(!S.user||!S.user.uid){err.textContent='Faça login primeiro.';err.style.display='block';return;}
-  // Loading state
-  btn.classList.add('loading');
-  btn.disabled=true;
-  // Chamar Cloud Function para criar a Checkout Session
-  fetch(STRIPE_CF_URL,{
-    method:'POST',
-    headers:{'Content-Type':'application/json'},
-    body:JSON.stringify({
-      uid:S.user.uid,
-      email:S.user.email,
-      returnUrl:window.location.href.split('?')[0]
-    })
-  })
-  .then(r=>{if(!r.ok)throw new Error('HTTP '+r.status);return r.json();})
-  .then(data=>{
-    if(data.url){
-      // Redirecionar para Stripe Checkout
-      window.location.href=data.url;
-    } else {
-      throw new Error(data.error||'Erro ao criar sessão');
-    }
-  })
-  .catch(e=>{
-    console.error('Stripe Checkout erro:',e);
-    err.textContent='Erro ao conectar com o pagamento. Tente novamente ou use outra forma.';
-    err.style.display='block';
-    btn.classList.remove('loading');
-    btn.disabled=false;
-  });
-}
-
-// Verificar se voltou do Stripe com sucesso (query param ?payment=success)
-function checkStripeReturn(){
-  const params=new URLSearchParams(window.location.search);
-  if(params.get('payment')==='success'){
-    // Limpar URL
-    window.history.replaceState({},'',window.location.pathname);
-    // O webhook já setou premium no Firestore
-    // Recarregar dados do Firestore para pegar o premium
-    if(S.user&&S.user.uid&&window.fbLoad){
-      window.fbLoad(S.user.uid).then(data=>{
-        if(data&&data.premium){
-          S.premium=data.premium;
-          document.getElementById('paywall').style.display='none';
-          atualizarMenuPremium();
-          toast('Pagamento confirmado! Bem-vindo ao Premium.','t-ok');
-        } else {
-          // Webhook pode demorar alguns segundos — tentar novamente
-          setTimeout(()=>{
-            window.fbLoad(S.user.uid).then(d2=>{
-              if(d2&&d2.premium){
-                S.premium=d2.premium;
-                document.getElementById('paywall').style.display='none';
-                atualizarMenuPremium();
-                toast('Pagamento confirmado! Bem-vindo ao Premium.','t-ok');
-              } else {
-                toast('Pagamento recebido! Ativação em até 1 minuto.','t-info');
-              }
-            });
-          },5000);
-        }
-      });
-    }
-  }
-  if(params.get('payment')==='cancelled'){
-    window.history.replaceState({},'',window.location.pathname);
-    toast('Pagamento cancelado. Você pode tentar novamente.','t-info');
-  }
-}
 // FIX-02: activateKey com transaction para invalidar chave após uso
 function activateKey(){
   const k=document.getElementById('pw-key-input').value.trim().toUpperCase();
