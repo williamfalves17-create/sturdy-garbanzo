@@ -1182,9 +1182,14 @@ input[type=range]::-moz-range-thumb{width:18px;height:18px;border-radius:50%;bac
       <!-- ─── RADAR ─── -->
       <div class="page" id="pg-radar">
         <div class="panel" style="margin-bottom:16px;">
-          <div style="font-family:'Syne',sans-serif;font-size:16px;font-weight:700;margin-bottom:4px;">Radar de Notícias</div>
-          <div style="font-size:12px;color:var(--text3);">Economia · Investimentos · Tecnologia · Geopolítica</div>
-          <div style="font-size:10px;color:var(--text4);margin-top:4px;font-family:'DM Mono',monospace;">Notícias em tempo real via RSS</div>
+          <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;">
+            <div>
+              <div style="font-family:'Syne',sans-serif;font-size:16px;font-weight:700;margin-bottom:4px;">Radar de Notícias</div>
+              <div style="font-size:12px;color:var(--text3);">Economia · Investimentos · Tecnologia · Geopolítica</div>
+              <div style="font-size:10px;color:var(--text4);margin-top:4px;font-family:'DM Mono',monospace;">Fontes: InfoMoney · Brazil Journal · Money Times</div>
+            </div>
+            <button class="btn btn-ghost btn-sm" onclick="renderRadar()" style="white-space:nowrap;">↻ Atualizar</button>
+          </div>
         </div>
         <div class="news-grid" id="news-grid"></div>
       </div>
@@ -2089,11 +2094,13 @@ const TICKER_DATA=[
   {n:'EUR',v:'R$6,41',c:'+0,1%',up:true},{n:'BTC',v:'$84.2k',c:'+2,1%',up:true},
   {n:'IPCA',v:'4,83%',c:'-0,1',up:false},{n:'IGP-M',v:'6,12%',c:'+0,2',up:true},
 ];
-// FIX-08: Removido indicador LIVE enganoso, adicionado (ref.)
+// FIX-08: Show live/ref indicator based on actual data status
 function renderTicker(){
-  document.getElementById('ticker').innerHTML=TICKER_DATA.map(t=>`
-    <div class="tick-item"><div class="tick-name">${t.n} <span style="font-size:7px;color:var(--text4);font-weight:400;">(ref.)</span></div><div class="tick-val">${t.v}</div>
-    <div class="tick-chg ${t.up?'tick-up':'tick-dn'}">${t.up?'▲':'▼'} ${t.c}</div></div>`).join('');
+  document.getElementById('ticker').innerHTML=TICKER_DATA.map(t=>{
+    const liveTag=t.live?'<span style="font-size:7px;color:var(--green);font-weight:400;">● ao vivo</span>':'<span style="font-size:7px;color:var(--text4);font-weight:400;">(ref.)</span>';
+    return `<div class="tick-item"><div class="tick-name">${t.n} ${liveTag}</div><div class="tick-val">${t.v}</div>
+    <div class="tick-chg ${t.up?'tick-up':'tick-dn'}">${t.up?'▲':'▼'} ${t.c}</div></div>`;
+  }).join('');
 }
 
 // ═══════════════════ DASHBOARD ═══════════════════
@@ -2348,6 +2355,16 @@ const MKT_FIIS=[
   {t:'SNAG11',seg:'Fiagros',c:9.61,dy12:1.269,dym:0.106,rendaCota:0.102,pag:'Mensal',pvp:0.94,av:'Compra'},
   {t:'GGRC11',seg:'FII Tijolo',c:102.40,dy12:9.50,dym:0.792,rendaCota:0.811,pag:'Mensal',pvp:0.87,av:'Compra'},
   {t:'ALZR11',seg:'FII Tijolo',c:111.30,dy12:8.90,dym:0.742,rendaCota:0.825,pag:'Mensal',pvp:0.93,av:'Neutro'},
+  {t:'HGRE11',seg:'FII Tijolo',c:112.80,dy12:8.60,dym:0.717,rendaCota:0.808,pag:'Mensal',pvp:0.85,av:'Compra'},
+  {t:'VISC11',seg:'FII Tijolo',c:98.60,dy12:9.30,dym:0.775,rendaCota:0.764,pag:'Mensal',pvp:0.89,av:'Compra'},
+  {t:'KNRI11',seg:'FII Tijolo',c:133.50,dy12:7.80,dym:0.650,rendaCota:0.868,pag:'Mensal',pvp:0.82,av:'Compra'},
+  {t:'XPLG11',seg:'FII Tijolo',c:93.20,dy12:9.60,dym:0.800,rendaCota:0.746,pag:'Mensal',pvp:0.86,av:'Compra'},
+  {t:'RECR11',seg:'FII Papel',c:8.14,dy12:1.180,dym:0.098,rendaCota:0.080,pag:'Mensal',pvp:0.87,av:'Compra'},
+  {t:'KNCR11',seg:'FII Papel',c:97.50,dy12:1.050,dym:0.088,rendaCota:0.855,pag:'Mensal',pvp:1.02,av:'Neutro'},
+  {t:'HGLG11',seg:'FII Tijolo',c:154.30,dy12:8.20,dym:0.683,rendaCota:1.054,pag:'Mensal',pvp:0.96,av:'Neutro'},
+  {t:'GALG11',seg:'Fiagros',c:8.95,dy12:1.340,dym:0.112,rendaCota:0.100,pag:'Mensal',pvp:0.92,av:'Compra'},
+  {t:'RBRR11',seg:'FII Papel',c:86.50,dy12:1.160,dym:0.097,rendaCota:0.836,pag:'Mensal',pvp:0.91,av:'Compra'},
+  {t:'VRTA11',seg:'FII Papel',c:8.60,dy12:1.200,dym:0.100,rendaCota:0.086,pag:'Mensal',pvp:0.88,av:'Compra'},
 ];
 const MKT_ACOES=[
   {t:'BBAS3',setor:'Banco',c:18.48,dy12:2.377,pag:'Semestral',pvp:0.58,pl:4.2,av:'Compra'},
@@ -2360,6 +2377,16 @@ const MKT_ACOES=[
   {t:'EGIE3',setor:'Energia',c:44.80,dy12:8.40,pag:'Semestral',pvp:2.10,pl:9.3,av:'Compra'},
   {t:'CXSE3',setor:'Seguro',c:18.20,dy12:4.50,pag:'Anual',pvp:2.30,pl:10.1,av:'Neutro'},
   {t:'SCHD',setor:'ETF EUA',c:null,dy12:3.50,pag:'Trimestral',pvp:null,pl:null,av:'Compra'},
+  {t:'ABEV3',setor:'Bebidas',c:13.80,dy12:5.20,pag:'Semestral',pvp:3.60,pl:14.5,av:'Neutro'},
+  {t:'RENT3',setor:'Locação',c:38.70,dy12:2.40,pag:'Semestral',pvp:4.10,pl:15.2,av:'Neutro'},
+  {t:'SUZB3',setor:'Papel/Celulose',c:52.40,dy12:3.80,pag:'Anual',pvp:2.80,pl:8.9,av:'Compra'},
+  {t:'VIVT3',setor:'Telecom',c:48.50,dy12:7.60,pag:'Semestral',pvp:1.40,pl:12.8,av:'Compra'},
+  {t:'SBSP3',setor:'Saneamento',c:82.30,dy12:4.90,pag:'Anual',pvp:2.50,pl:11.5,av:'Compra'},
+  {t:'CPLE6',setor:'Energia',c:10.20,dy12:8.70,pag:'Anual',pvp:0.95,pl:5.8,av:'Compra'},
+  {t:'CMIG4',setor:'Energia',c:11.50,dy12:10.20,pag:'Semestral',pvp:1.05,pl:4.9,av:'Compra'},
+  {t:'TRPL4',setor:'Energia',c:25.80,dy12:7.30,pag:'Semestral',pvp:1.30,pl:8.0,av:'Compra'},
+  {t:'B3SA3',setor:'Bolsa',c:12.60,dy12:5.10,pag:'Trimestral',pvp:2.80,pl:13.5,av:'Neutro'},
+  {t:'IVVB11',setor:'ETF S&P500',c:280.00,dy12:0.80,pag:'—',pvp:null,pl:null,av:'Compra'},
 ];
 const MKT_RENDAFIXA=[
   {t:'Tesouro Selic 2027',tipo:'Tesouro Direto',bruta:'13,25%aa',liquida:'~11,26%aa',ir:'Sim (15–22,5%)',liq:'Diária (D+1)',garantia:'Governo Federal',av:'Compra'},
@@ -2379,11 +2406,22 @@ const MKT_CRYPTO=[
   {t:'Solana',s:'SOL',preco:148,mcap:'US$ 68B',v24h:'+3,2%',v7d:'+12,1%',cat:'Smart Contracts',risco:'Muito Alto'},
   {t:'Cardano',s:'ADA',preco:0.45,mcap:'US$ 16B',v24h:'-0,4%',v7d:'+1,8%',cat:'Smart Contracts',risco:'Muito Alto'},
   {t:'Polkadot',s:'DOT',preco:6.80,mcap:'US$ 9B',v24h:'+1,1%',v7d:'+4,2%',cat:'Interoperabilidade',risco:'Muito Alto'},
+  {t:'XRP',s:'XRP',preco:2.18,mcap:'US$ 125B',v24h:'+0,6%',v7d:'+3,5%',cat:'Pagamentos',risco:'Alto'},
+  {t:'Avalanche',s:'AVAX',preco:35.40,mcap:'US$ 14B',v24h:'+2,8%',v7d:'+9,3%',cat:'Smart Contracts',risco:'Muito Alto'},
+  {t:'Chainlink',s:'LINK',preco:14.50,mcap:'US$ 9B',v24h:'+1,9%',v7d:'+7,6%',cat:'Oracle',risco:'Muito Alto'},
+  {t:'Polygon',s:'POL',preco:0.38,mcap:'US$ 3,8B',v24h:'-0,2%',v7d:'+2,1%',cat:'Layer 2',risco:'Muito Alto'},
+  {t:'Cosmos',s:'ATOM',preco:8.90,mcap:'US$ 3,5B',v24h:'+1,3%',v7d:'+5,4%',cat:'Interoperabilidade',risco:'Muito Alto'},
+  {t:'Near Protocol',s:'NEAR',preco:5.20,mcap:'US$ 5,8B',v24h:'+2,4%',v7d:'+8,9%',cat:'Smart Contracts',risco:'Muito Alto'},
+  {t:'Sui',s:'SUI',preco:3.45,mcap:'US$ 10B',v24h:'+4,1%',v7d:'+15,3%',cat:'Smart Contracts',risco:'Muito Alto'},
+  {t:'Render',s:'RNDR',preco:7.80,mcap:'US$ 4B',v24h:'+3,5%',v7d:'+11,2%',cat:'DePIN / AI',risco:'Muito Alto'},
+  {t:'Arbitrum',s:'ARB',preco:1.05,mcap:'US$ 3,6B',v24h:'+1,7%',v7d:'+6,3%',cat:'Layer 2',risco:'Muito Alto'},
 ];
 const MKT_STABLE=[
   {t:'Tether',s:'USDT',preco:1.00,lastro:'Dólar USD',defi:'4–8%aa',risco:'Baixo',uso:'Proteção cambial, trading'},
   {t:'USD Coin',s:'USDC',preco:1.00,lastro:'Dólar USD',defi:'4–6%aa',risco:'Baixo',uso:'DeFi, remessas internacionais'},
   {t:'Dai',s:'DAI',preco:1.00,lastro:'Cripto-colateral',defi:'3–5%aa',risco:'Médio',uso:'DeFi descentralizado'},
+  {t:'DREX',s:'DREX',preco:1.00,lastro:'Real Digital (BCB)',defi:'Selic',risco:'Baixo',uso:'CBDC brasileira (piloto)'},
+  {t:'BRLA',s:'BRLA',preco:1.00,lastro:'Real BRL',defi:'8–12%aa',risco:'Médio',uso:'Stablecoin pareada ao Real'},
 ];
 
 let currentMktTab='fiis';
@@ -2768,7 +2806,7 @@ function renderDividas(){
     return;
   }
 
-  const html ='';
+  let html ='';
   for(let i=0;i<sorted.length;i++){
     var d=sorted[i];
     var jurosM=d.saldo*(d.taxa/100);
@@ -3169,47 +3207,122 @@ const RSS_FEEDS=[
 function timeAgo(dateStr){
   const now=new Date(), then=new Date(dateStr);
   const diff=Math.floor((now-then)/60000);
+  if(isNaN(diff)||diff<0) return 'recente';
   if(diff<60) return diff+'min atrás';
   if(diff<1440) return Math.floor(diff/60)+'h atrás';
   return Math.floor(diff/1440)+'d atrás';
+}
+
+async function fetchFromProxy(feedUrl, proxyIndex){
+  const proxies=[
+    url=>'https://api.rss2json.com/v1/api.json?rss_url='+encodeURIComponent(url)+'&count=15',
+    url=>'https://api.allorigins.win/raw?url='+encodeURIComponent(url),
+    url=>'https://corsproxy.io/?'+encodeURIComponent(url),
+  ];
+  const idx=proxyIndex||0;
+  if(idx>=proxies.length) throw new Error('All proxies failed');
+  const proxyUrl=proxies[idx](feedUrl);
+  const resp=await fetch(proxyUrl,{signal:AbortSignal.timeout(8000)});
+  if(!resp.ok) throw new Error('HTTP '+resp.status);
+  return resp;
+}
+
+async function parseRSSItems(feedUrl,src){
+  const catColors={'economia':'var(--green)','mercado':'var(--accent3)','investimentos':'var(--cyan)','cripto':'var(--yellow)','tecnologia':'var(--accent)','politica':'var(--red)','default':'var(--text2)'};
+  const catFromTitle=(t)=>{
+    t=t.toLowerCase();
+    if(t.match(/bitcoin|ethereum|cripto|btc|eth|criptomoeda/)) return {cat:'Cripto',color:catColors.cripto};
+    if(t.match(/selic|cdi|ipca|inflação|juros|copom|pib|câmbio/)) return {cat:'Economia',color:catColors.economia};
+    if(t.match(/ibovespa|ações|bolsa|b3|blue chip|dividend|fii|fundo/)) return {cat:'Mercado',color:catColors.mercado};
+    if(t.match(/tesouro|cdb|lci|lca|renda fixa|poupança|investir/)) return {cat:'Investimentos',color:catColors.investimentos};
+    if(t.match(/ia |inteligência artificial|tech|open finance|fintech/)) return {cat:'Tecnologia',color:catColors.tecnologia};
+    if(t.match(/trump|eua|china|fed|guerra|tarif|geopolit|sanções/)) return {cat:'Geopolítica',color:catColors.politica};
+    return {cat:'Economia',color:catColors.economia};
+  };
+
+  // Try proxy 0 (rss2json — returns JSON directly)
+  try{
+    const resp=await fetchFromProxy(feedUrl,0);
+    const data=await resp.json();
+    if(data.status==='ok'&&data.items&&data.items.length>0){
+      return data.items.map(item=>{
+        const catInfo=catFromTitle(item.title);
+        return {
+          src:src,
+          cat:catInfo.cat,
+          catColor:catInfo.color,
+          title:item.title.replace(/<[^>]*>/g,'').trim(),
+          time:timeAgo(item.pubDate),
+          pubDate:new Date(item.pubDate),
+          url:item.link
+        };
+      });
+    }
+  }catch(e){console.warn('Proxy 0 failed for',src,e);}
+
+  // Try proxy 1/2 (returns raw XML)
+  for(let px=1;px<=2;px++){
+    try{
+      const resp=await fetchFromProxy(feedUrl,px);
+      const text=await resp.text();
+      const parser=new DOMParser();
+      const xml=parser.parseFromString(text,'text/xml');
+      const items=xml.querySelectorAll('item');
+      if(items.length>0){
+        return Array.from(items).slice(0,15).map(item=>{
+          const title=(item.querySelector('title')?.textContent||'').replace(/<[^>]*>/g,'').trim();
+          const link=item.querySelector('link')?.textContent||'#';
+          const pubDate=item.querySelector('pubDate')?.textContent||'';
+          const catInfo=catFromTitle(title);
+          return {
+            src:src,
+            cat:catInfo.cat,
+            catColor:catInfo.color,
+            title:title,
+            time:timeAgo(pubDate),
+            pubDate:pubDate?new Date(pubDate):new Date(),
+            url:link
+          };
+        });
+      }
+    }catch(e){console.warn('Proxy',px,'failed for',src,e);}
+  }
+  return [];
 }
 
 async function fetchNews(){
   const grid=document.getElementById('news-grid');
   if(!grid)return;
   try{
-    const catColors={'economia':'var(--green)','mercado':'var(--accent3)','investimentos':'var(--cyan)','cripto':'var(--yellow)','tecnologia':'var(--accent)','politica':'var(--red)','default':'var(--text2)'};
-    const catFromTitle=(t)=>{
-      t=t.toLowerCase();
-      if(t.match(/bitcoin|ethereum|cripto|btc|eth/)) return {cat:'Cripto',color:catColors.cripto};
-      if(t.match(/selic|cdi|ipca|inflação|juros|copom/)) return {cat:'Economia',color:catColors.economia};
-      if(t.match(/ibovespa|ações|bolsa|b3|blue chip/)) return {cat:'Mercado',color:catColors.mercado};
-      if(t.match(/fii|fundo imob|dividend/)) return {cat:'Investimentos',color:catColors.investimentos};
-      if(t.match(/ia |inteligência artificial|tech|open finance/)) return {cat:'Tecnologia',color:catColors.tecnologia};
-      if(t.match(/trump|eua|china|fed|guerra|tarif/)) return {cat:'Geopolítica',color:catColors.politica};
-      return {cat:'Economia',color:catColors.economia};
-    };
+    // Fetch from multiple sources in parallel
+    const results=await Promise.allSettled([
+      parseRSSItems('https://www.infomoney.com.br/feed/','InfoMoney'),
+      parseRSSItems('https://braziljournal.com/feed/','Brazil Journal'),
+      parseRSSItems('https://www.moneytimes.com.br/feed/','Money Times'),
+    ]);
 
-    const resp=await fetch('https://api.rss2json.com/v1/api.json?rss_url='+encodeURIComponent('https://www.infomoney.com.br/feed/')+'&count=12');
-    const data=await resp.json();
-    if(data.status==='ok'&&data.items){
-      NEWS=data.items.map(item=>{
-        const catInfo=catFromTitle(item.title);
-        return {
-          src:'InfoMoney',
-          cat:catInfo.cat,
-          catColor:catInfo.color,
-          title:item.title.replace(/<[^>]*>/g,''),
-          time:timeAgo(item.pubDate),
-          url:item.link
-        };
-      });
-    }
+    let allNews=[];
+    results.forEach(r=>{
+      if(r.status==='fulfilled'&&r.value.length>0) allNews=allNews.concat(r.value);
+    });
+
+    // Sort by date, most recent first
+    allNews.sort((a,b)=>(b.pubDate||0)-(a.pubDate||0));
+    // Remove duplicates by title similarity
+    const seen=new Set();
+    NEWS=allNews.filter(n=>{
+      const key=n.title.toLowerCase().substring(0,40);
+      if(seen.has(key)) return false;
+      seen.add(key);
+      return true;
+    }).slice(0,20);
+
+    if(NEWS.length===0) throw new Error('No news fetched');
   }catch(e){
     console.warn('fetchNews erro:',e);
-    // Fallback estático
+    // Fallback estático with helpful message
     NEWS=[
-      {src:'InfoMoney',cat:'Economia',catColor:'var(--green)',title:'Carregando notícias...',time:'',url:'#'},
+      {src:'LLIW',cat:'Info',catColor:'var(--text2)',title:'Não foi possível carregar notícias. Verifique sua conexão e clique em atualizar.',time:'agora',url:'#'},
     ];
   }
   renderRadarCards();
@@ -3219,16 +3332,15 @@ function renderRadarCards(){
   const grid=document.getElementById('news-grid');
   if(!grid||!NEWS.length)return;
   grid.innerHTML=NEWS.map(n=>`
-    <div class="news-card" onclick="window.open('${n.url}','_blank')">
-      <div><span class="news-cat" style="background:${n.catColor}22;color:${n.catColor}">${n.cat}</span></div>
-      <div class="news-source" style="color:var(--text3)">${n.src}</div>
-      <div class="news-title">${n.title}</div>
+    <div class="news-card" onclick="${n.url!=='#'?`window.open('${n.url}','_blank')`:''}">
+      <div><span class="news-cat" style="background:${n.catColor}22;color:${n.catColor}">${escHTML(n.cat)}</span></div>
+      <div class="news-source" style="color:var(--text3)">${escHTML(n.src)}</div>
+      <div class="news-title">${escHTML(n.title)}</div>
       <div class="news-time">${n.time}</div>
     </div>`).join('');
 }
 
 function renderRadar(){
-  // Show loading state
   const grid=document.getElementById('news-grid');
   if(grid)grid.innerHTML='<div style="grid-column:1/-1;text-align:center;padding:40px;color:var(--text3);font-size:13px;">Carregando notícias em tempo real...</div>';
   fetchNews();
