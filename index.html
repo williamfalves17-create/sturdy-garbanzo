@@ -469,6 +469,13 @@ input[type=range]::-moz-range-thumb{width:18px;height:18px;border-radius:50%;bac
 .csv-import-area:hover{border-color:var(--accent);background:rgba(124,106,247,0.03);}
 .csv-import-area input[type=file]{display:none;}
 
+/* ═══════════ SPREADSHEET INPUT ROW ═══════════ */
+#desp-input-row td{padding:4px 3px !important;}
+#desp-input-row .fi,#desp-input-row .fs{border-radius:4px;height:auto;}
+#desp-input-row .fi:focus,#desp-input-row .fs:focus{border-color:var(--green) !important;box-shadow:0 0 0 2px rgba(30,217,122,0.12);}
+#desp-spreadsheet tbody tr{transition:background 0.15s;}
+#desp-spreadsheet tbody tr:hover{background:rgba(124,106,247,0.03);}
+
 /* ═══════════ TOAST (ENHANCED) ═══════════ */
 #toast-container{position:fixed;bottom:22px;right:22px;z-index:9999;display:flex;flex-direction:column-reverse;gap:8px;pointer-events:none;}
 .toast-item{background:var(--card);border:1px solid var(--border2);border-radius:var(--radius);padding:14px 18px;font-size:12px;color:var(--text);transform:translateX(120%);opacity:0;transition:all 0.35s cubic-bezier(0.16,1,0.3,1);display:flex;align-items:center;gap:10px;box-shadow:0 8px 32px rgba(0,0,0,0.5);max-width:360px;pointer-events:auto;position:relative;overflow:hidden;}
@@ -811,31 +818,57 @@ input[type=range]::-moz-range-thumb{width:18px;height:18px;border-radius:50%;bac
 
       <!-- ─── DESPESAS ─── -->
       <div class="page" id="pg-despesas">
-        <div class="panel">
-          <div class="sec-title" style="margin-bottom:16px;">Registrar Despesa</div>
-          <div class="form-grid">
-            <div class="fg"><label class="fl">Descrição</label><input class="fi" id="d-desc" aria-label="Descrição da despesa" placeholder="Ex: Aluguel"></div>
-            <div class="fg"><label class="fl">Categoria</label><select class="fs" id="d-cat"><option>Moradia</option><option>Alimentação</option><option>Transporte</option><option>Saúde</option><option>Educação</option><option>Lazer</option><option>Investimento</option><option>Pagamento de Dívida</option><option>Assinaturas</option><option>Outros</option></select></div>
-            <div class="fg"><label class="fl">Valor (R$)</label><input class="fi" id="d-valor" type="number" placeholder="0,00" aria-label="Valor da despesa" min="0"></div>
-            <div class="fg"><label class="fl">Data</label><input class="fi" id="d-data" aria-label="Data da despesa" type="date"></div>
-            <div class="fg"><label class="fl">Recorrência</label><select class="fs" id="d-rec"><option>Única</option><option>Mensal</option><option>Anual</option></select></div>
-            <div class="fg"><label class="fl">Limite Alerta (R$)</label><input class="fi" id="d-limit" aria-label="Limite de alerta" type="number" placeholder="Opcional"></div>
-          </div>
-          <button class="btn btn-accent" onclick="addDesp()">+ Registrar</button>
-          <div style="display:flex;gap:8px;margin-top:10px;">
-            <div class="csv-import-area" style="flex:1;" onclick="document.getElementById('csv-desp-input').click()">
-              <input type="file" id="csv-desp-input" accept=".csv" onchange="importCSV(this,'desp')">
-              <span style="font-size:11px;color:var(--text3);">📥 Importar CSV</span>
-            </div>
-            <button class="btn btn-ghost btn-sm" onclick="exportCSV('desp')" style="white-space:nowrap;">📤 Exportar CSV</button>
-          </div>
-        </div>
+        <!-- KPIs do mês -->
+        <div class="kpi-row" id="desp-kpis"></div>
+
         <div class="panel">
           <div class="panel-hd">
-            <div class="sec-title">Histórico</div>
-            <div style="font-size:11px;color:var(--text3)">Total: <span id="d-total" style="color:var(--red);font-family:'DM Mono',monospace"></span></div>
+            <div class="sec-title">Planilha de Despesas <span class="badge badge-red" id="desp-month-badge"></span></div>
+            <div style="display:flex;gap:8px;align-items:center;">
+              <div style="font-size:11px;color:var(--text3)">Total: <span id="d-total" style="color:var(--red);font-family:'DM Mono',monospace"></span></div>
+              <button class="btn btn-ghost btn-sm" onclick="exportCSV('desp')" style="white-space:nowrap;font-size:10px;">📤 CSV</button>
+              <div class="csv-import-area" style="padding:6px 10px;margin:0;border-width:1px;" onclick="document.getElementById('csv-desp-input').click()">
+                <input type="file" id="csv-desp-input" accept=".csv" onchange="importCSV(this,'desp')">
+                <span style="font-size:10px;color:var(--text3);">📥 CSV</span>
+              </div>
+            </div>
           </div>
-          <div class="tbl-wrap"><table><thead><tr><th>Data</th><th>Descrição</th><th>Categoria</th><th>Recorrência</th><th>Valor</th><th></th></tr></thead><tbody id="tb-desp"></tbody></table></div>
+          <div style="font-size:11px;color:var(--text3);margin-bottom:14px;">Preencha a linha verde e pressione <b style="color:var(--green)">Enter</b> ou clique <b>+ Adicionar</b> para registrar. Estilo planilha — igual ao Excel.</div>
+          
+          <div class="tbl-wrap"><table id="desp-spreadsheet">
+            <thead>
+              <tr>
+                <th style="width:100px;">Data</th>
+                <th style="min-width:140px;">Descrição</th>
+                <th style="width:130px;">Categoria</th>
+                <th style="width:90px;">Recorrência</th>
+                <th style="width:100px;">Valor (R$)</th>
+                <th style="width:80px;">Alerta</th>
+                <th style="width:50px;"></th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- Linha de input inline (estilo planilha) -->
+              <tr id="desp-input-row" style="background:rgba(30,217,122,0.04);border:1px solid rgba(30,217,122,0.2);">
+                <td><input class="fi" id="d-data" type="date" style="margin:0;padding:8px 6px;font-size:11px;background:transparent;border-color:rgba(30,217,122,0.15);"></td>
+                <td><input class="fi" id="d-desc" placeholder="Descrição..." style="margin:0;padding:8px 6px;font-size:11px;background:transparent;border-color:rgba(30,217,122,0.15);" onkeydown="if(event.key==='Enter')addDesp()"></td>
+                <td><select class="fs" id="d-cat" style="margin:0;padding:8px 4px;font-size:11px;background:transparent;border-color:rgba(30,217,122,0.15);"><option>Moradia</option><option>Alimentação</option><option>Transporte</option><option>Saúde</option><option>Educação</option><option>Lazer</option><option>Investimento</option><option>Pagamento de Dívida</option><option>Assinaturas</option><option>Outros</option></select></td>
+                <td><select class="fs" id="d-rec" style="margin:0;padding:8px 4px;font-size:11px;background:transparent;border-color:rgba(30,217,122,0.15);"><option>Única</option><option>Mensal</option><option>Anual</option></select></td>
+                <td><input class="fi" id="d-valor" type="number" placeholder="0,00" min="0" style="margin:0;padding:8px 6px;font-size:11px;background:transparent;border-color:rgba(30,217,122,0.15);text-align:right;" onkeydown="if(event.key==='Enter')addDesp()"></td>
+                <td><input class="fi" id="d-limit" type="number" placeholder="—" style="margin:0;padding:8px 6px;font-size:11px;background:transparent;border-color:rgba(30,217,122,0.15);text-align:right;" onkeydown="if(event.key==='Enter')addDesp()"></td>
+                <td style="text-align:center;"><button class="btn btn-sm" onclick="addDesp()" style="background:var(--green);color:#fff;padding:6px 10px;font-size:11px;font-weight:700;white-space:nowrap;" title="Adicionar despesa">+</button></td>
+              </tr>
+            </tbody>
+            <tbody id="tb-desp"></tbody>
+          </table></div>
+        </div>
+
+        <!-- Despesas por Categoria (resumo mensal estilo planilha) -->
+        <div class="panel">
+          <div class="panel-hd">
+            <div class="sec-title">Resumo por Categoria <span class="badge badge-purple">Mês Atual</span></div>
+          </div>
+          <div id="desp-cat-summary"></div>
         </div>
       </div>
 
@@ -2089,10 +2122,10 @@ async function fetchLiveData(){
 
 // ═══════════════════ TICKER ═══════════════════
 const TICKER_DATA=[
-  {n:'SELIC',v:'13,25%',c:'+0.25',up:true},{n:'CDI',v:'13,15%',c:'+0.24',up:true},
+  {n:'SELIC',v:'14,75%',c:'-0.25',up:false},{n:'CDI',v:'14,65%',c:'-0.24',up:false},
   {n:'IBOV',v:'132.847',c:'+1,2%',up:true},{n:'USD',v:'R$5,92',c:'-0,3%',up:false},
   {n:'EUR',v:'R$6,41',c:'+0,1%',up:true},{n:'BTC',v:'$84.2k',c:'+2,1%',up:true},
-  {n:'IPCA',v:'4,83%',c:'-0,1',up:false},{n:'IGP-M',v:'6,12%',c:'+0,2',up:true},
+  {n:'IPCA',v:'4,50%',c:'-0,3',up:false},{n:'IGP-M',v:'5,20%',c:'-0,1',up:false},
 ];
 // FIX-08: Show live/ref indicator based on actual data status
 function renderTicker(){
@@ -2208,30 +2241,80 @@ function addDesp(){
   const rec=document.getElementById('d-rec').value;
   const limit=parseFloat(document.getElementById('d-limit').value)||0;
   if(!data||!valor){toast('Preencha valor e data','t-err');return;}
-  // alert check
   if(limit>0&&valor>limit)toast(`Alerta: despesa acima do limite de ${fBRL(limit)}!`,'t-info');
   S.desps.push({id:Date.now(),descricao:desc,categoria:cat,valor,data,recorrencia:rec,limite:limit});
   save();renderDesp();toast('Despesa registrada!');
   document.getElementById('d-desc').value='';document.getElementById('d-valor').value='';document.getElementById('d-limit').value='';
+  // Foco de volta no campo descrição (workflow de planilha)
+  document.getElementById('d-desc').focus();
 }
 function renderDesp(){
   const tb=document.getElementById('tb-desp');
   const sorted=[...S.desps].sort((a,b)=>new Date(b.data)-new Date(a.data));
   const total=sorted.reduce((s,d)=>s+d.valor,0);
   document.getElementById('d-total').textContent=fBRL(total);
+
+  // Month badge
+  const now=new Date(),tm=now.getMonth(),ty=now.getFullYear();
+  const mb=document.getElementById('desp-month-badge');
+  if(mb) mb.textContent=MONTHS[tm]+'/'+ty;
+
+  // KPIs do mês
+  const mDesp=S.desps.filter(d=>{const dt=new Date(d.data+'T12:00');return dt.getMonth()===tm&&dt.getFullYear()===ty;});
+  const totalMes=mDesp.reduce((s,d)=>s+d.valor,0);
+  const mRec=S.recs.filter(r=>{const dt=new Date(r.data+'T12:00');return dt.getMonth()===tm&&dt.getFullYear()===ty;}).reduce((s,r)=>s+r.valor,0);
+  const pctRenda=mRec>0?(totalMes/mRec*100):0;
+  const pm=tm===0?11:tm-1, py=tm===0?ty-1:ty;
+  const totalMesAnt=S.desps.filter(d=>{const dt=new Date(d.data+'T12:00');return dt.getMonth()===pm&&dt.getFullYear()===py;}).reduce((s,d)=>s+d.valor,0);
+  const varMes=totalMesAnt>0?((totalMes-totalMesAnt)/totalMesAnt*100):0;
+  const kd=document.getElementById('desp-kpis');
+  if(kd) kd.innerHTML=`
+    <div class="kpi"><div class="kpi-top" style="background:var(--red)"></div><div class="kpi-lbl">Despesas (mês)</div><div class="kpi-val" style="color:var(--red)">${fBRL(totalMes)}</div><div class="kpi-sub ${pctRenda>80?'dn':'neutral'}">${fPct(pctRenda)} da renda</div></div>
+    <div class="kpi"><div class="kpi-top" style="background:var(--accent)"></div><div class="kpi-lbl">Total Geral</div><div class="kpi-val">${fBRL(total)}</div><div class="kpi-sub neutral">${sorted.length} lançamentos</div></div>
+    <div class="kpi"><div class="kpi-top" style="background:${varMes>0?'var(--red)':'var(--green)'}"></div><div class="kpi-lbl">vs Mês Anterior</div><div class="kpi-val" style="color:${varMes>0?'var(--red)':'var(--green)'}">${varMes>0?'+':''}${varMes.toFixed(1)}%</div><div class="kpi-sub ${varMes>0?'dn':'up'}">${totalMesAnt>0?fBRL(totalMesAnt)+' no mês passado':'sem dados'}</div></div>
+    <div class="kpi"><div class="kpi-top" style="background:var(--yellow)"></div><div class="kpi-lbl">Média/dia (mês)</div><div class="kpi-val">${fBRL(totalMes/Math.max(1,new Date().getDate()))}</div><div class="kpi-sub neutral">gasto diário médio</div></div>`;
+
+  // Tabela estilo planilha
   tb.innerHTML=sorted.map(d=>{
     const isDivida = d.categoria==='Pagamento de Dívida';
     const catBg = isDivida ? 'rgba(240,72,90,0.12)' : 'rgba(124,106,247,0.1)';
     const catColor = isDivida ? 'var(--red)' : 'var(--accent3)';
     return `<tr>
-      <td class="td-mono">${d.data?new Date(d.data+'T12:00').toLocaleDateString('pt-BR'):'-'}</td>
-      <td>${isDivida?'<span style="font-size:9px;background:rgba(240,72,90,0.12);color:var(--red);padding:1px 5px;border-radius:3px;margin-right:4px;">DÍVIDA</span>':''}${escHTML(d.descricao||'—')}</td>
-      <td><span class="td-tag" style="background:${catBg};color:${catColor}">${d.categoria}</span></td>
-      <td><span class="td-tag" style="background:rgba(124,106,247,0.08);color:var(--text3)">${d.recorrencia}</span></td>
-      <td class="td-dn">${fBRL(d.valor)}</td>
-      <td><button class="btn btn-xs btn-red" title="Excluir despesa" onclick="S.desps=S.desps.filter(x=>x.id!==${d.id});save();renderDesp();">✕</button></td>
+      <td class="td-mono" style="font-size:11px;">${d.data?new Date(d.data+'T12:00').toLocaleDateString('pt-BR'):'-'}</td>
+      <td style="font-size:12px;">${isDivida?'<span style="font-size:8px;background:rgba(240,72,90,0.12);color:var(--red);padding:1px 4px;border-radius:3px;margin-right:3px;">DIV</span>':''}${escHTML(d.descricao||'—')}</td>
+      <td><span class="td-tag" style="background:${catBg};color:${catColor};font-size:10px;">${d.categoria}</span></td>
+      <td><span style="font-size:10px;color:var(--text3)">${d.recorrencia}</span></td>
+      <td class="td-dn" style="text-align:right;font-size:12px;">${fBRL(d.valor)}</td>
+      <td style="font-size:10px;color:var(--text4);text-align:right;">${d.limite>0?fBRL(d.limite):'—'}</td>
+      <td style="text-align:center;"><button class="btn btn-xs btn-red" title="Excluir" onclick="S.desps=S.desps.filter(x=>x.id!==${d.id});save();renderDesp();" style="padding:3px 6px;">✕</button></td>
     </tr>`;
-  }).join('')||'<tr><td colspan="6" style="text-align:center;color:var(--text4);padding:20px;">Nenhuma despesa ainda</td></tr>';
+  }).join('')||'<tr><td colspan="7" style="text-align:center;color:var(--text4);padding:30px;font-size:12px;">Nenhuma despesa ainda — adicione na linha verde acima ↑</td></tr>';
+
+  // Resumo por categoria (estilo planilha)
+  const catSummary=document.getElementById('desp-cat-summary');
+  if(catSummary){
+    const catMap={};
+    mDesp.forEach(d=>{catMap[d.categoria]=(catMap[d.categoria]||0)+d.valor;});
+    const cats=Object.entries(catMap).sort((a,b)=>b[1]-a[1]);
+    const CATCOLORS={'Moradia':'var(--red)','Alimentação':'var(--yellow)','Transporte':'var(--cyan)','Saúde':'var(--green)','Educação':'var(--accent3)','Lazer':'#ff8c42','Investimento':'var(--accent)','Pagamento de Dívida':'var(--red)','Assinaturas':'#c084fc','Outros':'var(--text3)'};
+    if(cats.length===0){
+      catSummary.innerHTML='<div style="text-align:center;padding:20px;color:var(--text4);font-size:12px;">Sem despesas neste mês.</div>';
+    } else {
+      catSummary.innerHTML='<table style="width:100%;"><thead><tr><th style="text-align:left;">Categoria</th><th style="text-align:right;">Valor</th><th style="text-align:right;">%</th><th style="width:30%;">Barra</th></tr></thead><tbody>'+
+      cats.map(([cat,val])=>{
+        const pct=(val/totalMes*100);
+        const color=CATCOLORS[cat]||'var(--text3)';
+        return `<tr>
+          <td style="font-size:12px;font-weight:600;"><span style="display:inline-block;width:8px;height:8px;border-radius:2px;background:${color};margin-right:6px;"></span>${escHTML(cat)}</td>
+          <td style="text-align:right;font-family:'DM Mono',monospace;font-size:12px;color:var(--red);">${fBRL(val)}</td>
+          <td style="text-align:right;font-family:'DM Mono',monospace;font-size:11px;color:var(--text3);">${pct.toFixed(0)}%</td>
+          <td><div style="background:var(--bg4);border-radius:3px;height:6px;overflow:hidden;"><div style="width:${pct}%;height:100%;background:${color};border-radius:3px;transition:width 0.5s;"></div></div></td>
+        </tr>`;
+      }).join('')+
+      '<tr style="border-top:1px solid var(--border);font-weight:700;"><td style="font-size:12px;padding-top:10px;">TOTAL</td><td style="text-align:right;font-family:\'DM Mono\',monospace;font-size:13px;color:var(--red);padding-top:10px;">'+fBRL(totalMes)+'</td><td style="text-align:right;font-family:\'DM Mono\',monospace;font-size:11px;color:var(--text3);padding-top:10px;">100%</td><td></td></tr>'+
+      '</tbody></table>';
+    }
+  }
 }
 
 // ═══════════════════ PLANEJAMENTO ═══════════════════
@@ -2389,14 +2472,14 @@ const MKT_ACOES=[
   {t:'IVVB11',setor:'ETF S&P500',c:280.00,dy12:0.80,pag:'—',pvp:null,pl:null,av:'Compra'},
 ];
 const MKT_RENDAFIXA=[
-  {t:'Tesouro Selic 2027',tipo:'Tesouro Direto',bruta:'13,25%aa',liquida:'~11,26%aa',ir:'Sim (15–22,5%)',liq:'Diária (D+1)',garantia:'Governo Federal',av:'Compra'},
-  {t:'Tesouro IPCA+ 2035',tipo:'Tesouro Direto',bruta:'IPCA + 6,20%',liquida:'IPCA + ~5,27%',ir:'Sim (15–22,5%)',liq:'Diária (D+1)',garantia:'Governo Federal',av:'Compra'},
-  {t:'CDB 110% CDI',tipo:'CDB',bruta:'14,47%aa',liquida:'~12,30%aa',ir:'Sim (15–22,5%)',liq:'Vencimento',garantia:'FGC R$250k',av:'Compra'},
-  {t:'CDB 120% CDI',tipo:'CDB',bruta:'15,78%aa',liquida:'~13,41%aa',ir:'Sim (15–22,5%)',liq:'Vencimento',garantia:'FGC R$250k',av:'Compra'},
-  {t:'LCI 95% CDI',tipo:'LCI',bruta:'12,49%aa',liquida:'12,49%aa',ir:'Isento PF',liq:'Carência 90d',garantia:'FGC R$250k',av:'Compra'},
-  {t:'LCI 100% CDI',tipo:'LCI',bruta:'13,15%aa',liquida:'13,15%aa',ir:'Isento PF',liq:'Carência 90d',garantia:'FGC R$250k',av:'Compra'},
-  {t:'LCA 90% CDI',tipo:'LCA',bruta:'11,84%aa',liquida:'11,84%aa',ir:'Isento PF',liq:'Carência 90d',garantia:'FGC R$250k',av:'Neutro'},
-  {t:'LCA 95% CDI',tipo:'LCA',bruta:'12,49%aa',liquida:'12,49%aa',ir:'Isento PF',liq:'Carência 90d',garantia:'FGC R$250k',av:'Compra'},
+  {t:'Tesouro Selic 2028',tipo:'Tesouro Direto',bruta:'14,75%aa',liquida:'~12,54%aa',ir:'Sim (15–22,5%)',liq:'Diária (D+1)',garantia:'Governo Federal',av:'Compra'},
+  {t:'Tesouro IPCA+ 2035',tipo:'Tesouro Direto',bruta:'IPCA + 6,80%',liquida:'IPCA + ~5,78%',ir:'Sim (15–22,5%)',liq:'Diária (D+1)',garantia:'Governo Federal',av:'Compra'},
+  {t:'CDB 110% CDI',tipo:'CDB',bruta:'16,12%aa',liquida:'~13,70%aa',ir:'Sim (15–22,5%)',liq:'Vencimento',garantia:'FGC R$250k',av:'Compra'},
+  {t:'CDB 120% CDI',tipo:'CDB',bruta:'17,58%aa',liquida:'~14,94%aa',ir:'Sim (15–22,5%)',liq:'Vencimento',garantia:'FGC R$250k',av:'Compra'},
+  {t:'LCI 95% CDI',tipo:'LCI',bruta:'13,92%aa',liquida:'13,92%aa',ir:'Isento PF',liq:'Carência 90d',garantia:'FGC R$250k',av:'Compra'},
+  {t:'LCI 100% CDI',tipo:'LCI',bruta:'14,65%aa',liquida:'14,65%aa',ir:'Isento PF',liq:'Carência 90d',garantia:'FGC R$250k',av:'Compra'},
+  {t:'LCA 90% CDI',tipo:'LCA',bruta:'13,19%aa',liquida:'13,19%aa',ir:'Isento PF',liq:'Carência 90d',garantia:'FGC R$250k',av:'Neutro'},
+  {t:'LCA 95% CDI',tipo:'LCA',bruta:'13,92%aa',liquida:'13,92%aa',ir:'Isento PF',liq:'Carência 90d',garantia:'FGC R$250k',av:'Compra'},
   {t:'Poupança',tipo:'Poupança',bruta:'6,17%aa',liquida:'6,17%aa',ir:'Isento PF',liq:'Mensal',garantia:'FGC R$250k',av:'Evitar'},
 ];
 const MKT_CRYPTO=[
@@ -2446,9 +2529,9 @@ function switchMktTab(tab){
 function renderMercado(){
   // KPIs
   const lr=LIVE_RATES;
-  const fSelic=lr.selic?lr.selic.toFixed(2).replace('.',',')+'%':'13,25%';
-  const fCdi=lr.cdi?lr.cdi.toFixed(2).replace('.',',')+'%':'13,15%';
-  const fIpca=lr.ipca?lr.ipca.toFixed(2).replace('.',',')+'%':'4,83%';
+  const fSelic=lr.selic?lr.selic.toFixed(2).replace('.',',')+'%':'14,75%';
+  const fCdi=lr.cdi?lr.cdi.toFixed(2).replace('.',',')+'%':'14,65%';
+  const fIpca=lr.ipca?lr.ipca.toFixed(2).replace('.',',')+'%':'4,50%';
   const fUsd=lr.usd?'R$ '+lr.usd.toFixed(2).replace('.',','):'R$ 5,92';
   const fBtcK=lr.btc?'$'+Math.round((lr.btc/(lr.usd||5.70))/1000)+'k':'$84.2k';
   document.getElementById('mkt-kpis').innerHTML=`
@@ -2554,7 +2637,7 @@ function renderMercado(){
   </tr>`).join('');
 
   // Comparativo chart
-  const _s=LIVE_RATES.selic||13.25, _c=LIVE_RATES.cdi||13.15;
+  const _s=LIVE_RATES.selic||14.75, _c=LIVE_RATES.cdi||14.65;
   const compLabels=['Tesouro Selic','CDB 110%','LCI 100%','FII Médio','Ações (DY)','Poupança','Bitcoin*'];
   const rates=[_s,_c*1.1,_c,11.0,8.5,_s*0.5+0.0875,120];
   const cap=10000,anos=5,n=anos*12;
@@ -3138,10 +3221,10 @@ function calcComparativo(){
   const cap=parseFloat(document.getElementById('cmp-cap').value)||10000;
   const anos=parseFloat(document.getElementById('cmp-anos').value)||5;
   const n=anos*12;
-  const _s2=LIVE_RATES.selic||13.25, _c2=LIVE_RATES.cdi||13.15;
+  const _s2=LIVE_RATES.selic||14.75, _c2=LIVE_RATES.cdi||14.65;
   const calc=(taxa)=>cap*Math.pow(1+taxa/100,n);
   const data=[calc(_s2/12),calc(_c2*1.1/12),calc(1.134),calc((_s2*0.5+0.0875)/12)];
-  mkChart('c-cmp',{type:'bar',data:{labels:['Tesouro Selic\n(13,25%aa)','CDB 110% CDI\n(14,47%aa)','FII Médio\n(~13,6%aa)','Poupança\n(6,17%aa)'],datasets:[{data,backgroundColor:['#18d4e8','#7c6af7','#1ed97a','#f04a5a'],borderRadius:8,borderSkipped:false}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{grid:{color:'rgba(255,255,255,0.03)'}},y:{grid:{color:'rgba(255,255,255,0.03)'},ticks:{callback:v=>fBRL(v)}}}}});
+  mkChart('c-cmp',{type:'bar',data:{labels:['Tesouro Selic\n(14,75%aa)','CDB 110% CDI\n(16,12%aa)','FII Médio\n(~13,6%aa)','Poupança\n(6,17%aa)'],datasets:[{data,backgroundColor:['#18d4e8','#7c6af7','#1ed97a','#f04a5a'],borderRadius:8,borderSkipped:false}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{grid:{color:'rgba(255,255,255,0.03)'}},y:{grid:{color:'rgba(255,255,255,0.03)'},ticks:{callback:v=>fBRL(v)}}}}});
 }
 function calcJS(){
   const c=parseFloat(document.getElementById('js-c').value)||0;
@@ -3175,7 +3258,7 @@ const EDU=[
   {icon:'%',bg:'rgba(124,106,247,0.15)',title:'Juros Simples',sub:'O básico do dinheiro',body:`<b>Juros simples</b> são calculados sempre sobre o capital inicial, sem considerar os juros já acumulados.<br><br>Se você investe R$ 1.000 a 2% ao mês por 12 meses:<br><div class="edu-formula">J = C × i × n = 1000 × 0,02 × 12 = R$ 240</div>Útil para calcular parcelas de financiamentos de curto prazo.`},
   {icon:'∑',bg:'rgba(30,217,122,0.15)',title:'Juros Compostos',sub:'O poder dos juros sobre juros',body:`<b>Juros compostos</b> são calculados sobre o capital inicial mais os juros já acumulados. São a base da construção de riqueza.<br><br><div class="edu-formula">M = C × (1 + i)ⁿ</div>R$ 1.000 a 1%/mês por 12 meses = <b>R$ 1.126,83</b><br>vs. juros simples: R$ 1.240 — mas os compostos crescem <i>exponencialmente</i> no longo prazo. Einstein chamou de "a 8ª maravilha do mundo".`},
   {icon:'⬡',bg:'rgba(245,200,66,0.15)',title:'Taxa Selic',sub:'A taxa básica da economia',body:`A <b>Selic</b> (Sistema Especial de Liquidação e Custódia) é a taxa básica de juros da economia brasileira, definida pelo Banco Central a cada 45 dias pelo COPOM.<br><br>Ela influencia:<br>· Rendimento do Tesouro Selic<br>· Taxa do CDI<br>· Crédito pessoal e financiamentos<br>· Câmbio e inflação<br><br>Quando a Selic sobe, o crédito fica mais caro mas investimentos em renda fixa rendem mais.`},
-  {icon:'◈',bg:'rgba(24,212,232,0.15)',title:'CDI',sub:'O índice dos bancos',body:`O <b>CDI</b> (Certificado de Depósito Interbancário) é a taxa que os bancos cobram entre si para empréstimos de curtíssimo prazo.<br><br>Sempre muito próximo da Selic (geralmente 0,1% abaixo). É a referência para:<br>· CDBs (ex: "CDB 110% do CDI")<br>· Fundos DI<br>· Contas remuneradas<br><br>Um CDB a 110% do CDI com CDI em 13,15%/ano = 14,47%/ano.`},
+  {icon:'◈',bg:'rgba(24,212,232,0.15)',title:'CDI',sub:'O índice dos bancos',body:`O <b>CDI</b> (Certificado de Depósito Interbancário) é a taxa que os bancos cobram entre si para empréstimos de curtíssimo prazo.<br><br>Sempre muito próximo da Selic (geralmente 0,1% abaixo). É a referência para:<br>· CDBs (ex: "CDB 110% do CDI")<br>· Fundos DI<br>· Contas remuneradas<br><br>Um CDB a 110% do CDI com CDI em 14,65%/ano = 16,12%/ano.`},
   {icon:'◉',bg:'rgba(212,168,67,0.15)',title:'CDB',sub:'Certificado de Depósito Bancário',body:`O <b>CDB</b> é um título emitido por bancos para captar dinheiro. Você empresta dinheiro ao banco e ele te paga juros.<br><br>· Protegido pelo FGC até R$ 250 mil por instituição<br>· Pode ser pré-fixado, pós-fixado (% do CDI) ou IPCA+<br>· Liquidez varia: alguns têm resgate diário, outros no vencimento<br><br>Prefira CDBs de bancos menores com taxas acima de 110% do CDI.`},
   {icon:'◎',bg:'rgba(240,72,90,0.15)',title:'LCI e LCA',sub:'Isenção de Imposto de Renda',body:`<b>LCI</b> (Letras de Crédito Imobiliário) e <b>LCA</b> (Letras de Crédito do Agronegócio) são investimentos isentos de IR para pessoa física.<br><br>Por isso, uma LCI a 10% líquida pode ser melhor que um CDB a 13% tributado:<br><div class="edu-formula">CDB 13% - IR 15% = ~11% líquido</div>Verifique sempre o rendimento líquido antes de comparar. Também têm cobertura do FGC.`},
   {icon:'▤',bg:'rgba(124,106,247,0.15)',title:'FIIs — Fundos de Investimento Imobiliário',sub:'Imóveis sem comprar imóvel',body:`Os <b>FIIs</b> permitem investir em imóveis a partir de R$ 10. Você compra cotas na bolsa e recebe aluguéis mensais (dividendos) isentos de IR.<br><br>Tipos principais:<br>· <b>Tijolo</b> — imóveis físicos (shoppings, galpões, lajes)<br>· <b>Papel</b> — CRIs e CRAs (crédito imobiliário)<br>· <b>Fiagros</b> — crédito do agronegócio<br><br>Avalie sempre o P/VP (abaixo de 1 = desconto) e o DY (Dividend Yield).`},
