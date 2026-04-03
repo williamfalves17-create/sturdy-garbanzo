@@ -476,6 +476,26 @@ input[type=range]::-moz-range-thumb{width:18px;height:18px;border-radius:50%;bac
 #desp-spreadsheet tbody tr{transition:background 0.15s;}
 #desp-spreadsheet tbody tr:hover{background:rgba(124,106,247,0.03);}
 
+/* ═══════════ DATA GRID (Terminal Financeiro) ═══════════ */
+.dg-wrap{overflow-x:auto;scrollbar-width:thin;}
+.dg-table{width:100%;border-collapse:collapse;font-size:12px;}
+.dg-table thead th{padding:8px 10px;font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:1.2px;color:var(--text4);background:var(--bg2);border-bottom:2px solid var(--border2);position:sticky;top:0;white-space:nowrap;font-family:'DM Mono',monospace;}
+.dg-table tbody td{padding:6px 10px;border-bottom:1px solid var(--border);vertical-align:middle;transition:background 0.1s;}
+.dg-table tbody tr:hover td{background:rgba(124,106,247,0.03);}
+.dg-table tfoot td{padding:10px;border-top:2px solid var(--border2);background:var(--bg2);}
+.dg-input-row{background:rgba(30,217,122,0.03) !important;}
+.dg-input-row td{padding:4px 4px !important;border-bottom:2px solid rgba(30,217,122,0.2) !important;}
+.dg-cell{width:100%;background:transparent;border:1px solid var(--border);border-radius:3px;padding:7px 8px;color:var(--text);font-size:11px;font-family:'DM Sans',sans-serif;outline:none;transition:all 0.15s;}
+.dg-cell:focus{border-color:var(--green);background:rgba(30,217,122,0.04);box-shadow:0 0 0 2px rgba(30,217,122,0.1);}
+.dg-cell::placeholder{color:var(--text4);}
+.dg-select{cursor:pointer;-webkit-appearance:none;appearance:none;padding-right:20px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%234a4a6a'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 6px center;}
+.dg-mono{font-family:'DM Mono',monospace !important;font-feature-settings:'tnum' !important;}
+.dg-add-btn{width:28px;height:28px;border-radius:4px;border:1px solid rgba(30,217,122,0.3);background:rgba(30,217,122,0.1);color:var(--green);font-size:14px;font-weight:700;cursor:pointer;transition:all 0.15s;display:flex;align-items:center;justify-content:center;}
+.dg-add-btn:hover{background:var(--green);color:#fff;border-color:var(--green);}
+.dg-total-row td{font-size:11px;}
+.dg-del-btn{opacity:0.3;background:none;border:none;color:var(--red);cursor:pointer;font-size:11px;padding:2px 4px;transition:opacity 0.15s;}
+.dg-table tbody tr:hover .dg-del-btn{opacity:1;}
+
 /* ═══════════ TOAST (ENHANCED) ═══════════ */
 #toast-container{position:fixed;bottom:22px;right:22px;z-index:9999;display:flex;flex-direction:column-reverse;gap:8px;pointer-events:none;}
 .toast-item{background:var(--card);border:1px solid var(--border2);border-radius:var(--radius);padding:14px 18px;font-size:12px;color:var(--text);transform:translateX(120%);opacity:0;transition:all 0.35s cubic-bezier(0.16,1,0.3,1);display:flex;align-items:center;gap:10px;box-shadow:0 8px 32px rgba(0,0,0,0.5);max-width:360px;pointer-events:auto;position:relative;overflow:hidden;}
@@ -818,56 +838,47 @@ input[type=range]::-moz-range-thumb{width:18px;height:18px;border-radius:50%;bac
 
       <!-- ─── DESPESAS ─── -->
       <div class="page" id="pg-despesas">
-        <!-- KPIs do mês -->
         <div class="kpi-row" id="desp-kpis"></div>
 
-        <div class="panel">
-          <div class="panel-hd">
-            <div class="sec-title">Planilha de Despesas <span class="badge badge-red" id="desp-month-badge"></span></div>
-            <div style="display:flex;gap:8px;align-items:center;">
-              <div style="font-size:11px;color:var(--text3)">Total: <span id="d-total" style="color:var(--red);font-family:'DM Mono',monospace"></span></div>
-              <button class="btn btn-ghost btn-sm" onclick="exportCSV('desp')" style="white-space:nowrap;font-size:10px;">📤 CSV</button>
-              <div class="csv-import-area" style="padding:6px 10px;margin:0;border-width:1px;" onclick="document.getElementById('csv-desp-input').click()">
+        <div class="panel" style="padding:0;overflow:hidden;">
+          <div style="display:flex;align-items:center;justify-content:space-between;padding:14px 18px;border-bottom:1px solid var(--border);background:var(--bg3);">
+            <div style="display:flex;align-items:center;gap:10px;">
+              <div style="font-family:'Syne',sans-serif;font-size:14px;font-weight:700;">Despesas</div>
+              <span class="badge badge-red" id="desp-month-badge"></span>
+              <span style="font-family:'DM Mono',monospace;font-size:12px;color:var(--red);font-weight:600;" id="d-total"></span>
+            </div>
+            <div style="display:flex;gap:6px;align-items:center;">
+              <span style="font-size:9px;color:var(--text4);font-family:'DM Mono',monospace;" id="desp-count-label"></span>
+              <button class="btn btn-ghost btn-sm" onclick="exportCSV('desp')" style="font-size:9px;padding:4px 8px;">📤</button>
+              <div class="csv-import-area" style="padding:4px 8px;margin:0;border-width:1px;display:inline-block;" onclick="document.getElementById('csv-desp-input').click()">
                 <input type="file" id="csv-desp-input" accept=".csv" onchange="importCSV(this,'desp')">
-                <span style="font-size:10px;color:var(--text3);">📥 CSV</span>
+                <span style="font-size:9px;color:var(--text3);">📥</span>
               </div>
             </div>
           </div>
-          <div style="font-size:11px;color:var(--text3);margin-bottom:14px;">Preencha a linha verde e pressione <b style="color:var(--green)">Enter</b> ou clique <b>+ Adicionar</b> para registrar. Estilo planilha — igual ao Excel.</div>
-          
-          <div class="tbl-wrap"><table id="desp-spreadsheet">
-            <thead>
-              <tr>
-                <th style="width:100px;">Data</th>
-                <th style="min-width:140px;">Descrição</th>
-                <th style="width:130px;">Categoria</th>
-                <th style="width:90px;">Recorrência</th>
-                <th style="width:100px;">Valor (R$)</th>
-                <th style="width:80px;">Alerta</th>
-                <th style="width:50px;"></th>
-              </tr>
-            </thead>
-            <tbody>
-              <!-- Linha de input inline (estilo planilha) -->
-              <tr id="desp-input-row" style="background:rgba(30,217,122,0.04);border:1px solid rgba(30,217,122,0.2);">
-                <td><input class="fi" id="d-data" type="date" style="margin:0;padding:8px 6px;font-size:11px;background:transparent;border-color:rgba(30,217,122,0.15);"></td>
-                <td><input class="fi" id="d-desc" placeholder="Descrição..." style="margin:0;padding:8px 6px;font-size:11px;background:transparent;border-color:rgba(30,217,122,0.15);" onkeydown="if(event.key==='Enter')addDesp()"></td>
-                <td><select class="fs" id="d-cat" style="margin:0;padding:8px 4px;font-size:11px;background:transparent;border-color:rgba(30,217,122,0.15);"><option>Moradia</option><option>Alimentação</option><option>Transporte</option><option>Saúde</option><option>Educação</option><option>Lazer</option><option>Investimento</option><option>Pagamento de Dívida</option><option>Assinaturas</option><option>Outros</option></select></td>
-                <td><select class="fs" id="d-rec" style="margin:0;padding:8px 4px;font-size:11px;background:transparent;border-color:rgba(30,217,122,0.15);"><option>Única</option><option>Mensal</option><option>Anual</option></select></td>
-                <td><input class="fi" id="d-valor" type="number" placeholder="0,00" min="0" style="margin:0;padding:8px 6px;font-size:11px;background:transparent;border-color:rgba(30,217,122,0.15);text-align:right;" onkeydown="if(event.key==='Enter')addDesp()"></td>
-                <td><input class="fi" id="d-limit" type="number" placeholder="—" style="margin:0;padding:8px 6px;font-size:11px;background:transparent;border-color:rgba(30,217,122,0.15);text-align:right;" onkeydown="if(event.key==='Enter')addDesp()"></td>
-                <td style="text-align:center;"><button class="btn btn-sm" onclick="addDesp()" style="background:var(--green);color:#fff;padding:6px 10px;font-size:11px;font-weight:700;white-space:nowrap;" title="Adicionar despesa">+</button></td>
-              </tr>
-            </tbody>
+          <div class="dg-wrap"><table class="dg-table" id="desp-grid">
+            <colgroup><col style="width:92px"><col style="min-width:150px"><col style="width:120px"><col style="width:80px"><col style="width:105px"><col style="width:34px"></colgroup>
+            <thead><tr><th>DATA</th><th>DESCRIÇÃO</th><th>CATEGORIA</th><th>RECORR.</th><th style="text-align:right;">VALOR (R$)</th><th></th></tr></thead>
             <tbody id="tb-desp"></tbody>
+            <tbody><tr class="dg-input-row" id="dg-input-row">
+              <td><input class="dg-cell" id="d-data" type="date" data-col="0" tabindex="1"></td>
+              <td><input class="dg-cell" id="d-desc" placeholder="Descrição..." data-col="1" tabindex="2"></td>
+              <td><select class="dg-cell dg-select" id="d-cat" data-col="2" tabindex="3"><option>Moradia</option><option>Alimentação</option><option>Transporte</option><option>Saúde</option><option>Educação</option><option>Lazer</option><option>Investimento</option><option>Pag. Dívida</option><option>Assinaturas</option><option>Outros</option></select></td>
+              <td><select class="dg-cell dg-select" id="d-rec" data-col="3" tabindex="4"><option>Única</option><option>Mensal</option><option>Anual</option></select></td>
+              <td><input class="dg-cell dg-mono" id="d-valor" type="number" placeholder="0,00" min="0" step="0.01" style="text-align:right;" data-col="4" tabindex="5"></td>
+              <td style="text-align:center;padding:0;"><button class="dg-add-btn" onclick="addDesp()" tabindex="6" title="Enter">↵</button></td>
+            </tr></tbody>
+            <tfoot><tr class="dg-total-row">
+              <td style="font-weight:700;color:var(--text3);font-size:9px;letter-spacing:1px;">TOTAL</td>
+              <td id="dg-total-count" style="color:var(--text3);font-size:10px;"></td><td></td><td></td>
+              <td id="dg-total-val" style="text-align:right;font-family:'DM Mono',monospace;font-weight:700;color:var(--red);font-size:13px;"></td>
+              <td></td>
+            </tr></tfoot>
           </table></div>
+          <div style="padding:6px 18px 8px;border-top:1px solid var(--border);"><span style="font-size:9px;color:var(--text4);">⌨ <b>Tab</b> navegar · <b>Enter</b> confirmar · <b>Esc</b> limpar</span></div>
         </div>
-
-        <!-- Despesas por Categoria (resumo mensal estilo planilha) -->
         <div class="panel">
-          <div class="panel-hd">
-            <div class="sec-title">Resumo por Categoria <span class="badge badge-purple">Mês Atual</span></div>
-          </div>
+          <div class="panel-hd"><div class="sec-title">Resumo por Categoria <span class="badge badge-purple">Mês Atual</span></div></div>
           <div id="desp-cat-summary"></div>
         </div>
       </div>
@@ -941,7 +952,7 @@ input[type=range]::-moz-range-thumb{width:18px;height:18px;border-radius:50%;bac
           <button class="mkt-tab btn btn-sm" id="tab-acoes" onclick="switchMktTab('acoes')" style="background:transparent;border:1px solid var(--border2);color:var(--text3);">Ações</button>
           <button class="mkt-tab btn btn-sm" id="tab-rendafixa" onclick="switchMktTab('rendafixa')" style="background:transparent;border:1px solid var(--border2);color:var(--text3);">Renda Fixa · Selic · LCI · LCA</button>
           <button class="mkt-tab btn btn-sm" id="tab-crypto" onclick="switchMktTab('crypto')" style="background:transparent;border:1px solid var(--border2);color:var(--text3);">Cripto</button>
-          <button class="btn btn-ghost btn-sm" style="margin-left:auto;" onclick="renderMercado()">↻ Atualizar</button>
+          <button class="btn btn-ghost btn-sm" style="margin-left:auto;" onclick="renderMercado();updateMarketWithAPIs();toast('Atualizando cotações...','t-info')">↻ Atualizar</button>
         </div>
 
         <!-- FIIs -->
@@ -1806,6 +1817,8 @@ function launchApp(){
   S.dividas = S.dividas.map(d => ({...d, pagamentos: d.pagamentos||[], saldoInicial: d.saldoInicial||d.saldoOriginal||d.saldo}));
   save();
   renderTicker();renderEducacao();renderRadar();fetchLiveData();
+  // Buscar cotações reais via brapi + CoinGecko (assíncrono)
+  setTimeout(()=>updateMarketWithAPIs(),2000);
   if(typeof updateGreeting==='function')updateGreeting();
   if(typeof updateDebtBadge==='function')updateDebtBadge();
   if(typeof generateNotifs==='function')generateNotifs();
@@ -2120,6 +2133,112 @@ async function fetchLiveData(){
   if(document.getElementById('mkt-kpis')&&document.getElementById('mkt-kpis').innerHTML) renderMercado();
 }
 
+// ═══════════════════ BRAPI + COINGECKO API ═══════════════════
+// Atualiza cotações de FIIs/Ações via brapi.dev e Cryptos via CoinGecko
+const BRAPI_TOKEN=''; // Opcional: coloque seu token gratuito de brapi.dev/register
+async function fetchBrapiQuote(ticker){
+  try{
+    const url='https://brapi.dev/api/quote/'+encodeURIComponent(ticker)+(BRAPI_TOKEN?'?token='+BRAPI_TOKEN:'');
+    const resp=await fetch(url,{signal:AbortSignal.timeout(6000)});
+    if(!resp.ok) return null;
+    const data=await resp.json();
+    if(data.results&&data.results[0]) return data.results[0];
+  }catch(e){console.warn('brapi erro:',ticker,e);}
+  return null;
+}
+
+async function fetchBrapiMultiple(tickers){
+  try{
+    const url='https://brapi.dev/api/quote/'+tickers.join(',')+(BRAPI_TOKEN?'?token='+BRAPI_TOKEN:'');
+    const resp=await fetch(url,{signal:AbortSignal.timeout(10000)});
+    if(!resp.ok) return [];
+    const data=await resp.json();
+    return data.results||[];
+  }catch(e){console.warn('brapi batch erro:',e);}
+  return [];
+}
+
+async function fetchCryptoLive(){
+  try{
+    const ids='bitcoin,ethereum,binancecoin,solana,cardano,ripple,polkadot,avalanche-2,chainlink,matic-network,cosmos,near,sui,render-token,arbitrum';
+    const resp=await fetch('https://api.coingecko.com/api/v3/simple/price?ids='+ids+'&vs_currencies=usd&include_24hr_change=true&include_7d_change=true&include_market_cap=true',{signal:AbortSignal.timeout(8000)});
+    if(!resp.ok) return null;
+    return await resp.json();
+  }catch(e){console.warn('CoinGecko erro:',e);}
+  return null;
+}
+
+// Mapeamento CoinGecko ID → símbolo
+const CGK_MAP={
+  'bitcoin':{s:'BTC',t:'Bitcoin'},'ethereum':{s:'ETH',t:'Ethereum'},'binancecoin':{s:'BNB',t:'BNB'},
+  'solana':{s:'SOL',t:'Solana'},'cardano':{s:'ADA',t:'Cardano'},'ripple':{s:'XRP',t:'XRP'},
+  'polkadot':{s:'DOT',t:'Polkadot'},'avalanche-2':{s:'AVAX',t:'Avalanche'},'chainlink':{s:'LINK',t:'Chainlink'},
+  'matic-network':{s:'POL',t:'Polygon'},'cosmos':{s:'ATOM',t:'Cosmos'},'near':{s:'NEAR',t:'Near Protocol'},
+  'sui':{s:'SUI',t:'Sui'},'render-token':{s:'RNDR',t:'Render'},'arbitrum':{s:'ARB',t:'Arbitrum'}
+};
+
+async function updateMarketWithAPIs(){
+  // 1. Atualizar FIIs/Ações com brapi
+  const fiiTickers=MKT_FIIS.map(f=>f.t);
+  const acoesTickers=MKT_ACOES.filter(a=>a.c!==null&&!a.t.includes('SCHD')&&!a.t.includes('IVVB')).map(a=>a.t);
+  // Buscar em batches (brapi aceita múltiplos separados por vírgula)
+  const batch1=fiiTickers.slice(0,10);
+  const batch2=fiiTickers.slice(10);
+  const batch3=acoesTickers.slice(0,10);
+  const batch4=acoesTickers.slice(10);
+  
+  const [r1,r2,r3,r4]=await Promise.allSettled([
+    fetchBrapiMultiple(batch1),fetchBrapiMultiple(batch2),
+    fetchBrapiMultiple(batch3),fetchBrapiMultiple(batch4)
+  ]);
+  
+  const allResults=[...(r1.status==='fulfilled'?r1.value:[]),...(r2.status==='fulfilled'?r2.value:[]),...(r3.status==='fulfilled'?r3.value:[]),...(r4.status==='fulfilled'?r4.value:[])];
+  
+  let updatedCount=0;
+  allResults.forEach(q=>{
+    if(!q||!q.symbol)return;
+    const sym=q.symbol.replace('.SA','');
+    // Atualizar FIIs
+    const fii=MKT_FIIS.find(f=>f.t===sym);
+    if(fii&&q.regularMarketPrice){fii.c=q.regularMarketPrice;fii._live=true;updatedCount++;}
+    // Atualizar Ações
+    const acao=MKT_ACOES.find(a=>a.t===sym);
+    if(acao&&q.regularMarketPrice){acao.c=q.regularMarketPrice;acao._live=true;updatedCount++;}
+  });
+
+  // 2. Atualizar Cryptos com CoinGecko
+  const cryptoData=await fetchCryptoLive();
+  if(cryptoData){
+    Object.entries(cryptoData).forEach(([id,data])=>{
+      const meta=CGK_MAP[id];
+      if(!meta) return;
+      const crypto=MKT_CRYPTO.find(c=>c.s===meta.s);
+      if(crypto&&data.usd){
+        crypto.preco=data.usd;
+        crypto.mcap=data.usd_market_cap?'US$ '+(data.usd_market_cap/1e9).toFixed(0)+'B':crypto.mcap;
+        crypto.v24h=data.usd_24h_change?(data.usd_24h_change>=0?'+':'')+data.usd_24h_change.toFixed(1)+'%':crypto.v24h;
+        crypto._live=true;
+        updatedCount++;
+      }
+    });
+    // Atualizar BTC no ticker
+    if(cryptoData.bitcoin&&cryptoData.bitcoin.usd){
+      const btcUsd=cryptoData.bitcoin.usd;
+      const btcChg=cryptoData.bitcoin.usd_24h_change||0;
+      TICKER_DATA[5].v='$'+Math.round(btcUsd/1000)+'k';
+      TICKER_DATA[5].c=(btcChg>=0?'+':'')+btcChg.toFixed(1)+'%';
+      TICKER_DATA[5].up=btcChg>=0;
+      TICKER_DATA[5].live=true;
+    }
+  }
+
+  if(updatedCount>0){
+    console.log('LLIW: '+updatedCount+' ativos atualizados via API');
+    renderTicker();
+    if(document.querySelector('#pg-mercado.active')) renderMercado();
+  }
+}
+
 // ═══════════════════ TICKER ═══════════════════
 const TICKER_DATA=[
   {n:'SELIC',v:'14,75%',c:'-0.25',up:false},{n:'CDI',v:'14,65%',c:'-0.24',up:false},
@@ -2232,34 +2351,48 @@ function renderRec(){
   </tr>`).join('')||'<tr><td colspan="6" style="text-align:center;color:var(--text4);padding:20px;">Nenhum lançamento ainda</td></tr>';
 }
 
-// ═══════════════════ DESPESAS ═══════════════════
+// ═══════════════════ DESPESAS (DATA GRID) ═══════════════════
 function addDesp(){
   const desc=document.getElementById('d-desc').value.trim();
   const cat=document.getElementById('d-cat').value;
   const valor=parseFloat(document.getElementById('d-valor').value)||0;
   const data=document.getElementById('d-data').value;
   const rec=document.getElementById('d-rec').value;
-  const limit=parseFloat(document.getElementById('d-limit').value)||0;
   if(!data||!valor){toast('Preencha valor e data','t-err');return;}
-  if(limit>0&&valor>limit)toast(`Alerta: despesa acima do limite de ${fBRL(limit)}!`,'t-info');
-  S.desps.push({id:Date.now(),descricao:desc,categoria:cat,valor,data,recorrencia:rec,limite:limit});
+  S.desps.push({id:Date.now(),descricao:desc,categoria:cat,valor,data,recorrencia:rec,limite:0});
   save();renderDesp();toast('Despesa registrada!');
-  document.getElementById('d-desc').value='';document.getElementById('d-valor').value='';document.getElementById('d-limit').value='';
-  // Foco de volta no campo descrição (workflow de planilha)
-  document.getElementById('d-desc').focus();
+  document.getElementById('d-desc').value='';document.getElementById('d-valor').value='';
+  // Workflow terminal: foco volta ao primeiro campo útil
+  setTimeout(()=>document.getElementById('d-desc').focus(),50);
 }
+// Keyboard Navigation (Tab/Enter/Esc) para o Data Grid
+document.addEventListener('keydown',function(e){
+  const row=document.getElementById('dg-input-row');
+  if(!row||!row.contains(e.target))return;
+  if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();addDesp();}
+  if(e.key==='Escape'){
+    document.getElementById('d-desc').value='';document.getElementById('d-valor').value='';
+    document.getElementById('d-desc').focus();
+  }
+});
 function renderDesp(){
   const tb=document.getElementById('tb-desp');
   const sorted=[...S.desps].sort((a,b)=>new Date(b.data)-new Date(a.data));
   const total=sorted.reduce((s,d)=>s+d.valor,0);
   document.getElementById('d-total').textContent=fBRL(total);
 
-  // Month badge
   const now=new Date(),tm=now.getMonth(),ty=now.getFullYear();
   const mb=document.getElementById('desp-month-badge');
   if(mb) mb.textContent=MONTHS[tm]+'/'+ty;
+  const cl=document.getElementById('desp-count-label');
+  if(cl) cl.textContent=sorted.length+' registros';
 
-  // KPIs do mês
+  // Totalizador do grid
+  const dgc=document.getElementById('dg-total-count');
+  const dgv=document.getElementById('dg-total-val');
+  if(dgc) dgc.textContent=sorted.length+' lançamentos';
+  if(dgv) dgv.textContent=fBRL(total);
+
   const mDesp=S.desps.filter(d=>{const dt=new Date(d.data+'T12:00');return dt.getMonth()===tm&&dt.getFullYear()===ty;});
   const totalMes=mDesp.reduce((s,d)=>s+d.valor,0);
   const mRec=S.recs.filter(r=>{const dt=new Date(r.data+'T12:00');return dt.getMonth()===tm&&dt.getFullYear()===ty;}).reduce((s,r)=>s+r.valor,0);
@@ -2274,21 +2407,20 @@ function renderDesp(){
     <div class="kpi"><div class="kpi-top" style="background:${varMes>0?'var(--red)':'var(--green)'}"></div><div class="kpi-lbl">vs Mês Anterior</div><div class="kpi-val" style="color:${varMes>0?'var(--red)':'var(--green)'}">${varMes>0?'+':''}${varMes.toFixed(1)}%</div><div class="kpi-sub ${varMes>0?'dn':'up'}">${totalMesAnt>0?fBRL(totalMesAnt)+' no mês passado':'sem dados'}</div></div>
     <div class="kpi"><div class="kpi-top" style="background:var(--yellow)"></div><div class="kpi-lbl">Média/dia (mês)</div><div class="kpi-val">${fBRL(totalMes/Math.max(1,new Date().getDate()))}</div><div class="kpi-sub neutral">gasto diário médio</div></div>`;
 
-  // Tabela estilo planilha
+  // Data Grid rows
   tb.innerHTML=sorted.map(d=>{
-    const isDivida = d.categoria==='Pagamento de Dívida';
-    const catBg = isDivida ? 'rgba(240,72,90,0.12)' : 'rgba(124,106,247,0.1)';
+    const isDivida = d.categoria==='Pagamento de Dívida'||d.categoria==='Pag. Dívida';
+    const catBg = isDivida ? 'rgba(240,72,90,0.08)' : 'rgba(124,106,247,0.06)';
     const catColor = isDivida ? 'var(--red)' : 'var(--accent3)';
     return `<tr>
-      <td class="td-mono" style="font-size:11px;">${d.data?new Date(d.data+'T12:00').toLocaleDateString('pt-BR'):'-'}</td>
-      <td style="font-size:12px;">${isDivida?'<span style="font-size:8px;background:rgba(240,72,90,0.12);color:var(--red);padding:1px 4px;border-radius:3px;margin-right:3px;">DIV</span>':''}${escHTML(d.descricao||'—')}</td>
-      <td><span class="td-tag" style="background:${catBg};color:${catColor};font-size:10px;">${d.categoria}</span></td>
-      <td><span style="font-size:10px;color:var(--text3)">${d.recorrencia}</span></td>
-      <td class="td-dn" style="text-align:right;font-size:12px;">${fBRL(d.valor)}</td>
-      <td style="font-size:10px;color:var(--text4);text-align:right;">${d.limite>0?fBRL(d.limite):'—'}</td>
-      <td style="text-align:center;"><button class="btn btn-xs btn-red" title="Excluir" onclick="S.desps=S.desps.filter(x=>x.id!==${d.id});save();renderDesp();" style="padding:3px 6px;">✕</button></td>
+      <td style="font-family:'DM Mono',monospace;font-size:11px;color:var(--text2);">${d.data?new Date(d.data+'T12:00').toLocaleDateString('pt-BR'):'-'}</td>
+      <td style="font-size:12px;">${isDivida?'<span style="font-size:7px;background:rgba(240,72,90,0.1);color:var(--red);padding:1px 3px;border-radius:2px;margin-right:3px;font-weight:700;">DIV</span>':''}${escHTML(d.descricao||'—')}</td>
+      <td><span style="font-size:10px;padding:2px 6px;border-radius:3px;background:${catBg};color:${catColor}">${d.categoria}</span></td>
+      <td style="font-size:10px;color:var(--text4);">${d.recorrencia}</td>
+      <td style="text-align:right;font-family:'DM Mono',monospace;font-size:12px;color:var(--red);font-weight:500;">${fBRL(d.valor)}</td>
+      <td style="text-align:center;"><button class="dg-del-btn" title="Excluir" onclick="S.desps=S.desps.filter(x=>x.id!==${d.id});save();renderDesp();">✕</button></td>
     </tr>`;
-  }).join('')||'<tr><td colspan="7" style="text-align:center;color:var(--text4);padding:30px;font-size:12px;">Nenhuma despesa ainda — adicione na linha verde acima ↑</td></tr>';
+  }).join('')||'<tr><td colspan="6" style="text-align:center;color:var(--text4);padding:32px;font-size:12px;">Nenhuma despesa — preencha acima e pressione Enter</td></tr>';
 
   // Resumo por categoria (estilo planilha)
   const catSummary=document.getElementById('desp-cat-summary');
@@ -2547,7 +2679,7 @@ function renderMercado(){
   document.getElementById('tb-fiis').innerHTML=MKT_FIIS.map(m=>`<tr>
     <td style="font-family:'Syne',sans-serif;font-weight:700;font-size:13px;">${m.t}</td>
     <td><span class="td-tag" style="background:rgba(245,200,66,0.12);color:var(--yellow)">${m.seg}</span></td>
-    <td class="td-mono">${fBRL(m.c)}</td>
+    <td class="td-mono">${fBRL(m.c)}${m._live?'<span style="color:var(--green);font-size:7px;margin-left:3px;">●</span>':''}</td>
     <td class="td-up">${m.dy12.toFixed(3)}%</td>
     <td class="td-mono">${m.dym.toFixed(3)}%</td>
     <td class="td-up">${fBRL(m.rendaCota)}</td>
@@ -2560,7 +2692,7 @@ function renderMercado(){
   document.getElementById('tb-acoes').innerHTML=MKT_ACOES.map(m=>`<tr>
     <td style="font-family:'Syne',sans-serif;font-weight:700;font-size:13px;">${m.t}</td>
     <td><span class="td-tag" style="background:rgba(124,106,247,0.12);color:var(--accent3)">${m.setor}</span></td>
-    <td class="td-mono">${m.c!=null?fBRL(m.c):'—'}</td>
+    <td class="td-mono">${m.c!=null?fBRL(m.c):'—'}${m._live?'<span style="color:var(--green);font-size:7px;margin-left:3px;">●</span>':''}</td>
     <td class="td-up">${m.dy12.toFixed(2)}%</td>
     <td><span class="td-tag" style="background:rgba(245,200,66,0.1);color:var(--yellow)">${m.pag}</span></td>
     <td class="td-mono" style="color:${m.pvp!=null&&m.pvp<1.5?'var(--green)':'var(--yellow)'}">${m.pvp!=null?m.pvp.toFixed(2):'—'}</td>
